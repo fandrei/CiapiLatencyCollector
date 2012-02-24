@@ -23,6 +23,7 @@ namespace LatencyCollectorCore
 		{
 			try
 			{
+				_terminated = false;
 				_thread = new Thread(ThreadProc);
 				_thread.Start();
 			}
@@ -36,7 +37,7 @@ namespace LatencyCollectorCore
 		{
 			var period = TimeSpan.FromMinutes(1.0 / AppSettings.Instance.DataPollingRate);
 			Data data = null;
-			while (true)
+			while (!_terminated)
 			{
 				try
 				{
@@ -84,6 +85,7 @@ namespace LatencyCollectorCore
 		{
 			try
 			{
+				_terminated = true;
 				_thread.Interrupt();
 				_thread = null;
 			}
@@ -93,6 +95,7 @@ namespace LatencyCollectorCore
 			}
 		}
 
+		private static volatile bool _terminated;
 		private static Thread _thread;
 	}
 }
