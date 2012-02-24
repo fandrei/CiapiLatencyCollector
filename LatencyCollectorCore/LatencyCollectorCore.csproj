@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{7B312C9B-4CA0-446E-B737-4D25F0BA5902}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>{0715852F-3503-4916-8E4F-0D2950F6AF1D}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CiapiLatencyCollector</RootNamespace>
-    <AssemblyName>CiapiLatencyCollector</AssemblyName>
+    <RootNamespace>LatencyCollectorCore</RootNamespace>
+    <AssemblyName>LatencyCollectorCore</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -34,35 +34,38 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CIAPI">
+      <HintPath>..\CiapiLatencyCollector\packages\CIAPI.CS.3.1.0\lib\net40\CIAPI.dll\Release\CIAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetClient_N2">
+      <HintPath>..\CiapiLatencyCollector\packages\CIAPI.CS.3.1.0\lib\net40\CIAPI.dll\Release\DotNetClient_N2.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\CiapiLatencyCollector\packages\CIAPI.CS.3.1.0\lib\net40\CIAPI.dll\Release\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.JsonClient.35">
+      <HintPath>..\CiapiLatencyCollector\packages\CIAPI.CS.3.1.0\lib\net40\CIAPI.dll\Release\Salient.JsonClient.35.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.ReflectiveLoggingAdapter.35">
+      <HintPath>..\CiapiLatencyCollector\packages\CIAPI.CS.3.1.0\lib\net40\CIAPI.dll\Release\Salient.ReflectiveLoggingAdapter.35.dll</HintPath>
+    </Reference>
+    <Reference Include="StreamingClient">
+      <HintPath>..\CiapiLatencyCollector\packages\CIAPI.CS.3.1.0\lib\net40\CIAPI.dll\Release\StreamingClient.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LatencyCollectorService.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="LatencyCollectorService.Designer.cs">
-      <DependentUpon>LatencyCollectorService.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="LatencyCollectorService.resx">
-      <DependentUpon>LatencyCollectorService.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LatencyCollectorCore\LatencyCollectorCore.csproj">
-      <Project>{0715852F-3503-4916-8E4F-0D2950F6AF1D}</Project>
-      <Name>LatencyCollectorCore</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
