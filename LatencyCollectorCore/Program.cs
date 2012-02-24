@@ -40,23 +40,12 @@ namespace LatencyCollectorCore
 		static void ThreadProc()
 		{
 			var period = TimeSpan.FromMinutes(1.0 / AppSettings.Instance.DataPollingRate);
-			Data data = null;
+
 			while (!_terminated)
 			{
 				try
 				{
-					data = new Data();
-					data.Login();
-					Trace.WriteLine("Logged in");
-
-					data.GetMarketsList(MarketType.CFD, 100, "", "");
-					data.GetMarketsList(MarketType.Spread, 100, "", "");
-					Trace.WriteLine("Request finished ok");
-
-					data.Logout();
-					data.Dispose();
-					Trace.WriteLine("Logged out");
-
+					PerformPolling();
 					Thread.Sleep(period);
 				}
 				catch (ThreadInterruptedException)
@@ -69,20 +58,35 @@ namespace LatencyCollectorCore
 				}
 				finally
 				{
-					if (data != null)
+					if (_data != null)
 					{
 						try
 						{
-							data.Dispose();
+							_data.Dispose();
 						}
 						catch (Exception exc)
 						{
 							Trace.WriteLine(exc);
 						}
-						data = null;
+						_data = null;
 					}
 				}
 			}
+		}
+
+		private static void PerformPolling()
+		{
+			_data = new Data();
+			_data.Login();
+			Trace.WriteLine("Logged in");
+
+			_data.GetMarketsList(MarketType.CFD, 100, "", "");
+			_data.GetMarketsList(MarketType.Spread, 100, "", "");
+			Trace.WriteLine("Request finished ok");
+
+			_data.Logout();
+			_data.Dispose();
+			Trace.WriteLine("Logged out");
 		}
 
 		static void Stop()
@@ -90,7 +94,7 @@ namespace LatencyCollectorCore
 			try
 			{
 				_terminated = true;
-				_thread.Interrupt();
+				_data.Logout();
 				_thread = null;
 			}
 			catch (Exception exc)
@@ -99,6 +103,7 @@ namespace LatencyCollectorCore
 			}
 		}
 
+		private static Data _data;
 		private static volatile bool _terminated;
 		private static Thread _thread;
 	}
