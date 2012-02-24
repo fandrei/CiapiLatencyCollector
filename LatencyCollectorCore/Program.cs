@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
+using AppMetrics.Client;
+
 namespace LatencyCollectorCore
 {
 	class Program
@@ -17,6 +19,8 @@ namespace LatencyCollectorCore
 			Start();
 			Console.ReadKey();
 			Stop();
+
+			Tracker.Terminate(true);
 		}
 
 		static void Start()
