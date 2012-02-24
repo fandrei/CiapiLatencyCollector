@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-
+using AppMetrics.Client;
 using CIAPI.DTO;
 using CIAPI.Rpc;
 using CIAPI.Streaming;
@@ -45,10 +45,8 @@ namespace LatencyCollectorCore
 					IStreamingClient streamingClient;
 					try
 					{
-						var measure = StartMeasure();
 						streamingClient = StreamingClientFactory.CreateStreamingClient(
 							new Uri(AppSettings.Instance.StreamingServerUrl), AppSettings.Instance.UserName, client.Session);
-						EndMeasure(measure, "CreateStreamingClient");
 					}
 					catch (Exception exc)
 					{
@@ -75,10 +73,7 @@ namespace LatencyCollectorCore
 
 				if (_streamingClient != null)
 				{
-					var measure = StartMeasure();
 					_streamingClient.Dispose();
-					EndMeasure(measure, "StreamingClient.Dispose");
-
 					_streamingClient = null;
 				}
 
@@ -199,18 +194,16 @@ namespace LatencyCollectorCore
 			return Stopwatch.StartNew();
 		}
 
-		static void EndMeasure(Stopwatch watch, string label = null)
+		static void EndMeasure(Stopwatch watch, string label)
 		{
 			var diff = watch.Elapsed;
 			watch.Stop();
 
-			if (label == null)
-			{
-				var stackTrace = new StackTrace();
-				label = stackTrace.GetFrame(1).GetMethod().Name;
-			}
-			//Tracker.LogEvent("Latency " + label, diff.TotalSeconds, MessagePriority.Low);
+			Tracker.Log("Latency " + label, diff.TotalSeconds);
 		}
+
+		static readonly Tracker Tracker = new Tracker("http://current.metrics.labs.cityindex.com/LogEvent.ashx", 
+			"CiapiLatencyCollector");
 	}
 
 	enum MarketType { CFD, Spread, }
