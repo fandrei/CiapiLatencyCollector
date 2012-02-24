@@ -158,13 +158,13 @@ namespace LatencyCollectorCore
 
 		public void Dispose()
 		{
-			Trace.WriteLine("Data.Dispose()\r\n");
+			Trace.WriteLine("Data.Dispose()");
 			_disposed = true;
 
 			try
 			{
 				Logout();
-				Trace.WriteLine("Data.Dispose() finished successfully\r\n");
+				Trace.WriteLine("Data.Dispose() finished successfully");
 			}
 			catch (Exception exc)
 			{

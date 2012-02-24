@@ -23,30 +23,7 @@ namespace LatencyCollectorCore
 		{
 			try
 			{
-				_data = new Data();
-				_data.Login();
-				Trace.WriteLine("Logged in");
-
-				_thread = new Thread(
-				() =>
-				{
-					var period = TimeSpan.FromMinutes(1.0 / AppSettings.Instance.DataPollingRate);
-					while (_data.Connected)
-					{
-						try
-						{
-							_data.GetMarketsList(MarketType.CFD, 100, "", "");
-							_data.GetMarketsList(MarketType.Spread, 100, "", "");
-							Trace.WriteLine("Request finished ok");
-
-							Thread.Sleep(period);
-						}
-						catch (Exception exc)
-						{
-							Trace.WriteLine(exc);
-						}
-					}
-				});
+				_thread = new Thread(ThreadProc);
 				_thread.Start();
 			}
 			catch (Exception exc)
@@ -55,22 +32,67 @@ namespace LatencyCollectorCore
 			}
 		}
 
+		static void ThreadProc()
+		{
+			var period = TimeSpan.FromMinutes(1.0 / AppSettings.Instance.DataPollingRate);
+			Data data = null;
+			while (true)
+			{
+				try
+				{
+					data = new Data();
+					data.Login();
+					Trace.WriteLine("Logged in");
+
+					data.GetMarketsList(MarketType.CFD, 100, "", "");
+					data.GetMarketsList(MarketType.Spread, 100, "", "");
+					Trace.WriteLine("Request finished ok");
+
+					data.Logout();
+					data.Dispose();
+					Trace.WriteLine("Logged out");
+
+					Thread.Sleep(period);
+				}
+				catch (ThreadInterruptedException)
+				{
+					break;
+				}
+				catch (Exception exc)
+				{
+					Trace.WriteLine(exc);
+				}
+				finally
+				{
+					if (data != null)
+					{
+						try
+						{
+							data.Dispose();
+						}
+						catch (Exception exc)
+						{
+							Trace.WriteLine(exc);
+						}
+						data = null;
+					}
+				}
+			}
+		}
+
 		static void Stop()
 		{
 			try
 			{
-				_data.Logout();
 				_thread.Interrupt();
+				_thread = null;
 			}
 			catch (Exception exc)
 			{
 				Trace.WriteLine(exc);
 			}
-
-			Trace.WriteLine("Logged out");
 		}
 
-		private static Data _data;
 		private static Thread _thread;
 	}
 }
