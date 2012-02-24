@@ -35,25 +35,26 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CIAPI">
-      <HintPath>..\CiapiLatencyCollector\packages\CIAPI.CS.3.1.0\lib\net40\CIAPI.dll\Release\CIAPI.dll</HintPath>
+      <HintPath>..\packages\CIAPI.CS.3.1.0\lib\net40\CIAPI.dll\Release\CIAPI.dll</HintPath>
     </Reference>
     <Reference Include="DotNetClient_N2">
-      <HintPath>..\CiapiLatencyCollector\packages\CIAPI.CS.3.1.0\lib\net40\CIAPI.dll\Release\DotNetClient_N2.dll</HintPath>
+      <HintPath>..\packages\CIAPI.CS.3.1.0\lib\net40\CIAPI.dll\Release\DotNetClient_N2.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\CiapiLatencyCollector\packages\CIAPI.CS.3.1.0\lib\net40\CIAPI.dll\Release\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\CIAPI.CS.3.1.0\lib\net40\CIAPI.dll\Release\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Salient.JsonClient.35">
-      <HintPath>..\CiapiLatencyCollector\packages\CIAPI.CS.3.1.0\lib\net40\CIAPI.dll\Release\Salient.JsonClient.35.dll</HintPath>
+      <HintPath>..\packages\CIAPI.CS.3.1.0\lib\net40\CIAPI.dll\Release\Salient.JsonClient.35.dll</HintPath>
     </Reference>
     <Reference Include="Salient.ReflectiveLoggingAdapter.35">
-      <HintPath>..\CiapiLatencyCollector\packages\CIAPI.CS.3.1.0\lib\net40\CIAPI.dll\Release\Salient.ReflectiveLoggingAdapter.35.dll</HintPath>
+      <HintPath>..\packages\CIAPI.CS.3.1.0\lib\net40\CIAPI.dll\Release\Salient.ReflectiveLoggingAdapter.35.dll</HintPath>
     </Reference>
     <Reference Include="StreamingClient">
-      <HintPath>..\CiapiLatencyCollector\packages\CIAPI.CS.3.1.0\lib\net40\CIAPI.dll\Release\StreamingClient.dll</HintPath>
+      <HintPath>..\packages\CIAPI.CS.3.1.0\lib\net40\CIAPI.dll\Release\StreamingClient.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
