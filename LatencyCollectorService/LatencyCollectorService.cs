@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.ServiceProcess;
@@ -63,6 +64,9 @@ namespace CiapiLatencyCollector
 		{
 			using (var client = new WebClient())
 			{
+				if (!Directory.Exists(Const.WorkingAreaPath))
+					Directory.CreateDirectory(Const.WorkingAreaPath);
+
 				var tmpAssemblyPath = Const.WorkerAssemblyPath + ".tmp";
 				client.DownloadFile(Const.AutoUpdateUrl, tmpAssemblyPath);
 			}
