@@ -9,7 +9,7 @@ using AppMetrics.Client;
 
 namespace LatencyCollectorCore
 {
-	class Program
+	public class Program
 	{
 		static void Main(string[] args)
 		{
@@ -23,7 +23,7 @@ namespace LatencyCollectorCore
 			Tracker.Terminate(true);
 		}
 
-		static void Start()
+		public static void Start()
 		{
 			try
 			{
@@ -92,7 +92,7 @@ namespace LatencyCollectorCore
 			Trace.WriteLine("Logged out");
 		}
 
-		static void Stop()
+		public static void Stop()
 		{
 			try
 			{
@@ -100,6 +100,7 @@ namespace LatencyCollectorCore
 				{
 					_terminated = true;
 					_data.Logout();
+					_thread.Join(TimeSpan.FromSeconds(20));
 					_thread = null;
 				}
 			}
