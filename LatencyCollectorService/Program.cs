@@ -13,12 +13,11 @@ namespace CiapiLatencyCollector
 		/// </summary>
 		static void Main()
 		{
-			ServiceBase[] ServicesToRun;
-			ServicesToRun = new ServiceBase[] 
-			{ 
-				new LatencyCollectorService() 
-			};
-			ServiceBase.Run(ServicesToRun);
+			var servicesToRun = new ServiceBase[] 
+				{ 
+					new LatencyCollectorService() 
+				};
+			ServiceBase.Run(servicesToRun);
 		}
 	}
 }
