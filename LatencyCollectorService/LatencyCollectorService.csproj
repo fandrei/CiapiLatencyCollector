@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Const.cs" />
     <Compile Include="LatencyCollectorService.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -57,12 +58,6 @@
     <EmbeddedResource Include="LatencyCollectorService.resx">
       <DependentUpon>LatencyCollectorService.cs</DependentUpon>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LatencyCollectorCore\LatencyCollectorCore.csproj">
-      <Project>{0715852F-3503-4916-8E4F-0D2950F6AF1D}</Project>
-      <Name>LatencyCollectorCore</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

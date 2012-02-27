@@ -27,9 +27,12 @@ namespace LatencyCollectorCore
 		{
 			try
 			{
-				_terminated = false;
-				_thread = new Thread(ThreadProc);
-				_thread.Start();
+				lock (Sync)
+				{
+					_terminated = false;
+					_thread = new Thread(ThreadProc);
+					_thread.Start();
+				}
 			}
 			catch (Exception exc)
 			{
@@ -93,9 +96,12 @@ namespace LatencyCollectorCore
 		{
 			try
 			{
-				_terminated = true;
-				_data.Logout();
-				_thread = null;
+				lock (Sync)
+				{
+					_terminated = true;
+					_data.Logout();
+					_thread = null;
+				}
 			}
 			catch (Exception exc)
 			{
@@ -106,5 +112,6 @@ namespace LatencyCollectorCore
 		private static Data _data;
 		private static volatile bool _terminated;
 		private static Thread _thread;
+		private static readonly object Sync = new object();
 	}
 }
