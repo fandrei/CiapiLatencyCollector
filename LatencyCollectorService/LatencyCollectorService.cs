@@ -18,6 +18,11 @@ namespace CiapiLatencyCollector
 			InitializeComponent();
 		}
 
+		public void Start()
+		{
+			OnStart(new string[0]);
+		}
+
 		protected override void OnStart(string[] args)
 		{
 			lock (Sync)
