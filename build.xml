@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" >
+<Project ToolsVersion="4.0" DefaultTargets="Package" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" >
 
   <PropertyGroup>
     <MSBuildCommunityTasksPath>$(MSBuildProjectDirectory)\tools\msbuild\MSBuildCommunityTasks\</MSBuildCommunityTasksPath>
@@ -14,6 +14,7 @@
     <!-- This gets set by the build server -->
     <BuildVersion>0</BuildVersion>
     <FullVersion>$(MajorVersion).$(MinorVersion).$(BuildVersion)</FullVersion>
+    <TargetDir>$(MSBuildProjectDirectory)\_bin\$(Configuration)\</TargetDir>
   </PropertyGroup>
 
   <Target Name="UpdateVersion" >
@@ -30,8 +31,7 @@
         ReplacementText="AssemblyVersion(&quot;$(FullVersion)&quot;)" />
 
     <!-- Store version number for auto update -->
-    <WriteLinesToFile File="$(MSBuildProjectDirectory)\_bin\$(Configuration)\version.txt" 
-                      Lines="$(FullVersion)" Overwrite="true" />
+    <WriteLinesToFile File="$(TargetDir)\version.txt" Lines="$(FullVersion)" Overwrite="true" />
   </Target>
 
   <Target Name="Build" DependsOnTargets="UpdateVersion" >
@@ -39,4 +39,15 @@
       Properties="Configuration=$(Configuration)" />
   </Target>
 
+  <Target Name="Package" DependsOnTargets="Build" >
+    <ItemGroup>
+      <!-- All files from build -->
+      <ZipFiles Include="$(TargetDir)\**\*.dll" />
+    </ItemGroup>
+    <Zip Files="@(ZipFiles)"
+         WorkingDirectory="$(TargetDir)"
+         ZipFileName="$(TargetDir)\LatencyCollectorCore.zip"
+         ZipLevel="9" />
+  </Target>
+  
 </Project>
