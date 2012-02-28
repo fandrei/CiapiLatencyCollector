@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -26,7 +24,7 @@ namespace CiapiLatencyCollector
 
 		protected override void OnStart(string[] args)
 		{
-			lock (Sync)
+			lock (_sync)
 			{
 				_thread = new Thread(ThreadProc);
 				_thread.Start();
@@ -35,14 +33,14 @@ namespace CiapiLatencyCollector
 
 		protected override void OnStop()
 		{
-			lock (Sync)
+			lock (_sync)
 			{
 				_thread.Interrupt();
 				_thread = null;
 			}
 		}
 
-		static void ThreadProc()
+		void ThreadProc()
 		{
 			try
 			{
@@ -60,20 +58,69 @@ namespace CiapiLatencyCollector
 			}
 		}
 
-		static void CheckUpdates()
+		void CheckUpdates()
 		{
 			using (var client = new WebClient())
 			{
 				if (!Directory.Exists(Const.WorkingAreaPath))
 					Directory.CreateDirectory(Const.WorkingAreaPath);
 
-				var tmpAssemblyPath = Const.WorkerAssemblyPath + ".tmp";
+				var assemblyPath = Const.WorkerAssemblyPath;
+				var tmpAssemblyPath = assemblyPath + ".tmp";
 				client.DownloadFile(Const.AutoUpdateUrl, tmpAssemblyPath);
+
+				if (!File.Exists(assemblyPath) || !AssembliesAreEqual(tmpAssemblyPath, assemblyPath))
+				{
+					StopWorkerDomain();
+					File.Delete(assemblyPath);
+					File.Move(tmpAssemblyPath, assemblyPath);
+				}
+
+				if (_appDomain == null)
+					StartWorkerDomain(assemblyPath);
 			}
 		}
 
-		private static Thread _thread;
-		private static readonly object Sync = new object();
-		private static readonly TimeSpan AutoUpdateCheckPeriod = TimeSpan.FromMinutes(1);
+		private static bool AssembliesAreEqual(string file1, string file2)
+		{
+			var version1 = FileVersionInfo.GetVersionInfo(file1);
+			var version2 = FileVersionInfo.GetVersionInfo(file2);
+			var res = version1.ToString().Equals(version2.ToString());
+			return res;
+		}
+
+		private void StartWorkerDomain(string assemblyPath)
+		{
+			_appDomain = CreateAppDomain(Const.WorkingAreaPath);
+			_proxyClass = _appDomain.CreateInstanceFromAndUnwrap(assemblyPath, "LatencyCollectorCore.Proxy");
+			_proxyClass.Start();
+		}
+
+		void StopWorkerDomain()
+		{
+			if (_appDomain == null)
+				return;
+
+			_proxyClass.Stop();
+			_proxyClass = null;
+			AppDomain.Unload(_appDomain);
+			_appDomain = null;
+		}
+
+		static AppDomain CreateAppDomain(string basePath)
+		{
+			var setup = new AppDomainSetup
+				{
+					ApplicationBase = basePath
+				};
+			var appDomain = AppDomain.CreateDomain("LatencyCollectorCore", null, setup);
+			return appDomain;
+		}
+
+		private readonly object _sync = new object();
+		private Thread _thread;
+		private AppDomain _appDomain;
+		private dynamic _proxyClass;
+		private static readonly TimeSpan AutoUpdateCheckPeriod = TimeSpan.FromMinutes(10);
 	}
 }

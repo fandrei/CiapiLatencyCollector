@@ -22,7 +22,7 @@ namespace CiapiLatencyCollector
 
 		public static string WorkerAssemblyPath
 		{
-			get { return WorkingAreaPath + @"\\LatencyCollectorCore.dll"; }
+			get { return WorkingAreaPath + @"\\LatencyCollectorCore.exe"; }
 		}
 	}
 }
