@@ -133,6 +133,6 @@ namespace CiapiLatencyCollector
 		private Thread _thread;
 		private AppDomain _appDomain;
 		private dynamic _proxyClass;
-		private static readonly TimeSpan AutoUpdateCheckPeriod = TimeSpan.FromMinutes(10);
+		private static readonly TimeSpan AutoUpdateCheckPeriod = TimeSpan.FromMinutes(1);
 	}
 }
