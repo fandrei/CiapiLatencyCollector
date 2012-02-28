@@ -7,8 +7,7 @@ namespace CiapiLatencyCollector
 {
 	class Const
 	{
-		public const string AutoUpdateUrl = 
-			"http://ci.labs.cityindex.com:8080/job/CiapiLatencyCollector/ws/_bin/Release/LatencyCollectorCore.exe";
+		public const string AutoUpdateBaseUrl = "http://ci.labs.cityindex.com:8080/job/CiapiLatencyCollector/ws/_bin/Release/";
 
 		public static string WorkingAreaPath
 		{

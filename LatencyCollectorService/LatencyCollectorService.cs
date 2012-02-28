@@ -8,6 +8,8 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading;
 
+using Ionic.Zip;
+
 namespace CiapiLatencyCollector
 {
 	public partial class LatencyCollectorService : ServiceBase
@@ -42,51 +44,61 @@ namespace CiapiLatencyCollector
 
 		void ThreadProc()
 		{
-			try
+			while (true)
 			{
-				while (true)
+				try
 				{
-					CheckUpdates();
-					Thread.Sleep(AutoUpdateCheckPeriod);
+					ApplyUpdates();
+					if (_appDomain == null)
+						StartWorkerDomain(Const.WorkerAssemblyPath);
 				}
-			}
-			catch (ThreadInterruptedException)
-			{}
-			catch (Exception exc)
-			{
-				Trace.WriteLine(exc);
+				catch (ThreadInterruptedException)
+				{
+					break;
+				}
+				catch (Exception exc)
+				{
+					Trace.WriteLine(exc);
+				}
+
+				Thread.Sleep(AutoUpdateCheckPeriod);
 			}
 		}
 
-		void CheckUpdates()
+		void ApplyUpdates()
 		{
 			using (var client = new WebClient())
 			{
 				if (!Directory.Exists(Const.WorkingAreaPath))
 					Directory.CreateDirectory(Const.WorkingAreaPath);
 
-				var assemblyPath = Const.WorkerAssemblyPath;
-				var tmpAssemblyPath = assemblyPath + ".tmp";
-				client.DownloadFile(Const.AutoUpdateUrl, tmpAssemblyPath);
-
-				if (!File.Exists(assemblyPath) || !AssembliesAreEqual(tmpAssemblyPath, assemblyPath))
+				// compare versions
+				var localVersionFile = Const.WorkingAreaPath + "version.txt";
+				if (File.Exists(localVersionFile))
 				{
-					StopWorkerDomain();
-					File.Delete(assemblyPath);
-					File.Move(tmpAssemblyPath, assemblyPath);
+					var localVersion = File.ReadAllText(localVersionFile);
+					var newVersion = client.DownloadString(Const.AutoUpdateBaseUrl + "version.txt");
+					if (newVersion == localVersion)
+						return;
 				}
 
-				if (_appDomain == null)
-					StartWorkerDomain(assemblyPath);
+				StopWorkerDomain();
+
+				DeleteAllFiles(Const.WorkingAreaPath);
+
+				var zipFilePath = Const.WorkingAreaPath + "LatencyCollectorCore.zip";
+				client.DownloadFile(Const.AutoUpdateBaseUrl + "LatencyCollectorCore.zip", zipFilePath);
+				var zipFile = new ZipFile(zipFilePath);
+				zipFile.ExtractAll(Const.WorkingAreaPath);
 			}
 		}
 
-		private static bool AssembliesAreEqual(string file1, string file2)
+		private static void DeleteAllFiles(string path)
 		{
-			var version1 = FileVersionInfo.GetVersionInfo(file1);
-			var version2 = FileVersionInfo.GetVersionInfo(file2);
-			var res = version1.ToString().Equals(version2.ToString());
-			return res;
+			foreach (var file in Directory.GetFiles(path))
+			{
+				File.Delete(file);
+			}
 		}
 
 		private void StartWorkerDomain(string assemblyPath)
