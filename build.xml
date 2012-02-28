@@ -29,14 +29,16 @@
         Files="$(MSBuildProjectDirectory)\LatencyCollectorService\Properties\AssemblyInfo.cs"
         Regex="AssemblyVersion\(&quot;.*&quot;\)"
         ReplacementText="AssemblyVersion(&quot;$(FullVersion)&quot;)" />
-
-    <!-- Store version number for auto update -->
-    <WriteLinesToFile File="$(TargetDir)\version.txt" Lines="$(FullVersion)" Overwrite="true" />
   </Target>
 
   <Target Name="Build" DependsOnTargets="UpdateVersion" >
+    
     <MSBuild Projects="$(MSBuildProjectDirectory)\CiapiLatencyCollector.sln" Targets="Rebuild"
       Properties="Configuration=$(Configuration)" />
+
+    <!-- Store version number for auto update -->
+    <WriteLinesToFile File="$(TargetDir)\version.txt" Lines="$(FullVersion)" Overwrite="true" />
+
   </Target>
 
   <Target Name="Package" DependsOnTargets="Build" >
