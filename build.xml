@@ -18,6 +18,7 @@
 
   <Target Name="UpdateVersion" >
     <Message Text="Updating version to $(FullVersion)" />
+    
     <!-- Update assembly version number using build number -->
     <FileUpdate
         Files="$(MSBuildProjectDirectory)\LatencyCollectorCore\Properties\AssemblyInfo.cs"
@@ -27,6 +28,10 @@
         Files="$(MSBuildProjectDirectory)\LatencyCollectorService\Properties\AssemblyInfo.cs"
         Regex="AssemblyVersion\(&quot;.*&quot;\)"
         ReplacementText="AssemblyVersion(&quot;$(FullVersion)&quot;)" />
+
+    <!-- Store version number for auto update -->
+    <WriteLinesToFile File="$(MSBuildProjectDirectory)\_bin\$(Configuration)\version.txt" 
+                      Lines="$(FullVersion)" Overwrite="true" />
   </Target>
 
   <Target Name="Build" DependsOnTargets="UpdateVersion" >
