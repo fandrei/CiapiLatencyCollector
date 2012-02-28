@@ -44,8 +44,7 @@
   <Target Name="Package" DependsOnTargets="Build" >
     <ItemGroup>
       <!-- All files from build -->
-      <ZipFiles Include="$(TargetDir)\**\*.dll" />
-      <ZipFiles Include="$(TargetDir)\**\version.txt" />
+      <ZipFiles Include="$(TargetDir)\**\*.*" Exclude="$(TargetDir)\**\*.zip" />
     </ItemGroup>
     <Zip Files="@(ZipFiles)"
          WorkingDirectory="$(TargetDir)"
