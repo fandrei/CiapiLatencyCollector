@@ -44,37 +44,43 @@ namespace LatencyCollectorCore
 		{
 			var period = TimeSpan.FromMinutes(1.0 / AppSettings.Instance.DataPollingRate);
 
-			while (!_terminated)
+			try
 			{
-				try
+				while (!_terminated)
 				{
-					PerformPolling();
+					try
+					{
+						PerformPolling();
+					}
+					catch (ThreadInterruptedException)
+					{
+						break;
+					}
+					catch (Exception exc)
+					{
+						WriteLogEvent(exc.ToString());
+					}
+					finally
+					{
+						if (_data != null)
+						{
+							try
+							{
+								_data.Dispose();
+							}
+							catch (Exception exc)
+							{
+								Trace.WriteLine(exc);
+							}
+							_data = null;
+						}
+					}
+
 					Thread.Sleep(period);
 				}
-				catch (ThreadInterruptedException)
-				{
-					break;
-				}
-				catch (Exception exc)
-				{
-					WriteLogEvent(exc.ToString());
-				}
-				finally
-				{
-					if (_data != null)
-					{
-						try
-						{
-							_data.Dispose();
-						}
-						catch (Exception exc)
-						{
-							Trace.WriteLine(exc);
-						}
-						_data = null;
-					}
-				}
 			}
+			catch (ThreadInterruptedException)
+			{}
 		}
 
 		private static void PerformPolling()
