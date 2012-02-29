@@ -22,7 +22,6 @@ namespace CiapiLatencyCollector
 		public void Start()
 		{
 			OnStart(new string[0]);
-			_debugMode = true;
 		}
 
 		protected override void OnStart(string[] args)
@@ -141,11 +140,7 @@ namespace CiapiLatencyCollector
 
 		public void WriteEventLog(string message)
 		{
-			if (_debugMode)
-			{
-				Trace.WriteLine(message);
-				return;
-			}
+			Trace.WriteLine(message);
 
 			try
 			{
@@ -154,7 +149,6 @@ namespace CiapiLatencyCollector
 			}
 			catch (Exception exc)
 			{
-				Trace.WriteLine(message);
 				Trace.WriteLine(exc);
 			}
 		}
@@ -164,6 +158,5 @@ namespace CiapiLatencyCollector
 		private AppDomain _appDomain;
 		private dynamic _proxyClass;
 		private static readonly TimeSpan AutoUpdateCheckPeriod = TimeSpan.FromMinutes(1);
-		private bool _debugMode;
 	}
 }
