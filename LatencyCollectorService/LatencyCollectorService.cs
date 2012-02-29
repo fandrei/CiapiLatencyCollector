@@ -32,7 +32,6 @@ namespace CiapiLatencyCollector
 				_thread = new Thread(ThreadProc);
 				_thread.Start();
 			}
-			WriteEventLog("Service started");
 		}
 
 		protected override void OnStop()
@@ -148,12 +147,7 @@ namespace CiapiLatencyCollector
 			try
 			{
 				var appId = this.ServiceName;
-
-				if (!EventLog.SourceExists(appId))
-					EventLog.CreateEventSource(appId, "Application");
-
-				var eventLog = new EventLog { Source = appId };
-				eventLog.WriteEntry(message, EventLogEntryType.Warning);
+				EventLog.WriteEntry(appId, message, EventLogEntryType.Information);
 			}
 			catch (Exception exc)
 			{
