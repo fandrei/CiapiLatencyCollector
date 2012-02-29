@@ -22,6 +22,7 @@ namespace CiapiLatencyCollector
 		public void Start()
 		{
 			OnStart(new string[0]);
+			_debugMode = true;
 		}
 
 		protected override void OnStart(string[] args)
@@ -31,6 +32,7 @@ namespace CiapiLatencyCollector
 				_thread = new Thread(ThreadProc);
 				_thread.Start();
 			}
+			WriteEventLog("Service started");
 		}
 
 		protected override void OnStop()
@@ -58,7 +60,7 @@ namespace CiapiLatencyCollector
 				}
 				catch (Exception exc)
 				{
-					Trace.WriteLine(exc);
+					WriteEventLog(exc.ToString());
 				}
 
 				Thread.Sleep(AutoUpdateCheckPeriod);
@@ -129,10 +131,36 @@ namespace CiapiLatencyCollector
 			return appDomain;
 		}
 
+		public void WriteEventLog(string message)
+		{
+			if (_debugMode)
+			{
+				Trace.WriteLine(message);
+				return;
+			}
+
+			try
+			{
+				var appId = this.ServiceName;
+
+				if (!EventLog.SourceExists(appId))
+					EventLog.CreateEventSource(appId, "Application");
+
+				var eventLog = new EventLog { Source = appId };
+				eventLog.WriteEntry(message, EventLogEntryType.Warning);
+			}
+			catch (Exception exc)
+			{
+				Trace.WriteLine(message);
+				Trace.WriteLine(exc);
+			}
+		}
+
 		private readonly object _sync = new object();
 		private Thread _thread;
 		private AppDomain _appDomain;
 		private dynamic _proxyClass;
 		private static readonly TimeSpan AutoUpdateCheckPeriod = TimeSpan.FromMinutes(1);
+		private bool _debugMode;
 	}
 }
