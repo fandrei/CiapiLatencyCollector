@@ -202,7 +202,7 @@ namespace LatencyCollectorCore
 			Tracker.Log("Latency " + label, diff.TotalSeconds);
 		}
 
-		static readonly Tracker Tracker = new Tracker("http://current.metrics.labs.cityindex.com/LogEvent.ashx", 
+		static readonly Tracker Tracker = new Tracker("http://184.73.228.71/AppMetrics/LogEvent.ashx", 
 			"CiapiLatencyCollector");
 	}
 
