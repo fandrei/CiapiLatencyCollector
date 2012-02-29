@@ -57,7 +57,7 @@ namespace LatencyCollectorCore
 				}
 				catch (Exception exc)
 				{
-					OnException(exc);
+					WriteLogEvent(exc.ToString());
 				}
 				finally
 				{
@@ -110,18 +110,17 @@ namespace LatencyCollectorCore
 			}
 		}
 
-		static void OnException(Exception exc)
+		static void WriteLogEvent(string message)
 		{
-			var message = exc.ToString();
 			Trace.WriteLine(message);
 
 			try
 			{
 				EventLog.WriteEntry(Const.AppName, message, EventLogEntryType.Information);
 			}
-			catch (Exception exc2)
+			catch (Exception exc)
 			{
-				Trace.WriteLine(exc2);
+				Trace.WriteLine(exc);
 			}
 		}
 

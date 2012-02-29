@@ -7,6 +7,6 @@ namespace LatencyCollectorCore
 {
 	class Const
 	{
-		public const string AppName = "CIAPI Latency Collector core";
+		public const string AppName = "CIAPI Latency Collector";
 	}
 }
