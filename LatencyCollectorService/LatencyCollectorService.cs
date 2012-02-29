@@ -46,24 +46,30 @@ namespace CiapiLatencyCollector
 
 		void ThreadProc()
 		{
-			while (true)
+			try
 			{
-				try
+				while (true)
 				{
-					ApplyUpdates();
-					if (_appDomain == null)
-						StartWorkerDomain(Const.WorkerAssemblyPath);
-				}
-				catch (ThreadInterruptedException)
-				{
-					break;
-				}
-				catch (Exception exc)
-				{
-					WriteEventLog(exc.ToString());
-				}
+					try
+					{
+						ApplyUpdates();
+						if (_appDomain == null)
+							StartWorkerDomain(Const.WorkerAssemblyPath);
+					}
+					catch (ThreadInterruptedException)
+					{
+						break;
+					}
+					catch (Exception exc)
+					{
+						WriteEventLog(exc.ToString());
+					}
 
-				Thread.Sleep(AutoUpdateCheckPeriod);
+					Thread.Sleep(AutoUpdateCheckPeriod);
+				}
+			}
+			catch (ThreadInterruptedException)
+			{
 			}
 		}
 
