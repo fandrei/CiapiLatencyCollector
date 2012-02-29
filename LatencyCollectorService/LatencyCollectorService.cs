@@ -87,6 +87,7 @@ namespace CiapiLatencyCollector
 					var newVersion = client.DownloadString(Const.AutoUpdateBaseUrl + "version.txt");
 					if (newVersion == localVersion)
 						return;
+					WriteEventLog(string.Format("Trying to update to version {0}", newVersion));
 				}
 
 				StopWorkerDomain();
@@ -97,6 +98,8 @@ namespace CiapiLatencyCollector
 				client.DownloadFile(Const.AutoUpdateBaseUrl + "LatencyCollectorCore.zip", zipFilePath);
 				var zipFile = new ZipFile(zipFilePath);
 				zipFile.ExtractAll(Const.WorkingAreaPath);
+
+				WriteEventLog(string.Format("Update is successful"));
 			}
 		}
 
