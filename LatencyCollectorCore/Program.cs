@@ -123,7 +123,7 @@ namespace LatencyCollectorCore
 
 			try
 			{
-				EventLog.WriteEntry(Const.AppName, message, EventLogEntryType.Information);
+				EventLog.WriteEntry(Const.AppName, message, EventLogEntryType.Warning);
 			}
 			catch (Exception exc)
 			{
