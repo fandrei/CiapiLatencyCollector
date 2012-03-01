@@ -66,7 +66,7 @@ namespace LatencyCollectorCore
 			}
 		}
 
-		private static readonly string FileName = Util.GetAppLocation() + @"\..\AppSettings.xml";
+		private static readonly string FileName = Const.WorkingAreaPath + "AppSettings.xml";
 
 		public static void Reload()
 		{

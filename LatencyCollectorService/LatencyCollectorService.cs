@@ -75,11 +75,11 @@ namespace CiapiLatencyCollector
 		{
 			using (var client = new WebClient())
 			{
-				if (!Directory.Exists(Const.WorkingAreaPath))
-					Directory.CreateDirectory(Const.WorkingAreaPath);
+				if (!Directory.Exists(Const.WorkingAreaBinPath))
+					Directory.CreateDirectory(Const.WorkingAreaBinPath);
 
 				// compare versions
-				var localVersionFile = Const.WorkingAreaPath + "version.txt";
+				var localVersionFile = Const.WorkingAreaBinPath + "version.txt";
 				if (File.Exists(localVersionFile))
 				{
 					var localVersion = File.ReadAllText(localVersionFile);
@@ -91,12 +91,12 @@ namespace CiapiLatencyCollector
 
 				StopWorkerDomain();
 
-				DeleteAllFiles(Const.WorkingAreaPath);
+				DeleteAllFiles(Const.WorkingAreaBinPath);
 
-				var zipFilePath = Const.WorkingAreaPath + "LatencyCollectorCore.zip";
+				var zipFilePath = Const.WorkingAreaBinPath + "LatencyCollectorCore.zip";
 				client.DownloadFile(Const.AutoUpdateBaseUrl + "LatencyCollectorCore.zip", zipFilePath);
 				var zipFile = new ZipFile(zipFilePath);
-				zipFile.ExtractAll(Const.WorkingAreaPath);
+				zipFile.ExtractAll(Const.WorkingAreaBinPath);
 
 				WriteEventLog(string.Format("Update is successful"));
 			}
@@ -112,7 +112,7 @@ namespace CiapiLatencyCollector
 
 		private void StartWorkerDomain(string assemblyPath)
 		{
-			_appDomain = CreateAppDomain(Const.WorkingAreaPath);
+			_appDomain = CreateAppDomain(Const.WorkingAreaBinPath);
 			_proxyClass = _appDomain.CreateInstanceFromAndUnwrap(assemblyPath, "LatencyCollectorCore.Proxy");
 			_proxyClass.Start();
 		}
