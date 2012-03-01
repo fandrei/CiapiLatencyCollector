@@ -66,8 +66,7 @@ namespace LatencyCollectorCore
 			}
 		}
 
-		private static readonly string FileName = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
-			+ @"\City Index\CIAPI Latency Collector\AppSettings.xml";
+		private static readonly string FileName = Util.GetAppLocation() + @"\AppSettings.xml";
 
 		public static void Reload()
 		{
