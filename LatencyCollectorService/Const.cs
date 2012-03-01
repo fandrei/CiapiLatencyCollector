@@ -14,7 +14,7 @@ namespace CiapiLatencyCollector
 			get
 			{
 				var basePath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-				var res = basePath + @"\City Index\CIAPI Latency Collector\";
+				var res = basePath + @"\City Index\CIAPI Latency Collector\bin\";
 				return res;
 			}
 		}
