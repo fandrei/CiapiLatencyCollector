@@ -95,6 +95,7 @@ namespace LatencyCollectorCore
 
 			_data.Logout();
 			_data.Dispose();
+			_data = null;
 			Trace.WriteLine("Logged out");
 		}
 
@@ -105,7 +106,7 @@ namespace LatencyCollectorCore
 				lock (Sync)
 				{
 					_terminated = true;
-					_data.Logout();
+					_thread.Interrupt();
 					_thread.Join(TimeSpan.FromSeconds(20));
 					_thread = null;
 				}
