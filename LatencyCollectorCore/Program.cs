@@ -29,6 +29,9 @@ namespace LatencyCollectorCore
 			{
 				lock (Sync)
 				{
+					if (_thread != null)
+						throw new InvalidOperationException();
+
 					_terminated = false;
 					_thread = new Thread(ThreadProc);
 					_thread.Start();
@@ -46,6 +49,8 @@ namespace LatencyCollectorCore
 
 			try
 			{
+				_data = new Data();
+
 				while (!_terminated)
 				{
 					try
@@ -60,32 +65,29 @@ namespace LatencyCollectorCore
 					{
 						WriteLogEvent(exc.ToString());
 					}
-					finally
-					{
-						if (_data != null)
-						{
-							try
-							{
-								_data.Dispose();
-							}
-							catch (Exception exc)
-							{
-								Trace.WriteLine(exc);
-							}
-							_data = null;
-						}
-					}
 
 					Thread.Sleep(period);
 				}
 			}
 			catch (ThreadInterruptedException)
 			{}
+
+			try
+			{
+				if (_data != null)
+					_data.Dispose();
+				_data = null;
+
+				Tracker.Terminate(true);
+			}
+			catch (Exception exc)
+			{
+				WriteLogEvent(exc.ToString());
+			}
 		}
 
 		private static void PerformPolling()
 		{
-			_data = new Data();
 			_data.Login();
 			Trace.WriteLine("Logged in");
 
@@ -94,8 +96,6 @@ namespace LatencyCollectorCore
 			Trace.WriteLine("Request finished ok");
 
 			_data.Logout();
-			_data.Dispose();
-			_data = null;
 			Trace.WriteLine("Logged out");
 		}
 
@@ -106,7 +106,7 @@ namespace LatencyCollectorCore
 				lock (Sync)
 				{
 					_terminated = true;
-					_thread.Interrupt();
+					_data.Logout();
 					_thread.Join(TimeSpan.FromSeconds(20));
 					_thread = null;
 				}
