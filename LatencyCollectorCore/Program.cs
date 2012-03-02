@@ -11,7 +11,7 @@ namespace LatencyCollectorCore
 {
 	public class Program
 	{
-		static void Main(string[] args)
+		static void Main()
 		{
 			var listeners = new[] { new TextWriterTraceListener(Console.Out) };
 			Debug.Listeners.AddRange(listeners);
