@@ -44,7 +44,8 @@
   <Target Name="Package" DependsOnTargets="Build" >
     <ItemGroup>
       <!-- All files from build -->
-      <ZipFiles Include="$(TargetDir)\**\*.*" Exclude="$(TargetDir)\**\*.zip" />
+      <ZipFiles Include="$(TargetDir)\**\*.*"
+                Exclude="$(TargetDir)\**\*.zip;$(TargetDir)\**\CiapiLatencyCollector.*" />
     </ItemGroup>
     <Zip Files="@(ZipFiles)"
          WorkingDirectory="$(TargetDir)"
