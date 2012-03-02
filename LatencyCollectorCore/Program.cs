@@ -79,6 +79,8 @@ namespace LatencyCollectorCore
 					{
 						break;
 					}
+					catch (NotConnectedException)
+					{ }
 					catch (Exception exc)
 					{
 						WriteLogEvent(exc.ToString());
@@ -90,7 +92,7 @@ namespace LatencyCollectorCore
 				}
 			}
 			catch (ThreadInterruptedException)
-			{}
+			{ }
 
 			try
 			{
