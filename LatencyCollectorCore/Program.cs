@@ -51,7 +51,7 @@ namespace LatencyCollectorCore
 				{
 					_terminated = true;
 					_data.Logout();
-					_thread.Join(TimeSpan.FromSeconds(20));
+					_thread.Join(TimeSpan.FromMinutes(2));
 					_thread = null;
 				}
 			}
