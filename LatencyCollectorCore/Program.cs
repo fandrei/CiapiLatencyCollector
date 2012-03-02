@@ -77,7 +77,14 @@ namespace LatencyCollectorCore
 				if (_data != null)
 					_data.Dispose();
 				_data = null;
+			}
+			catch (Exception exc)
+			{
+				WriteLogEvent(exc.ToString());
+			}
 
+			try
+			{
 				Tracker.Terminate(true);
 			}
 			catch (Exception exc)
