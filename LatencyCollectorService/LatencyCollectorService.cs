@@ -38,10 +38,20 @@ namespace CiapiLatencyCollector
 		{
 			lock (_sync)
 			{
-				_terminated = true;
-				_thread.Interrupt();
-				_thread.Join();
-				_thread = null;
+				try
+				{
+					_terminated = true;
+					_thread.Abort();
+
+					StopWorkerDomain();
+
+					_thread.Join();
+					_thread = null;
+				}
+				catch (Exception exc)
+				{
+					WriteEventLog(exc.ToString(), EventLogEntryType.Warning);
+				}
 			}
 		}
 
@@ -57,29 +67,20 @@ namespace CiapiLatencyCollector
 						if (_appDomain == null)
 							StartWorkerDomain(Const.WorkerAssemblyPath);
 					}
-					catch (ThreadInterruptedException)
+					catch (ThreadAbortException)
 					{
 						break;
 					}
 					catch (Exception exc)
 					{
-						WriteEventLog(exc.ToString());
+						WriteEventLog(exc.ToString(), EventLogEntryType.Warning);
 					}
 
 					Thread.Sleep(AutoUpdateCheckPeriod);
 				}
 			}
-			catch (ThreadInterruptedException)
+			catch (ThreadAbortException)
 			{
-			}
-
-			try
-			{
-				StopWorkerDomain();
-			}
-			catch (Exception exc)
-			{
-				WriteEventLog(exc.ToString());
 			}
 		}
 
@@ -150,14 +151,14 @@ namespace CiapiLatencyCollector
 			return appDomain;
 		}
 
-		public void WriteEventLog(string message)
+		public void WriteEventLog(string message, EventLogEntryType type = EventLogEntryType.Information)
 		{
 			Trace.WriteLine(message);
 
 			try
 			{
 				var appId = this.ServiceName;
-				EventLog.WriteEntry(appId, message, EventLogEntryType.Information);
+				EventLog.WriteEntry(appId, message, type);
 			}
 			catch (Exception exc)
 			{
