@@ -28,6 +28,7 @@ namespace CiapiLatencyCollector
 		{
 			lock (_sync)
 			{
+				_terminated = false;
 				_thread = new Thread(ThreadProc);
 				_thread.Start();
 			}
@@ -37,7 +38,9 @@ namespace CiapiLatencyCollector
 		{
 			lock (_sync)
 			{
+				_terminated = true;
 				_thread.Interrupt();
+				_thread.Join();
 				_thread = null;
 			}
 		}
@@ -46,7 +49,7 @@ namespace CiapiLatencyCollector
 		{
 			try
 			{
-				while (true)
+				while (!_terminated)
 				{
 					try
 					{
@@ -68,6 +71,15 @@ namespace CiapiLatencyCollector
 			}
 			catch (ThreadInterruptedException)
 			{
+			}
+
+			try
+			{
+				StopWorkerDomain();
+			}
+			catch (Exception exc)
+			{
+				WriteEventLog(exc.ToString());
 			}
 		}
 
@@ -155,6 +167,7 @@ namespace CiapiLatencyCollector
 
 		private readonly object _sync = new object();
 		private Thread _thread;
+		private volatile bool _terminated;
 		private AppDomain _appDomain;
 		private dynamic _proxyClass;
 		private static readonly TimeSpan AutoUpdateCheckPeriod = TimeSpan.FromMinutes(1);
