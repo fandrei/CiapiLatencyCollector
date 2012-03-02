@@ -7,6 +7,12 @@ namespace LatencyCollectorCore
 {
 	public class Proxy : MarshalByRefObject
 	{
+		// remote references to this object never expire
+		public override object InitializeLifetimeService()
+		{
+			return null;
+		}
+
 		public void Start()
 		{
 			Program.Start();
