@@ -66,6 +66,8 @@ namespace LatencyCollectorCore
 						WriteLogEvent(exc.ToString());
 					}
 
+					if (_terminated)
+						break;
 					Thread.Sleep(period);
 				}
 			}
