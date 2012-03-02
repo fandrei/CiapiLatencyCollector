@@ -43,6 +43,24 @@ namespace LatencyCollectorCore
 			}
 		}
 
+		public static void Stop()
+		{
+			try
+			{
+				lock (Sync)
+				{
+					_terminated = true;
+					_data.Logout();
+					_thread.Join(TimeSpan.FromSeconds(20));
+					_thread = null;
+				}
+			}
+			catch (Exception exc)
+			{
+				Trace.WriteLine(exc);
+			}
+		}
+
 		static void ThreadProc()
 		{
 			var period = TimeSpan.FromMinutes(1.0 / AppSettings.Instance.DataPollingRate);
@@ -106,24 +124,6 @@ namespace LatencyCollectorCore
 
 			_data.Logout();
 			Trace.WriteLine("Logged out");
-		}
-
-		public static void Stop()
-		{
-			try
-			{
-				lock (Sync)
-				{
-					_terminated = true;
-					_data.Logout();
-					_thread.Join(TimeSpan.FromSeconds(20));
-					_thread = null;
-				}
-			}
-			catch (Exception exc)
-			{
-				Trace.WriteLine(exc);
-			}
 		}
 
 		static void WriteLogEvent(string message)
