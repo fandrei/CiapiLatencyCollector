@@ -39,7 +39,7 @@ namespace LatencyCollectorCore
 			}
 			catch (Exception exc)
 			{
-				Trace.WriteLine(exc);
+				ReportEvent(exc.ToString());
 			}
 		}
 
@@ -57,7 +57,7 @@ namespace LatencyCollectorCore
 			}
 			catch (Exception exc)
 			{
-				Trace.WriteLine(exc);
+				ReportEvent(exc.ToString());
 			}
 		}
 
@@ -83,7 +83,7 @@ namespace LatencyCollectorCore
 					{ }
 					catch (Exception exc)
 					{
-						WriteLogEvent(exc.ToString());
+						ReportEvent(exc.ToString());
 					}
 
 					if (_terminated)
@@ -102,7 +102,7 @@ namespace LatencyCollectorCore
 			}
 			catch (Exception exc)
 			{
-				WriteLogEvent(exc.ToString());
+				ReportEvent(exc.ToString());
 			}
 
 			try
@@ -111,24 +111,21 @@ namespace LatencyCollectorCore
 			}
 			catch (Exception exc)
 			{
-				WriteLogEvent(exc.ToString());
+				ReportEvent(exc.ToString());
 			}
 		}
 
 		private static void PerformPolling()
 		{
 			_data.Login();
-			Trace.WriteLine("Logged in");
 
 			_data.GetMarketsList(MarketType.CFD, 100, "", "");
 			_data.GetMarketsList(MarketType.Spread, 100, "", "");
-			Trace.WriteLine("Request finished ok");
 
 			_data.Logout();
-			Trace.WriteLine("Logged out");
 		}
 
-		static void WriteLogEvent(string message)
+		static void ReportEvent(string message)
 		{
 			Trace.WriteLine(message);
 

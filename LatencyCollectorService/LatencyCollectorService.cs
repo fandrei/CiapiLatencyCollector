@@ -50,7 +50,7 @@ namespace CiapiLatencyCollector
 				}
 				catch (Exception exc)
 				{
-					WriteEventLog(exc.ToString(), EventLogEntryType.Warning);
+					ReportEvent(exc.ToString(), EventLogEntryType.Warning);
 				}
 			}
 		}
@@ -73,7 +73,7 @@ namespace CiapiLatencyCollector
 					}
 					catch (Exception exc)
 					{
-						WriteEventLog(exc.ToString(), EventLogEntryType.Warning);
+						ReportEvent(exc.ToString(), EventLogEntryType.Warning);
 					}
 
 					Thread.Sleep(AutoUpdateCheckPeriod);
@@ -99,7 +99,7 @@ namespace CiapiLatencyCollector
 					var newVersion = client.DownloadString(Const.AutoUpdateBaseUrl + "version.txt");
 					if (newVersion == localVersion)
 						return;
-					WriteEventLog(string.Format("Trying to update to version {0}", newVersion));
+					ReportEvent(string.Format("Trying to update to version {0}", newVersion));
 				}
 
 				StopWorkerDomain();
@@ -111,7 +111,7 @@ namespace CiapiLatencyCollector
 				var zipFile = new ZipFile(zipFilePath);
 				zipFile.ExtractAll(Const.WorkingAreaBinPath);
 
-				WriteEventLog(string.Format("Update is successful"));
+				ReportEvent(string.Format("Update is successful"));
 			}
 		}
 
@@ -151,7 +151,7 @@ namespace CiapiLatencyCollector
 			return appDomain;
 		}
 
-		public void WriteEventLog(string message, EventLogEntryType type = EventLogEntryType.Information)
+		public void ReportEvent(string message, EventLogEntryType type = EventLogEntryType.Information)
 		{
 			Trace.WriteLine(message);
 
