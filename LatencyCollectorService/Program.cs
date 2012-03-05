@@ -14,11 +14,15 @@ namespace CiapiLatencyCollector
 		/// </summary>
 		static void Main(string[] args)
 		{
-			if (args.Length > 0 && args[0] == "-debug")
+			if (args.Length > 0)
 			{
-				var service = new LatencyCollectorService();
-				service.Start();
-				Thread.Sleep(Timeout.Infinite);
+				var arg = args[0];
+				if (arg == "-debug")
+				{
+					var service = new LatencyCollectorService();
+					service.Start();
+					Thread.Sleep(Timeout.Infinite);
+				}
 			}
 			else
 			{
