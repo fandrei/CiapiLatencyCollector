@@ -128,15 +128,7 @@ namespace LatencyCollectorCore
 		static void ReportEvent(string message)
 		{
 			Trace.WriteLine(message);
-
-			try
-			{
-				EventLog.WriteEntry(Const.AppName, message, EventLogEntryType.Warning);
-			}
-			catch (Exception exc)
-			{
-				Trace.WriteLine(exc);
-			}
+			Data.Tracker.Log("Exception", message);
 		}
 
 		private static Data _data;
