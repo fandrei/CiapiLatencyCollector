@@ -58,7 +58,7 @@ namespace LatencyCollectorCore
 					_client = client;
 					_streamingClient = streamingClient;
 
-					_connected = true;
+					Connected = true;
 				}
 
 				EnsureAccountInfoIsCached();
@@ -69,7 +69,7 @@ namespace LatencyCollectorCore
 		{
 			lock (_sync)
 			{
-				_connected = false;
+				Connected = false;
 
 				if (_streamingClient != null)
 				{
