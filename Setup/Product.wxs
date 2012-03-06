@@ -29,7 +29,7 @@
               Source='..\_bin\Release\Ionic.Zip.dll' Vital='yes' />
       </Component>
     </DirectoryRef>
-    
+
     <Feature Id="ProductFeature" Title="$(var.ProductShortName)" Level="1">
       <ComponentRef Id="ProductComponent" />
       <!-- Note: The following ComponentGroupRef is required to pull in generated authoring from project references. -->
@@ -44,12 +44,17 @@
     </Condition>
 
     <!-- Custom Actions -->
-    <CustomAction Id="InstallService" Directory="APPLICATIONROOTDIRECTORY" ExeCommand="CiapiLatencyCollector.exe -install"
-                  Return="asyncWait"/>
+    <CustomAction Id="InstallService" Directory="APPLICATIONROOTDIRECTORY" 
+                  ExeCommand="[APPLICATIONROOTDIRECTORY]CiapiLatencyCollector.exe -install" Return="asyncWait"/>
 
-    <CustomAction Id="UninstallService" Directory="APPLICATIONROOTDIRECTORY" ExeCommand="CiapiLatencyCollector.exe -uninstall"
-              Return="asyncWait"/>
+    <CustomAction Id="UninstallService" Directory="APPLICATIONROOTDIRECTORY" 
+                  ExeCommand="[APPLICATIONROOTDIRECTORY]CiapiLatencyCollector.exe -uninstall" Return="asyncWait"/>
 
+    <InstallExecuteSequence>
+      <Custom Action='InstallService' After='InstallFinalize'>NOT Installed</Custom>
+      <Custom Action='UninstallService' After='InstallValidate'>Installed</Custom>
+    </InstallExecuteSequence>
+    
     <UIRef Id="WixUI_Common" />
     <!--<WixVariable Id="WixUIBannerBmp"  Value="$(sys.SOURCEFILEDIR)\..\Common\LogoLabs.bmp" />-->
 
@@ -82,8 +87,6 @@
 
       <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg">1</Publish>
 
-      <!--<Publish Dialog="ExitDialog" Control="Finish" Event="DoAction"
-               Value="InstallService" Order="1">NOT Installed</Publish>-->
       <Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
     </UI>
   </Product>
