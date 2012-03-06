@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Configuration.Install;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.AccessControl;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading;
@@ -32,6 +34,7 @@ namespace CiapiLatencyCollector
 					}
 					else if (arg == "-install")
 					{
+						InitWorkingArea();
 						ManagedInstallerClass.InstallHelper(new[] { ExePath });
 					}
 					else if (arg == "-uninstall")
@@ -53,6 +56,25 @@ namespace CiapiLatencyCollector
 					};
 				ServiceBase.Run(servicesToRun);
 			}
+		}
+
+		static void InitWorkingArea()
+		{
+			EnsureFolderExists(Const.WorkingAreaPath);
+			EnsureFolderExists(Const.WorkingAreaBinPath);
+
+			var accessRights = Directory.GetAccessControl(Const.WorkingAreaBinPath);
+			var accessRule = new FileSystemAccessRule("NETWORK SERVICE", FileSystemRights.FullControl,
+				InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None,
+				AccessControlType.Allow);
+			accessRights.AddAccessRule(accessRule);
+			Directory.SetAccessControl(Const.WorkingAreaBinPath, accessRights);
+		}
+
+		private static void EnsureFolderExists(string path)
+		{
+			if (!Directory.Exists(path))
+				Directory.CreateDirectory(path);
 		}
 
 		static void ShowMessage(string message)

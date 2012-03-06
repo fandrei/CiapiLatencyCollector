@@ -11,14 +11,19 @@ namespace CiapiLatencyCollector
 
 		public const string AutoUpdateBaseUrl = "http://ci.labs.cityindex.com:8080/job/CiapiLatencyCollector/ws/_bin/Release/";
 
-		public static string WorkingAreaBinPath
+		public static string WorkingAreaPath
 		{
 			get
 			{
 				var basePath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-				var res = basePath + @"\City Index\CIAPI Latency Collector\bin\";
+				var res = basePath + @"\City Index\CIAPI Latency Collector\";
 				return res;
 			}
+		}
+
+		public static string WorkingAreaBinPath
+		{
+			get { return WorkingAreaPath + @"\bin\"; }
 		}
 
 		public static string WorkerAssemblyPath
