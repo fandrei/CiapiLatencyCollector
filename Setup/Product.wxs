@@ -15,7 +15,9 @@
     <!-- Installation Parts -->
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
-        <Directory Id="APPLICATIONROOTDIRECTORY" Name="$(var.ProductShortName)"/>
+        <Directory Id="CompanyFolder" Name="$(var.Manufacturer)">
+          <Directory Id="APPLICATIONROOTDIRECTORY" Name="$(var.ProductShortName)"/>
+        </Directory>
       </Directory>
     </Directory>
 
