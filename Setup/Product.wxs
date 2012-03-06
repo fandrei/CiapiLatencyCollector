@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?include "Variables.wxi"?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+
+  <Product Id="*" UpgradeCode="$(var.UpgradeCode)" Name="$(var.ProductLongName)" Language="1033"
+         Version="$(var.ProductVersion)" Manufacturer="$(var.Manufacturer)">
+
+    <Package InstallerVersion="200" Compressed="yes" />
+
+    <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" CompressionLevel="high"/>
+
+    <!-- Installation Parts -->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="APPLICATIONROOTDIRECTORY" Name="$(var.ProductShortName)"/>
+      </Directory>
+    </Directory>
+
+    <DirectoryRef Id="APPLICATIONROOTDIRECTORY">
+      <Component Id="ProductComponent" Guid="{30F914B5-7F73-4A9A-97B1-1C5B3BB17B7F}">
+        <File Id='CiapiLatencyCollector.exe' Name='CiapiLatencyCollector.exe'
+              Source='..\_bin\Release\CiapiLatencyCollector.exe' Vital='yes' />
+        <File Id='Ionic.Zip.dll' Name='Ionic.Zip.dll'
+              Source='..\_bin\Release\Ionic.Zip.dll' Vital='yes' />
+      </Component>
+    </DirectoryRef>
+    
+    <Feature Id="ProductFeature" Title="$(var.ProductShortName)" Level="1">
+      <ComponentRef Id="ProductComponent" />
+      <!-- Note: The following ComponentGroupRef is required to pull in generated authoring from project references. -->
+      <ComponentGroupRef Id="Product.Generated" />
+    </Feature>
+
+    <!-- Prerequisites -->
+    <PropertyRef Id="NETFRAMEWORK40CLIENT"/>
+
+    <Condition Message="This application requires .NET Framework 4.0. Please install the .NET Framework then run this installer again.">
+      <![CDATA[Installed OR NETFRAMEWORK40CLIENT]]>
+    </Condition>
+
+    <!-- Custom Actions -->
+    <CustomAction Id="InstallService" Directory="APPLICATIONROOTDIRECTORY" ExeCommand="CiapiLatencyCollector.exe -install"
+                  Return="asyncWait"/>
+
+    <CustomAction Id="UninstallService" Directory="APPLICATIONROOTDIRECTORY" ExeCommand="CiapiLatencyCollector.exe -uninstall"
+              Return="asyncWait"/>
+
+    <UIRef Id="WixUI_Common" />
+    <!--<WixVariable Id="WixUIBannerBmp"  Value="$(sys.SOURCEFILEDIR)\..\Common\LogoLabs.bmp" />-->
+
+    <UI>
+      <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
+      <TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="12" />
+      <TextStyle Id="WixUI_Font_Title" FaceName="Tahoma" Size="9" Bold="yes" />
+      <TextStyle Id="PseudoHyperlinkStyle" FaceName="Tahoma" Size="8" Underline="yes"/>
+
+      <Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
+      <Property Id="WixUI_Mode" Value="Minimal" />
+      <!-- No "change features" button -->
+      <Property Id="ARPNOMODIFY" Value="1" />
+
+      <DialogRef Id="ErrorDlg" />
+      <DialogRef Id="FatalError" />
+      <DialogRef Id="FilesInUse" />
+      <DialogRef Id="MsiRMFilesInUse" />
+      <DialogRef Id="PrepareDlg" />
+      <DialogRef Id="ProgressDlg" />
+      <DialogRef Id="ResumeDlg" />
+      <DialogRef Id="UserExit" />
+      <DialogRef Id="WelcomeEulaDlg" />
+
+      <Publish Dialog="MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="MaintenanceTypeDlg">1</Publish>
+
+      <Publish Dialog="MaintenanceTypeDlg" Control="RepairButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+      <Publish Dialog="MaintenanceTypeDlg" Control="RemoveButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+      <Publish Dialog="MaintenanceTypeDlg" Control="Back" Event="NewDialog" Value="MaintenanceWelcomeDlg">1</Publish>
+
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg">1</Publish>
+
+      <!--<Publish Dialog="ExitDialog" Control="Finish" Event="DoAction"
+               Value="InstallService" Order="1">NOT Installed</Publish>-->
+      <Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
+    </UI>
+  </Product>
+</Wix>
