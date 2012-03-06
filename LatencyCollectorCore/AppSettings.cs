@@ -7,6 +7,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Xml.Serialization;
 
+using CiapiLatencyCollector;
+
 namespace LatencyCollectorCore
 {
 	public class AppSettings
