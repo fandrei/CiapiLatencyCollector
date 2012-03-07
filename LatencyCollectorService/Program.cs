@@ -41,6 +41,10 @@ namespace CiapiLatencyCollector
 					{
 						ManagedInstallerClass.InstallHelper(new[] { "/u", ExePath });
 					}
+					else if (arg == "-start")
+					{
+						StartService();
+					}
 				}
 				catch (Exception exc)
 				{
@@ -55,6 +59,17 @@ namespace CiapiLatencyCollector
 						new LatencyCollectorService()
 					};
 				ServiceBase.Run(servicesToRun);
+			}
+		}
+
+		private static void StartService()
+		{
+			using (var controller = new ServiceController(Const.AppName))
+			{
+				if (controller.Status != ServiceControllerStatus.Running)
+				{
+					controller.Start();
+				}
 			}
 		}
 
@@ -84,7 +99,6 @@ namespace CiapiLatencyCollector
 
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]
 		public static extern int MessageBox(IntPtr hWnd, string text, string caption, int type);
-
 
 		private static readonly string ExePath = Assembly.GetExecutingAssembly().Location;
 	}
