@@ -46,21 +46,26 @@
     </Condition>
 
     <!-- Custom Actions -->
-    <CustomAction Id="InstallService" Directory="APPLICATIONROOTDIRECTORY" 
+    <CustomAction Id="InstallService" Directory="APPLICATIONROOTDIRECTORY" Execute="immediate"
                   ExeCommand="[APPLICATIONROOTDIRECTORY]CiapiLatencyCollector.exe -install" Return="asyncWait"/>
 
-    <CustomAction Id="UninstallService" Directory="APPLICATIONROOTDIRECTORY" 
-                  ExeCommand="[APPLICATIONROOTDIRECTORY]CiapiLatencyCollector.exe -uninstall" Return="asyncWait"/>
-
-    <CustomAction Id="RunConfig" Directory="APPLICATIONROOTDIRECTORY"
+    <CustomAction Id="RunConfig" Directory="APPLICATIONROOTDIRECTORY" Execute="immediate"
               ExeCommand="[APPLICATIONROOTDIRECTORY]CiapiLatencyCollectorConfig.exe" Return="asyncWait"/>
+
+    <CustomAction Id="StartService" Directory="APPLICATIONROOTDIRECTORY" Execute="immediate"
+              ExeCommand="[APPLICATIONROOTDIRECTORY]CiapiLatencyCollector.exe -start" Return="asyncWait"/>
+
+    <CustomAction Id="UninstallService" Directory="APPLICATIONROOTDIRECTORY" Execute="immediate"
+                  ExeCommand="[APPLICATIONROOTDIRECTORY]CiapiLatencyCollector.exe -uninstall" Return="asyncWait"/>
 
     <InstallExecuteSequence>
       <Custom Action='InstallService' After='InstallFinalize'>NOT Installed</Custom>
-      <Custom Action='RunConfig' After='InstallFinalize'>NOT Installed</Custom>
+      <Custom Action='RunConfig' After='InstallService'>NOT Installed</Custom>
+      <!--<Custom Action='StartService' After='RunConfig'>NOT Installed</Custom>-->
+
       <Custom Action='UninstallService' After='InstallValidate'>Installed</Custom>
     </InstallExecuteSequence>
-    
+
     <UIRef Id="WixUI_Common" />
     <!--<WixVariable Id="WixUIBannerBmp"  Value="$(sys.SOURCEFILEDIR)\..\Common\LogoLabs.bmp" />-->
 
