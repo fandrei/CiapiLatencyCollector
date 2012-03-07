@@ -35,11 +35,11 @@ namespace CiapiLatencyCollector
 					else if (arg == "-install")
 					{
 						InitWorkingArea();
-						ManagedInstallerClass.InstallHelper(new[] { ExePath });
+						ManagedInstallerClass.InstallHelper(new[] { ExePath, "/LogFile=" });
 					}
 					else if (arg == "-uninstall")
 					{
-						ManagedInstallerClass.InstallHelper(new[] { "/u", ExePath });
+						ManagedInstallerClass.InstallHelper(new[] { "/u", ExePath, "/LogFile=" });
 					}
 					else if (arg == "-start")
 					{
