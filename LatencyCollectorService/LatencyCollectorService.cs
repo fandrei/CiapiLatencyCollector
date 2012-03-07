@@ -64,8 +64,7 @@ namespace CiapiLatencyCollector
 					try
 					{
 						ApplyUpdates();
-						if (_appDomain == null)
-							StartWorkerDomain(Const.WorkerAssemblyPath);
+						EnsureWorkerDomainStarted();
 					}
 					catch (ThreadAbortException)
 					{
@@ -149,6 +148,12 @@ namespace CiapiLatencyCollector
 				};
 			var appDomain = AppDomain.CreateDomain("LatencyCollectorCore", null, setup);
 			return appDomain;
+		}
+
+		private void EnsureWorkerDomainStarted()
+		{
+			if (_appDomain == null)
+				StartWorkerDomain(Const.WorkerAssemblyPath);
 		}
 
 		public void ReportEvent(string message, EventLogEntryType type = EventLogEntryType.Information)
