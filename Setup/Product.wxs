@@ -27,6 +27,8 @@
               Source='..\_bin\Release\CiapiLatencyCollector.exe' Vital='yes' />
         <File Id='Ionic.Zip.dll' Name='Ionic.Zip.dll'
               Source='..\_bin\Release\Ionic.Zip.dll' Vital='yes' />
+        <File Id='CiapiLatencyCollectorConfig.exe' Name='CiapiLatencyCollectorConfig.exe'
+              Source='..\_bin\Release\CiapiLatencyCollectorConfig.exe' Vital='yes' />
       </Component>
     </DirectoryRef>
 
@@ -50,8 +52,12 @@
     <CustomAction Id="UninstallService" Directory="APPLICATIONROOTDIRECTORY" 
                   ExeCommand="[APPLICATIONROOTDIRECTORY]CiapiLatencyCollector.exe -uninstall" Return="asyncWait"/>
 
+    <CustomAction Id="RunConfig" Directory="APPLICATIONROOTDIRECTORY"
+              ExeCommand="[APPLICATIONROOTDIRECTORY]CiapiLatencyCollectorConfig.exe" Return="asyncWait"/>
+
     <InstallExecuteSequence>
       <Custom Action='InstallService' After='InstallFinalize'>NOT Installed</Custom>
+      <Custom Action='RunConfig' After='InstallFinalize'>NOT Installed</Custom>
       <Custom Action='UninstallService' After='InstallValidate'>Installed</Custom>
     </InstallExecuteSequence>
     
