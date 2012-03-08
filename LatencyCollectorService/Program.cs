@@ -94,11 +94,18 @@ namespace CiapiLatencyCollector
 
 		static void ShowMessage(string message)
 		{
-			MessageBox(IntPtr.Zero, message, Const.AppName, 0);
+			MessageBox(IntPtr.Zero, message, Const.AppName, MessageBoxOptions.OkOnly | MessageBoxOptions.Topmost);
 		}
 
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]
-		public static extern int MessageBox(IntPtr hWnd, string text, string caption, int type);
+		public static extern int MessageBox(IntPtr hWnd, string text, string caption, MessageBoxOptions type);
+
+		[Flags]
+		public enum MessageBoxOptions : uint
+		{
+			OkOnly = 0x000000,
+			Topmost = 0x040000
+		}
 
 		private static readonly string ExePath = Assembly.GetExecutingAssembly().Location;
 	}

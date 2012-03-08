@@ -31,7 +31,7 @@ namespace LatencyCollectorConfig
 			}
 			catch (Exception exc)
 			{
-				MessageBox.Show(exc.ToString());
+				MessageBox.Show(this, exc.ToString(), Const.AppName);
 			}
 		}
 
@@ -49,7 +49,7 @@ namespace LatencyCollectorConfig
 			}
 			catch (Exception exc)
 			{
-				MessageBox.Show(exc.ToString());
+				MessageBox.Show(this, exc.ToString(), Const.AppName);
 			}
 			Close();
 		}
