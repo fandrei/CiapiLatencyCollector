@@ -46,24 +46,39 @@
     </Condition>
 
     <!-- Custom Actions -->
-    <CustomAction Id="InstallService" Directory="APPLICATIONROOTDIRECTORY" Execute="deferred" Impersonate="no"
-                  ExeCommand="[APPLICATIONROOTDIRECTORY]CiapiLatencyCollector.exe -install" Return="asyncWait"/>
+    <CustomAction Id="InstallService" Directory="APPLICATIONROOTDIRECTORY"
+                  Execute="deferred" Impersonate="no" Return="asyncWait"
+                  ExeCommand="[APPLICATIONROOTDIRECTORY]CiapiLatencyCollector.exe -install" />
 
-    <CustomAction Id="RunConfig" Directory="APPLICATIONROOTDIRECTORY" Execute="deferred" Impersonate="no"
-              ExeCommand="[APPLICATIONROOTDIRECTORY]CiapiLatencyCollectorConfig.exe" Return="asyncWait"/>
+    <CustomAction Id="RunConfig" Directory="APPLICATIONROOTDIRECTORY"
+                  Execute="deferred" Impersonate="no" Return="asyncWait"
+                  ExeCommand="[APPLICATIONROOTDIRECTORY]CiapiLatencyCollectorConfig.exe" />
 
-    <CustomAction Id="StartService" Directory="APPLICATIONROOTDIRECTORY" Execute="deferred" Impersonate="no"
-              ExeCommand="[APPLICATIONROOTDIRECTORY]CiapiLatencyCollector.exe -start" Return="asyncWait"/>
+    <CustomAction Id="StartService" Directory="APPLICATIONROOTDIRECTORY"
+                  Execute="deferred" Impersonate="no" Return="asyncWait"
+                  ExeCommand="[APPLICATIONROOTDIRECTORY]CiapiLatencyCollector.exe -start" />
 
-    <CustomAction Id="UninstallService" Directory="APPLICATIONROOTDIRECTORY" Execute="deferred" Impersonate="no"
-                  ExeCommand="[APPLICATIONROOTDIRECTORY]CiapiLatencyCollector.exe -uninstall" Return="asyncWait"/>
+    <CustomAction Id="UninstallService" Directory="APPLICATIONROOTDIRECTORY"
+                  Execute="deferred" Impersonate="no" Return="asyncWait"
+                  ExeCommand="[APPLICATIONROOTDIRECTORY]CiapiLatencyCollector.exe -uninstall" />
 
     <InstallExecuteSequence>
-      <Custom Action='RunConfig' Before='InstallFinalize'>NOT Installed</Custom>
-      <Custom Action='InstallService' Before='InstallFinalize'>NOT Installed</Custom>
-      <!--<Custom Action='StartService' Before='InstallFinalize'>NOT Installed</Custom>-->
+      <Custom Action='RunConfig' After='InstallFiles'>
+        $ProductComponent = 3
+      </Custom>
 
-      <Custom Action='UninstallService' After='InstallInitialize'>Installed</Custom>
+      <Custom Action='InstallService' After='RunConfig' >
+        $ProductComponent = 3
+      </Custom>
+
+      <Custom Action='StartService' After='InstallService' >
+        $ProductComponent = 3
+      </Custom>
+
+      <Custom Action='UninstallService' Before='RemoveFiles' >
+        ?ProductComponent = 3
+      </Custom>
+
     </InstallExecuteSequence>
 
     <UIRef Id="WixUI_Common" />
