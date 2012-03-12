@@ -124,9 +124,12 @@ namespace CiapiLatencyCollector
 
 		private void StartWorkerDomain(string assemblyPath)
 		{
-			_appDomain = CreateAppDomain(Const.WorkingAreaBinPath);
-			_proxyClass = _appDomain.CreateInstanceFromAndUnwrap(assemblyPath, "LatencyCollectorCore.Proxy");
-			_proxyClass.Start();
+			var newDomain = CreateAppDomain(Const.WorkingAreaBinPath);
+			dynamic proxy = newDomain.CreateInstanceFromAndUnwrap(assemblyPath, "LatencyCollectorCore.Proxy");
+			proxy.Start();
+
+			_appDomain = newDomain;
+			_proxyClass = proxy;
 		}
 
 		void StopWorkerDomain()
