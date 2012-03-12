@@ -156,14 +156,13 @@ namespace CiapiLatencyCollector
 				StartWorkerDomain(Const.WorkerAssemblyPath);
 		}
 
-		public void ReportEvent(string message, EventLogEntryType type = EventLogEntryType.Information)
+		public static void ReportEvent(string message, EventLogEntryType type = EventLogEntryType.Information)
 		{
 			Trace.WriteLine(message);
 
 			try
 			{
-				var appId = this.ServiceName;
-				EventLog.WriteEntry(appId, message, type);
+				EventLog.WriteEntry(Const.AppName, message, type);
 			}
 			catch (Exception exc)
 			{
