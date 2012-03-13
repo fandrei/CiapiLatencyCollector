@@ -37,13 +37,15 @@
 			this.UserNameEdit = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
+			this.DataPollingRateEdit = new System.Windows.Forms.TextBox();
 			this.SuspendLayout();
 			// 
 			// OkButton
 			// 
 			this.OkButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.OkButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.OkButton.Location = new System.Drawing.Point(440, 120);
+			this.OkButton.Location = new System.Drawing.Point(440, 159);
 			this.OkButton.Name = "OkButton";
 			this.OkButton.Size = new System.Drawing.Size(75, 23);
 			this.OkButton.TabIndex = 4;
@@ -120,12 +122,29 @@
 			this.label1.TabIndex = 29;
 			this.label1.Text = "User name";
 			// 
+			// label5
+			// 
+			this.label5.Location = new System.Drawing.Point(12, 128);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(70, 34);
+			this.label5.TabIndex = 32;
+			this.label5.Text = "Data polling rate (per min)";
+			// 
+			// DataPollingRateEdit
+			// 
+			this.DataPollingRateEdit.Location = new System.Drawing.Point(100, 128);
+			this.DataPollingRateEdit.Name = "DataPollingRateEdit";
+			this.DataPollingRateEdit.Size = new System.Drawing.Size(249, 20);
+			this.DataPollingRateEdit.TabIndex = 33;
+			// 
 			// ConfigForm
 			// 
 			this.AcceptButton = this.OkButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(527, 155);
+			this.ClientSize = new System.Drawing.Size(527, 194);
+			this.Controls.Add(this.DataPollingRateEdit);
+			this.Controls.Add(this.label5);
 			this.Controls.Add(this.PasswordEdit);
 			this.Controls.Add(this.UserNameEdit);
 			this.Controls.Add(this.label2);
@@ -156,5 +175,7 @@
 		private System.Windows.Forms.TextBox UserNameEdit;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.TextBox DataPollingRateEdit;
 	}
 }

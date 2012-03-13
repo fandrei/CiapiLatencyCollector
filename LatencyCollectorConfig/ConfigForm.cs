@@ -28,6 +28,8 @@ namespace LatencyCollectorConfig
 
 				UserNameEdit.Text = AppSettings.Instance.UserName;
 				PasswordEdit.Text = AppSettings.Instance.Password;
+
+				DataPollingRateEdit.Text = AppSettings.Instance.DataPollingRate.ToString();
 			}
 			catch (Exception exc)
 			{
@@ -44,6 +46,8 @@ namespace LatencyCollectorConfig
 
 				AppSettings.Instance.UserName = UserNameEdit.Text;
 				AppSettings.Instance.Password = PasswordEdit.Text;
+
+				AppSettings.Instance.DataPollingRate = int.Parse(DataPollingRateEdit.Text);
 
 				AppSettings.Instance.Save();
 			}
