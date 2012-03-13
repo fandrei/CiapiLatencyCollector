@@ -131,9 +131,10 @@ namespace CiapiLatencyCollector
 			{
 				InvokeCrossDomain(newDomain, "Start");
 			}
-			finally
+			catch (Exception)
 			{
 				AppDomain.Unload(newDomain);
+				throw;
 			}
 
 			_appDomain = newDomain;
