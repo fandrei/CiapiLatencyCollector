@@ -1,26 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace LatencyCollectorCore
 {
 	public class Proxy : MarshalByRefObject
 	{
-		// remote references to this object never expire
-		public override object InitializeLifetimeService()
+		public Proxy(string typeName, string funcName, object[] args)
 		{
-			return null;
-		}
+			var assembly = Assembly.GetExecutingAssembly();
+			var type = assembly.GetType(typeName);
+			if (type == null)
+				throw new ApplicationException(string.Format("Type {0} not found", typeName));
 
-		public void Start()
-		{
-			Program.Start();
-		}
-
-		public void Stop()
-		{
-			Program.Stop();
+			type.InvokeMember(funcName, BindingFlags.InvokeMethod | BindingFlags.Public | BindingFlags.Static, null, null, args);
 		}
 	}
 }

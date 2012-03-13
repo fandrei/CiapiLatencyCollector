@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading;
@@ -122,14 +124,12 @@ namespace CiapiLatencyCollector
 			}
 		}
 
-		private void StartWorkerDomain(string assemblyPath)
+		private void StartWorkerDomain()
 		{
 			var newDomain = CreateAppDomain(Const.WorkingAreaBinPath);
-			dynamic proxy = newDomain.CreateInstanceFromAndUnwrap(assemblyPath, "LatencyCollectorCore.Proxy");
-			proxy.Start();
+			InvokeCrossDomain(newDomain, "Start");
 
 			_appDomain = newDomain;
-			_proxyClass = proxy;
 		}
 
 		void StopWorkerDomain()
@@ -137,8 +137,7 @@ namespace CiapiLatencyCollector
 			if (_appDomain == null)
 				return;
 
-			_proxyClass.Stop();
-			_proxyClass = null;
+			InvokeCrossDomain(_appDomain, "Stop");
 			AppDomain.Unload(_appDomain);
 			_appDomain = null;
 		}
@@ -156,7 +155,14 @@ namespace CiapiLatencyCollector
 		private void EnsureWorkerDomainStarted()
 		{
 			if (_appDomain == null)
-				StartWorkerDomain(Const.WorkerAssemblyPath);
+				StartWorkerDomain();
+		}
+
+		private static void InvokeCrossDomain(AppDomain newDomain, string methodName)
+		{
+			var args = new object[] { "LatencyCollectorCore.Program", methodName, null };
+			newDomain.CreateInstanceFromAndUnwrap(Const.WorkerAssemblyPath,
+				"LatencyCollectorCore.Proxy", false, BindingFlags.Default, null, args, CultureInfo.InvariantCulture, null);
 		}
 
 		public static void ReportEvent(string message, EventLogEntryType type = EventLogEntryType.Information)
@@ -177,7 +183,6 @@ namespace CiapiLatencyCollector
 		private Thread _thread;
 		private volatile bool _terminated;
 		private AppDomain _appDomain;
-		private dynamic _proxyClass;
 		private static readonly TimeSpan AutoUpdateCheckPeriod = TimeSpan.FromMinutes(1);
 	}
 }
