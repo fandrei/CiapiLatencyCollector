@@ -137,6 +137,8 @@ namespace CiapiLatencyCollector
 			}
 
 			_appDomain = newDomain;
+
+			ReportEvent("Started collecting");
 		}
 
 		void StopWorkerDomain()
