@@ -50,12 +50,13 @@ namespace LatencyCollectorConfig
 				AppSettings.Instance.DataPollingRate = int.Parse(DataPollingRateEdit.Text);
 
 				AppSettings.Instance.Save();
+
+				Close();
 			}
 			catch (Exception exc)
 			{
 				MessageBox.Show(this, exc.ToString(), Const.AppName);
 			}
-			Close();
 		}
 	}
 }
