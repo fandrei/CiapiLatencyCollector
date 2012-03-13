@@ -127,7 +127,14 @@ namespace CiapiLatencyCollector
 		private void StartWorkerDomain()
 		{
 			var newDomain = CreateAppDomain(Const.WorkingAreaBinPath);
-			InvokeCrossDomain(newDomain, "Start");
+			try
+			{
+				InvokeCrossDomain(newDomain, "Start");
+			}
+			finally
+			{
+				AppDomain.Unload(newDomain);
+			}
 
 			_appDomain = newDomain;
 		}
