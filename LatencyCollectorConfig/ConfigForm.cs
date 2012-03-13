@@ -58,5 +58,10 @@ namespace LatencyCollectorConfig
 				MessageBox.Show(this, exc.ToString(), Const.AppName);
 			}
 		}
+
+		private void CancelButton_Click(object sender, EventArgs e)
+		{
+			Close();
+		}
 	}
 }

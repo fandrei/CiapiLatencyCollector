@@ -39,16 +39,17 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
 			this.DataPollingRateEdit = new System.Windows.Forms.TextBox();
+			this.CancelButton = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// OkButton
 			// 
 			this.OkButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.OkButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.OkButton.Location = new System.Drawing.Point(440, 159);
+			this.OkButton.Location = new System.Drawing.Point(356, 159);
 			this.OkButton.Name = "OkButton";
 			this.OkButton.Size = new System.Drawing.Size(75, 23);
-			this.OkButton.TabIndex = 4;
+			this.OkButton.TabIndex = 5;
 			this.OkButton.Text = "OK";
 			this.OkButton.UseVisualStyleBackColor = true;
 			this.OkButton.Click += new System.EventHandler(this.OkButton_Click);
@@ -135,7 +136,19 @@
 			this.DataPollingRateEdit.Location = new System.Drawing.Point(100, 128);
 			this.DataPollingRateEdit.Name = "DataPollingRateEdit";
 			this.DataPollingRateEdit.Size = new System.Drawing.Size(249, 20);
-			this.DataPollingRateEdit.TabIndex = 33;
+			this.DataPollingRateEdit.TabIndex = 4;
+			// 
+			// CancelButton
+			// 
+			this.CancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.CancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.CancelButton.Location = new System.Drawing.Point(437, 159);
+			this.CancelButton.Name = "CancelButton";
+			this.CancelButton.Size = new System.Drawing.Size(75, 23);
+			this.CancelButton.TabIndex = 6;
+			this.CancelButton.Text = "Cancel";
+			this.CancelButton.UseVisualStyleBackColor = true;
+			this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
 			// 
 			// ConfigForm
 			// 
@@ -143,6 +156,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(527, 194);
+			this.Controls.Add(this.CancelButton);
 			this.Controls.Add(this.DataPollingRateEdit);
 			this.Controls.Add(this.label5);
 			this.Controls.Add(this.PasswordEdit);
@@ -177,5 +191,6 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.TextBox DataPollingRateEdit;
+		private System.Windows.Forms.Button CancelButton;
 	}
 }
