@@ -19,8 +19,6 @@ namespace LatencyCollectorCore
 			Start();
 			Console.ReadKey();
 			Stop();
-
-			Tracker.Terminate(true);
 		}
 
 		public static void Start()
