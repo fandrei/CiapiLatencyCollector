@@ -87,11 +87,11 @@ namespace CiapiLatencyCollector
 
 		void ApplyUpdates()
 		{
+			if (!Directory.Exists(Const.WorkingAreaBinPath))
+				Directory.CreateDirectory(Const.WorkingAreaBinPath);
+
 			using (var client = new WebClient())
 			{
-				if (!Directory.Exists(Const.WorkingAreaBinPath))
-					Directory.CreateDirectory(Const.WorkingAreaBinPath);
-
 				// compare versions
 				var localVersionFile = Const.WorkingAreaBinPath + "version.txt";
 				if (File.Exists(localVersionFile))
@@ -112,7 +112,10 @@ namespace CiapiLatencyCollector
 				var zipFile = new ZipFile(zipFilePath);
 				zipFile.ExtractAll(Const.WorkingAreaBinPath);
 
-				ReportEvent(string.Format("Update is successful"));
+				{
+					var localVersion = File.ReadAllText(localVersionFile).Trim();
+					ReportEvent(string.Format("Update to version {0} is successful", localVersion));
+				}
 			}
 		}
 
