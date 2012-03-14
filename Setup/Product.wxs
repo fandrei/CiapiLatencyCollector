@@ -83,6 +83,7 @@
 
     <UIRef Id="WixUI_Common" />
     <!--<WixVariable Id="WixUIBannerBmp"  Value="$(sys.SOURCEFILEDIR)\..\Common\LogoLabs.bmp" />-->
+    <WixVariable Id="WixUILicenseRtf" Value="license.rtf" />
 
     <UI>
       <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
