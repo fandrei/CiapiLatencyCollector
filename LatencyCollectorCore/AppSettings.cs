@@ -128,7 +128,7 @@ namespace LatencyCollectorCore
 
 		private void SetDefaults()
 		{
-			DataPollingRate = 1;
+			DataPollingRate = 10;
 		}
 
 		private const string DefaultServer = "https://ciapi.cityindex.com/TradingApi";
