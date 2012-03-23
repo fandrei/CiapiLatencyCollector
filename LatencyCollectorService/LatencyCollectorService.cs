@@ -109,8 +109,10 @@ namespace CiapiLatencyCollector
 
 				var zipFilePath = Const.WorkingAreaBinPath + "LatencyCollectorCore.zip";
 				client.DownloadFile(Const.AutoUpdateBaseUrl + "LatencyCollectorCore.zip", zipFilePath);
-				var zipFile = new ZipFile(zipFilePath);
-				zipFile.ExtractAll(Const.WorkingAreaBinPath);
+				using (var zipFile = new ZipFile(zipFilePath))
+				{
+					zipFile.ExtractAll(Const.WorkingAreaBinPath);
+				}
 
 				{
 					var localVersion = File.ReadAllText(localVersionFile).Trim();
