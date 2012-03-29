@@ -45,7 +45,6 @@
       <HintPath>..\packages\CIAPI.4.0.2\lib\net40\Release\DotNetClient_N2.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.4.5.1\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Salient.JsonClient.35, Version=3.2.0.31, Culture=neutral, PublicKeyToken=b412daeaa648e3eb, processorArchitecture=MSIL">
@@ -78,6 +77,7 @@
     <Compile Include="..\Shared\Util.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
