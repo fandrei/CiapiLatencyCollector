@@ -131,7 +131,7 @@ namespace CiapiLatencyCollector
 
 		private void StartWorkerDomain()
 		{
-			var newDomain = CreateAppDomain(Const.WorkingAreaBinPath);
+			var newDomain = CreateAppDomain(Const.WorkingAreaBinPath, Const.WorkerAssemblyPath + ".config");
 			try
 			{
 				InvokeCrossDomain(newDomain, "Start");
@@ -157,11 +157,12 @@ namespace CiapiLatencyCollector
 			_appDomain = null;
 		}
 
-		static AppDomain CreateAppDomain(string basePath)
+		static AppDomain CreateAppDomain(string basePath, string configPath)
 		{
 			var setup = new AppDomainSetup
 				{
-					ApplicationBase = basePath
+					ApplicationBase = basePath,
+					ConfigurationFile = configPath,
 				};
 			var appDomain = AppDomain.CreateDomain("LatencyCollectorCore", null, setup);
 			return appDomain;
