@@ -29,6 +29,10 @@
         Files="$(MSBuildProjectDirectory)\LatencyCollectorService\Properties\AssemblyInfo.cs"
         Regex="AssemblyVersion\(&quot;.*&quot;\)"
         ReplacementText="AssemblyVersion(&quot;$(FullVersion)&quot;)" />
+    <FileUpdate
+        Files="$(MSBuildProjectDirectory)\Setup\Variables.wxi"
+        Regex="ProductVersion *= *&quot;.*?&quot;"
+        ReplacementText="ProductVersion = &quot;$(FullVersion)&quot;" />
   </Target>
 
   <Target Name="Build" DependsOnTargets="UpdateVersion" >
