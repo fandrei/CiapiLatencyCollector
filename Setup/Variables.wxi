@@ -3,7 +3,7 @@
   
   <?define Manufacturer = "City Index" ?>
   <?define ProductShortName = "CIAPI Latency Collector" ?>
-  <?define ProductVersion = "1.0" ?>
+  <?define ProductVersion = "1.0.0" ?>
   <?define ProductVersionSuffix = "" ?>
   <?define ProductMidName = "$(var.ProductShortName) v$(var.ProductVersion) $(var.ProductVersionSuffix)" ?>
   <?define ProductLongName = "$(var.Manufacturer) $(var.ProductMidName)" ?>

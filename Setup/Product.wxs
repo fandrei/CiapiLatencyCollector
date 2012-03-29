@@ -12,6 +12,15 @@
 
     <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" CompressionLevel="high"/>
 
+    <Property Id="OLDERVERSIONBEINGUPGRADED" Secure="yes" />
+    <Upgrade Id="$(var.UpgradeCode)">
+      <UpgradeVersion Minimum="$(var.ProductVersion)" IncludeMinimum="no" OnlyDetect="yes"
+                      Property="NEWERVERSIONDETECTED"/>
+      <UpgradeVersion Minimum="0.0.0" IncludeMinimum="yes"
+                      Maximum="$(var.ProductVersion)" IncludeMaximum="no"
+                      Property="OLDERVERSIONBEINGUPGRADED" MigrateFeatures="yes"/>
+    </Upgrade>
+
     <!-- Installation Parts -->
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
@@ -46,6 +55,9 @@
     </Condition>
 
     <!-- Custom Actions -->
+
+    <CustomAction Id="NewerVersionDetected" Error="2000"/>
+
     <CustomAction Id="InstallService" Directory="APPLICATIONROOTDIRECTORY"
                   Execute="deferred" Impersonate="no" Return="ignore"
                   ExeCommand="[APPLICATIONROOTDIRECTORY]CiapiLatencyCollector.exe -install" />
@@ -63,6 +75,9 @@
                   ExeCommand="[APPLICATIONROOTDIRECTORY]CiapiLatencyCollector.exe -uninstall" />
 
     <InstallExecuteSequence>
+      <Custom Action="NewerVersionDetected" After="FindRelatedProducts">NEWERVERSIONDETECTED</Custom>
+      <RemoveExistingProducts After="InstallInitialize" />
+
       <Custom Action='RunConfig' After='InstallFiles'>
         $ProductComponent = 3
       </Custom>
@@ -86,6 +101,8 @@
     <WixVariable Id="WixUILicenseRtf" Value="license.rtf" />
 
     <UI>
+      <Error Id="2000">A newer version of this product is already installed</Error>
+      
       <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
       <TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="12" />
       <TextStyle Id="WixUI_Font_Title" FaceName="Tahoma" Size="9" Bold="yes" />
