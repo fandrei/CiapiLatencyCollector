@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 
@@ -27,6 +29,8 @@ namespace LatencyCollectorCore
 			{
 				lock (Sync)
 				{
+					AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+
 					if (_thread != null)
 						throw new InvalidOperationException();
 
@@ -51,6 +55,8 @@ namespace LatencyCollectorCore
 					_data.Logout();
 					_thread.Join(TimeSpan.FromMinutes(2));
 					_thread = null;
+
+					AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
 				}
 			}
 			catch (Exception exc)
@@ -127,6 +133,20 @@ namespace LatencyCollectorCore
 		{
 			Trace.WriteLine(message);
 			Data.Tracker.Log("Exception", message);
+		}
+
+		// load assembly from the working folder, if impossible to resolve automatically
+		// (workaround for Newtonsoft.Json load problem)
+		static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+		{
+			var name = new AssemblyName(args.Name);
+			var fileName = Util.GetAppLocation() + name.Name + ".dll";
+			if (File.Exists(fileName))
+			{
+				var res = Assembly.LoadFrom(fileName);
+				return res;
+			}
+			return null;
 		}
 
 		private static Data _data;
