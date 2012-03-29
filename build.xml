@@ -33,6 +33,10 @@
         Files="$(MSBuildProjectDirectory)\Setup\Variables.wxi"
         Regex="ProductVersion *= *&quot;.*?&quot;"
         ReplacementText="ProductVersion = &quot;$(FullVersion)&quot;" />
+    <FileUpdate
+        Files="$(MSBuildProjectDirectory)\LatencyCollectorCore\Data.cs"
+        Regex="{API_KEY}"
+        ReplacementText="$(API_KEY)" />
   </Target>
 
   <Target Name="Build" DependsOnTargets="UpdateVersion" >

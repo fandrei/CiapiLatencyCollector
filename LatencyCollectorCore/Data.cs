@@ -22,7 +22,7 @@ namespace LatencyCollectorCore
 			{
 				if (_client == null)
 				{
-					var client = new Client(new Uri(AppSettings.Instance.ServerUrl), "<API_KEY>");
+					var client = new Client(new Uri(AppSettings.Instance.ServerUrl), "{API_KEY}");
 					try
 					{
 						var measure = StartMeasure();
