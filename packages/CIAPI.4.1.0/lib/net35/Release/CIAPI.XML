@@ -76,7 +76,7 @@
         </member>
         <member name="P:CIAPI.DTO.AccountInformationResponseDTO.HasMultipleEmailAddresses">
             <summary>
-            Does the user have more than one email address configured?
+            Flag indicating whether the user has more than one email address configured.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ApiStopLimitOrderHistoryDTO">
@@ -211,12 +211,17 @@
         </member>
         <member name="P:CIAPI.DTO.ApiOrderDTO.OcoOrder">
             <summary>
-            Corresponding Oco Order (One Cancels the Other).
+            Corresponding OCO Order (One Cancels the Other).
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ApiStopLimitOrderDTO">
             <summary>
             Represents a stop/limit order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiStopLimitOrderDTO.Guaranteed">
+            <summary>
+            Flag to determine whether an order is guaranteed to trigger and fill at the associated trigger price.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiStopLimitOrderDTO.TriggerPrice">
@@ -234,14 +239,19 @@
             Identifier which relates to the expiry of the order/trade, i.e. GoodTillDate (GTD), GoodTillCancelled (GTC) or GoodForDay (GFD).
             </summary>
         </member>
+        <member name="T:CIAPI.DTO.ApiClientApplicationMessageTranslationDTO">
+            <summary>
+            Message translation entity with client specific translated textual strings.
+            </summary>
+        </member>
         <member name="P:CIAPI.DTO.ApiClientApplicationMessageTranslationDTO.Key">
             <summary>
-            Translation key
+            Translation key.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiClientApplicationMessageTranslationDTO.Value">
             <summary>
-            Translation value
+            Translation value.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ApiActiveStopLimitOrderDTO">
@@ -316,22 +326,22 @@
         </member>
         <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.StopOrder">
             <summary>
-            The if done stop order.
+            The if / done stop order.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.LimitOrder">
             <summary>
-            The if done limit order
+            The if / done limit order.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.OcoOrder">
             <summary>
-            The order on the other side of a one Cancels the other relationship.
+            The order on the other side of a One Cancels the Other relationship.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.LastChangedDateTimeUTC">
             <summary>
-            The last time that the order changed. Note - Does not include things such as the current market price.
+            The last time that the order changed. Note - does not include things such as the current market price.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.Applicability_Resolved">
@@ -396,12 +406,12 @@
         </member>
         <member name="T:CIAPI.DTO.ApiCultureLookupDTO">
             <summary>
-            Lookup data specific to a Culture
+            Lookup data specific to a Culture.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiCultureLookupDTO.Code">
             <summary>
-            2 letter ISO 639 culture code followed by a 2 letter uppercase ISO 3166 culture code
+            Two letter ISO 639 culture code followed by a two letter uppercase ISO 3166 culture code.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ApiBasicStopLimitOrderDTO">
@@ -636,7 +646,7 @@
         </member>
         <member name="P:CIAPI.DTO.TradeMarginDTO.OTEConvertedCurrencyId">
             <summary>
-            The currency ID of the OTE for this order.
+            The currency ID of the OTE for this order. See the "Currency ID" section of the CIAPI User Guide for a listing of the currency IDs.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.TradeMarginDTO.OTEConvertedCurrencyISOCode">
@@ -722,6 +732,21 @@
         <member name="P:CIAPI.DTO.QuoteDTO.RequestDateTime">
             <summary>
             The timestamp the quote was requested. Always expressed in UTC.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ClientPreferenceKeyDTO">
+            <summary>
+            Client preference key and value.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ClientPreferenceKeyDTO.Key">
+            <summary>
+            A unique client preference key identifier.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ClientPreferenceKeyDTO.Value">
+            <summary>
+            A value associated for the client preference key.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ApiTradeOrderDTO">
@@ -856,12 +881,32 @@
         </member>
         <member name="T:CIAPI.DTO.ApiPrimaryMarketTagDTO">
             <summary>
-            Market tag information extended to include a list o child tags.
+            Market tag information extended to include a list of child tags.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiPrimaryMarketTagDTO.Children">
             <summary>
             The list of child tags associated with this market tag.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiMarketSpreadDTO">
+            <summary>
+            Contains market spread value at specific time points.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketSpreadDTO.SpreadTimeUtc">
+            <summary>
+            The time and date in for the spread value in UTC, interchangable to local time using localtime offset.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketSpreadDTO.Spread">
+            <summary>
+            The market spread value.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketSpreadDTO.SpreadUnits">
+            <summary>
+            The market spread value's unit type.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ApiMarketInformationSaveDTO">
@@ -964,24 +1009,16 @@
             The trade currency.
             </summary>
         </member>
-        <member name="P:CIAPI.DTO.ApiTradeHistoryDTO.RealisedPnl">
-            <summary>
-            The realised profit and loss.
-            </summary>
-        </member>
-        <member name="P:CIAPI.DTO.ApiTradeHistoryDTO.RealisedPnlCurrency">
-            <summary>
-            The realised Pnl currency.
-            </summary>
-        </member>
+        <!-- Badly formed XML comment ignored for member "P:CIAPI.DTO.ApiTradeHistoryDTO.RealisedPnl" -->
+        <!-- Badly formed XML comment ignored for member "P:CIAPI.DTO.ApiTradeHistoryDTO.RealisedPnlCurrency" -->
         <member name="P:CIAPI.DTO.ApiTradeHistoryDTO.LastChangedDateTimeUtc">
             <summary>
-            The last time that the order changed. Note - Does not include things such as the current market price.
+            The last time that the order changed. Note - does not include things such as the current market price.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiTradeHistoryDTO.ExecutedDateTimeUtc">
             <summary>
-            The time the order was executed.
+            The time that the order was executed.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ApiClientAccountWatchlistDTO">
@@ -1041,7 +1078,7 @@
         </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MarginFactorUnits">
             <summary>
-            The margin factor units.
+            Controls if the margin factor is displayed as a percentage or in points. 26 == Percentage, and 27 == Points.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MinDistance">
@@ -1116,17 +1153,112 @@
         </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MarketSettingsTypeId">
             <summary>
-            The Id of the type of the market setting, ie Spread, CFD.
+            The ID type of the market setting, i.e. Spread, CFD.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MarketSettingsType">
             <summary>
-            The type of the market setting, ie Spread, CFD.
+            The type of the market setting, i.e. Spread, CFD.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MobileShortName">
             <summary>
             A short summary of the market name used when presenting the market name on mobile clients.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.CentralClearingType">
+            <summary>
+            The method used for central clearing, i.e. "No" or "LCH".
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.CentralClearingTypeDescription">
+            <summary>
+            The description of the method used for central clearing, i.e. "None" or "London Clearing House".
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MarketCurrencyId">
+            <summary>
+            The currency of the market being traded.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.PhoneMinSize">
+            <summary>
+            The minimum quantity that can be traded over the Phone.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.DailyFinancingAppliedAtUtc">
+            <summary>
+            Daily financing amount to be applied at specified time in UTC.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.NextMarketEodTimeUtc">
+            <summary>
+            Next Date and Time at which the End of Day (EOD) capture will run in UTC.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.TradingStartTimeUtc">
+            <summary>
+            Market Trading start time on each trading day represented in UTC and local time.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.TradingEndTimeUtc">
+            <summary>
+            Market Trading end time on each trading day represented in UTC and local time.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MarketPricingTimes">
+            <summary>
+            Market Pricing times on given set of working days.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MarketBreakTimes">
+            <summary>
+            Breaks throughout each trading day (Day is specified as 'DayOfWeek').
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MarketSpreads">
+            <summary>
+            Market spreads during each trading day.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.GuaranteedOrderPremium">
+            <summary>
+            The premium paid for a guaranteed order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.GuaranteedOrderPremiumUnits">
+            <summary>
+            The unit type being used for the guaranteed order premium. This can be (MultipleOfQuantity=1, PercentOfConsideration=2).
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.GuaranteedOrderMinDistance">
+            <summary>
+            The minimum distance from current market price at which a guaranteed order can be placed.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.GuaranteedOrderMinDistanceUnits">
+            <summary>
+            Guaranteed order minimum distance unit type. This can be: (Percentage=26, Points=27).
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiTradingDayTimesDTO">
+            <summary>
+            Contains start and end time information for market specific events such as trading and pricing.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradingDayTimesDTO.DayOfWeek">
+            <summary>
+            Day of the week at which the times are valid.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradingDayTimesDTO.StartTimeUtc">
+            <summary>
+            Start of the market time in both UTC and local time (using Offset property).
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradingDayTimesDTO.EndTimeUtc">
+            <summary>
+            End of the market time in both UTC and local time (using Offset property).
             </summary>
         </member>
         <member name="T:CIAPI.DTO.PriceDTO">
@@ -1184,6 +1316,11 @@
             A unique ID for this price. Treat as a unique, but random string.
             </summary>
         </member>
+        <member name="P:CIAPI.DTO.PriceDTO.StatusSummary">
+            <summary>
+            The current status summary for this price. Values are: 0 = Normal 1 = Indicative 2 = PhoneOnly 3 = Suspended 4 = Closed
+            </summary>
+        </member>
         <member name="T:CIAPI.DTO.PriceTickDTO">
             <summary>
             The mid price at the point in time of the price tick.
@@ -1216,7 +1353,7 @@
         </member>
         <member name="T:CIAPI.DTO.ApiOpenPositionDTO">
             <summary>
-            A Trade, or order that is currently open.
+            A trade, or order that is currently open.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiOpenPositionDTO.OrderId">
@@ -1226,7 +1363,7 @@
         </member>
         <member name="P:CIAPI.DTO.ApiOpenPositionDTO.MarketId">
             <summary>
-            The markets unique identifier.
+            The market's unique identifier.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiOpenPositionDTO.MarketName">
@@ -1251,7 +1388,7 @@
         </member>
         <member name="P:CIAPI.DTO.ApiOpenPositionDTO.TradingAccountId">
             <summary>
-            The trading account that the order is on.
+            The ID of the trading account that the order is on.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiOpenPositionDTO.Currency">
@@ -1276,7 +1413,7 @@
         </member>
         <member name="P:CIAPI.DTO.ApiOpenPositionDTO.LastChangedDateTimeUTC">
             <summary>
-            The last time that the order changed. Note - Does not include things such as the current market price.
+            The last time that the order changed. Note - does not include things such as the current market price.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiOpenPositionDTO.Status_Resolved">
@@ -1314,14 +1451,44 @@
             The list of market information for each requested market.
             </summary>
         </member>
+        <member name="T:CIAPI.DTO.UpdateDeleteClientPreferenceResponseDTO">
+            <summary>
+            A bool result to signify status of completed operation.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.UpdateDeleteClientPreferenceResponseDTO.Successful">
+            <summary>
+            Status of save
+            </summary>
+        </member>
         <member name="T:CIAPI.DTO.ApiClientApplicationMessageTranslationResponseDTO">
             <summary>
-            Gives a list of client application specific message translations
+            Gives a list of client application specific message translations.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiClientApplicationMessageTranslationResponseDTO.TranslationKeyValuePairs">
             <summary>
-            List of message translations (key/value pairs)
+            List of message translations (key/value pairs).
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.GetVersionInformationResponseDTO">
+            <summary>
+            The response containing version information and upgrade url of the client application.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.GetVersionInformationResponseDTO.MinimumRequiredVersion">
+            <summary>
+            The minimum version of the client application that can be used. If the installed version is less than this it shouldn't be used.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.GetVersionInformationResponseDTO.LatestVersion">
+            <summary>
+            The latest version of the client application that can be used.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.GetVersionInformationResponseDTO.UpgradeUrl">
+            <summary>
+            The url of the upgrade.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ListActiveStopLimitOrderResponseDTO">
@@ -1337,6 +1504,16 @@
         <member name="T:CIAPI.DTO.ApiSaveMarketInformationResponseDTO">
             <summary>
             An (empty) response to indicate that the save market information operation has completed.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ListMarketSearchResponseDTO">
+            <summary>
+            Response from a market search request.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ListMarketSearchResponseDTO.Markets">
+            <summary>
+            The requested list of markets.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ListNewsHeadlinesResponseDTO">
@@ -1357,6 +1534,16 @@
         <member name="P:CIAPI.DTO.GetActiveStopLimitOrderResponseDTO.ActiveStopLimitOrder">
             <summary>
             The active stop limit order. If it is null then the active stop limit order does not exist.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.GetListClientPreferenceResponseDTO">
+            <summary>
+            List of results of client preference get.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.GetListClientPreferenceResponseDTO.ClientPreferences">
+            <summary>
+            The requested client preference key value pair.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.NewStopLimitOrderRequestDTO">
@@ -1411,7 +1598,7 @@
         </member>
         <member name="P:CIAPI.DTO.NewStopLimitOrderRequestDTO.TradingAccountId">
             <summary>
-            The ID of the TradingAccount associated with the trade/order request.
+            The ID of the trading account associated with the trade/order request.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.NewStopLimitOrderRequestDTO.IfDone">
@@ -1431,7 +1618,7 @@
         </member>
         <member name="P:CIAPI.DTO.NewStopLimitOrderRequestDTO.ExpiryDateTimeUTC">
             <summary>
-            The associated expiry DateTime for a pair of GoodTillDate IfDone orders.
+            The associated expiry DateTime for a pair of GoodTillDate If/Done orders.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.NewStopLimitOrderRequestDTO.Guaranteed">
@@ -1459,6 +1646,11 @@
             The status message.
             </summary>
         </member>
+        <member name="T:CIAPI.DTO.ApiSaveAccountInformationResponseDTO">
+            <summary>
+            An (empty) response to indicate that the save account information operation has completed.
+            </summary>
+        </member>
         <member name="T:CIAPI.DTO.ApiOrderResponseDTO">
             <summary>
             Response to an order request.
@@ -1479,9 +1671,24 @@
             Order status ID.
             </summary>
         </member>
+        <member name="P:CIAPI.DTO.ApiOrderResponseDTO.OrderTypeId">
+            <summary>
+            Order type ID.
+            </summary>
+        </member>
         <member name="P:CIAPI.DTO.ApiOrderResponseDTO.Price">
             <summary>
             Order fill price.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderResponseDTO.Quantity">
+            <summary>
+            Order quantity
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderResponseDTO.TriggerPrice">
+            <summary>
+            Trigger price, if applicable
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiOrderResponseDTO.CommissionCharge">
@@ -1516,7 +1723,7 @@
         </member>
         <member name="T:CIAPI.DTO.ApiStopLimitResponseDTO">
             <summary>
-            The response from the stop limit order request
+            The response from the stop limit order request.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ListCfdMarketsResponseDTO">
@@ -1589,6 +1796,11 @@
             Quote response.
             </summary>
         </member>
+        <member name="P:CIAPI.DTO.ApiTradeOrderResponseDTO.Actions">
+            <summary>
+            List of order actions with their associated response.
+            </summary>
+        </member>
         <member name="P:CIAPI.DTO.ApiTradeOrderResponseDTO.StatusReason_Resolved">
             <summary>
             Plain text StatusReason
@@ -1651,7 +1863,7 @@
         </member>
         <member name="P:CIAPI.DTO.NewTradeOrderRequestDTO.TradingAccountId">
             <summary>
-            The ID of the TradingAccount associated with the trade/order request.
+            The ID of the trading account associated with the trade/order request.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.NewTradeOrderRequestDTO.IfDone">
@@ -1707,6 +1919,16 @@
         <member name="P:CIAPI.DTO.ApiLogOffRequestDTO.Session">
             <summary>
             Session identifier (session token) to delete (log off).
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ClientPreferenceRequestDTO">
+            <summary>
+            Get client preferences.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ClientPreferenceRequestDTO.Key">
+            <summary>
+            The client preference key to get.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ErrorCode">
@@ -1791,32 +2013,32 @@
         </member>
         <member name="P:CIAPI.DTO.ApiLogOnRequestDTO.AppKey">
             <summary>
-            A unique key use to identify the client application.
+            A unique key to identify the client application.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiLogOnRequestDTO.AppVersion">
             <summary>
-            The version of he client application.
+            The version of the client application.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiLogOnRequestDTO.AppComments">
             <summary>
-            Any comments the client applications what to associate with this session. Optional.
+            Any client application comments on what to associate with this session. (Optional).
             </summary>
         </member>
         <member name="T:CIAPI.DTO.DeleteWatchlistItemRequestDTO">
             <summary>
-            Delete watchlist item
+            Delete watchlist item.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.DeleteWatchlistItemRequestDTO.ParentWatchlistDisplayOrderId">
             <summary>
-            The watchlist display order id to delete the item from
+            The watchlist display order ID to delete the item from.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.DeleteWatchlistItemRequestDTO.MarketId">
             <summary>
-            The market item to delete
+            The market item to delete.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ApiLogOffResponseDTO">
@@ -1831,7 +2053,7 @@
         </member>
         <member name="T:CIAPI.DTO.MarketInformationSearchWithTagsResponseDTO">
             <summary>
-            Response from a market search with tags request.
+            Response from a market information search with tags request.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.MarketInformationSearchWithTagsResponseDTO.Markets">
@@ -1869,26 +2091,6 @@
             The details of the order if it is a stop limit order.
             </summary>
         </member>
-        <member name="T:CIAPI.DTO.GetVersionInformationResponseDTO">
-            <summary>
-            The response containing version information and upgrade url of the client application.
-            </summary>
-        </member>
-        <member name="P:CIAPI.DTO.GetVersionInformationResponseDTO.MinimumRequiredVersion">
-            <summary>
-            The minimum version of the client application that can be used. If the installed version is less than this it shouldn't be used.
-            </summary>
-        </member>
-        <member name="P:CIAPI.DTO.GetVersionInformationResponseDTO.LatestVersion">
-            <summary>
-            The latest version of the client application that can be used.
-            </summary>
-        </member>
-        <member name="P:CIAPI.DTO.GetVersionInformationResponseDTO.UpgradeUrl">
-            <summary>
-            The url of the upgrade.
-            </summary>
-        </member>
         <member name="T:CIAPI.DTO.ListTradeHistoryResponseDTO">
             <summary>
             Contains the result of a ListTradeHistory query.
@@ -1897,6 +2099,21 @@
         <member name="P:CIAPI.DTO.ListTradeHistoryResponseDTO.TradeHistory">
             <summary>
             A list of historical trades.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ListTradeHistoryResponseDTO.SupplementalOpenOrders">
+            <summary>
+            A list of trades which are referenced as OpenOrderId's in the trade history list - but do not actually exist in that list.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.GetClientPreferenceResponseDTO">
+            <summary>
+            Results of client preference get.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.GetClientPreferenceResponseDTO.ClientPreference">
+            <summary>
+            The requested client preference key value pair.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ApiSaveWatchlistResponseDTO">
@@ -1932,6 +2149,16 @@
         <member name="P:CIAPI.DTO.ListMarketInformationRequestDTO.MarketIds">
             <summary>
             The list of market IDs to get information for.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.GetKeyListClientPreferenceResponseDTO">
+            <summary>
+            Results of client preference get.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.GetKeyListClientPreferenceResponseDTO.ClientPreferenceKeys">
+            <summary>
+            The list of client preference keys.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ApiQuoteResponseDTO">
@@ -1986,7 +2213,7 @@
         </member>
         <member name="P:CIAPI.DTO.ApiLookupResponseDTO.ApiCultureLookupDTOList">
             <summary>
-            TODO: document me!
+            List of entities each containing data specific to a culture.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ApiIfDoneResponseDTO">
@@ -2002,6 +2229,16 @@
         <member name="P:CIAPI.DTO.ApiIfDoneResponseDTO.Limit">
             <summary>
             The Limit order response.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.SaveClientPreferenceRequestDTO">
+            <summary>
+            Save client preferences.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.SaveClientPreferenceRequestDTO.ClientPreference">
+            <summary>
+            The list of client preferences key value pairs to be saved.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ApiDeleteWatchlistRequestDTO">
@@ -2031,7 +2268,7 @@
         </member>
         <member name="T:CIAPI.DTO.ApiLogOnResponseDTO">
             <summary>
-            Response to a CreateSessionRequest (Log On).
+            Response to a LogOn call.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiLogOnResponseDTO.Session">
@@ -2041,12 +2278,12 @@
         </member>
         <member name="P:CIAPI.DTO.ApiLogOnResponseDTO.PasswordChangeRequired">
             <summary>
-            Flag used it indicate if a password change is needed.
+            Flag used to indicate whether a password change is needed.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiLogOnResponseDTO.AllowedAccountOperator">
             <summary>
-            Flag used it indicate if the account operator to which this use is associated is allowed to access the application.
+            Flag used to indicate whether the account operator associated with this user is allowed to access the application.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ListOpenPositionsResponseDTO">
@@ -2091,7 +2328,7 @@
         </member>
         <member name="P:CIAPI.DTO.ApiChangePasswordResponseDTO.IsPasswordChanged">
             <summary>
-            Was the password change request successful?
+            Flag indicating whether the password change request was successful.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.CancelOrderRequestDTO">
@@ -2136,12 +2373,47 @@
         </member>
         <member name="T:CIAPI.DTO.MarketInformationTagLookupResponseDTO">
             <summary>
-            Response from a market search with tags request.
+            Response from a search request of market information tags.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.MarketInformationTagLookupResponseDTO.Tags">
             <summary>
             The requested list of market tags.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiOrderActionResponseDTO">
+            <summary>
+            Response to an order request.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderActionResponseDTO.ActionedOrderId">
+            <summary>
+            Actioned Order ID.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderActionResponseDTO.ActioningOrderId">
+            <summary>
+            Actioning Order ID.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderActionResponseDTO.Quantity">
+            <summary>
+            Quantity.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderActionResponseDTO.ProfitAndLoss">
+            <summary>
+            Profit or Loss.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderActionResponseDTO.ProfitAndLossCurrency">
+            <summary>
+            Profit or Loss Currency.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderActionResponseDTO.OrderActionTypeId">
+            <summary>
+            Order Action Type.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ApiErrorResponseDTO">
@@ -2166,17 +2438,42 @@
         </member>
         <member name="T:CIAPI.DTO.ApiSimulateOrderResponseDTO">
             <summary>
-            Simulated order response
+            Simulated order response.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiSimulateOrderResponseDTO.StatusReason">
             <summary>
-            Simulated order status reason id.
+            Simulated order status reason ID.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiSimulateOrderResponseDTO.Status">
             <summary>
-            Simulated order status id.
+            Simulated order status ID.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiClientApplicationMessageTranslationRequestDTO">
+            <summary>
+            A request to update a stop/limit order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiClientApplicationMessageTranslationRequestDTO.ClientApplicationId">
+            <summary>
+            Client Id of requesting user.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiClientApplicationMessageTranslationRequestDTO.CultureId">
+            <summary>
+            Culture Id of requesting user.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiClientApplicationMessageTranslationRequestDTO.AccountOperatorId">
+            <summary>
+            Account Operatior Id of requesting user
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiClientApplicationMessageTranslationRequestDTO.InterestedTranslationKeys">
+            <summary>
+            A list of interesting keys to get translations for
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ApiSaveWatchlistRequestDTO">
@@ -2188,6 +2485,102 @@
             <summary>
             The watchlist to save. This will update an existing watchlist; or when the watchlistId is omitted or 0 is supplied, it will create a new watchlist.
             </summary>
+        </member>
+        <member name="M:CIAPI.Rpc.Client.ListMarketSearch(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.String,System.Int32,System.Boolean)">
+            <summary>
+            <p>Returns market information for the markets that meet the search criteria.</p> The search can be performed by market code and/or market name, and can include CFDs and Spread Bet markets.
+            </summary>
+            <param name="searchByMarketCode">Sets the search to use market code.</param>
+            <param name="searchByMarketName">Sets the search to use market Name.</param>
+            <param name="spreadProductType">Sets the search to include spread bet markets.</param>
+            <param name="cfdProductType">Sets the search to include CFD markets.</param>
+            <param name="binaryProductType">Sets the search to include binary markets.</param>
+            <param name="query">The text to search for. Matches part of market name / code from the start.</param>
+            <param name="maxResults">The maximum number of results to return.</param>
+            <param name="useMobileShortName">True if the market name should be in short form.  Helpful when displaying data on a small screen.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client.BeginListMarketSearch(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.String,System.Int32,System.Boolean,Salient.JsonClient.ApiAsyncCallback{CIAPI.DTO.ListMarketSearchResponseDTO},System.Object)">
+            <summary>
+            <p>Returns market information for the markets that meet the search criteria.</p> The search can be performed by market code and/or market name, and can include CFDs and Spread Bet markets.
+            </summary>
+            <param name="searchByMarketCode">Sets the search to use market code.</param>
+            <param name="searchByMarketName">Sets the search to use market Name.</param>
+            <param name="spreadProductType">Sets the search to include spread bet markets.</param>
+            <param name="cfdProductType">Sets the search to include CFD markets.</param>
+            <param name="binaryProductType">Sets the search to include binary markets.</param>
+            <param name="query">The text to search for. Matches part of market name / code from the start.</param>
+            <param name="maxResults">The maximum number of results to return.</param>
+            <param name="useMobileShortName">True if the market name should be in short form.  Helpful when displaying data on a small screen.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client.Save(CIAPI.DTO.SaveClientPreferenceRequestDTO)">
+            <summary>
+            Save client preferences.
+            </summary>
+            <param name="saveClientPreferenceRequestDTO">Save client preferences.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client.BeginSave(CIAPI.DTO.SaveClientPreferenceRequestDTO,Salient.JsonClient.ApiAsyncCallback{CIAPI.DTO.UpdateDeleteClientPreferenceResponseDTO},System.Object)">
+            <summary>
+            Save client preferences.
+            </summary>
+            <param name="saveClientPreferenceRequestDTO">Save client preferences.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client.Get(CIAPI.DTO.ClientPreferenceRequestDTO)">
+            <summary>
+            get client preferences.
+            </summary>
+            <param name="clientPreferenceRequestDto">get client preferences.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client.BeginGet(CIAPI.DTO.ClientPreferenceRequestDTO,Salient.JsonClient.ApiAsyncCallback{CIAPI.DTO.GetClientPreferenceResponseDTO},System.Object)">
+            <summary>
+            get client preferences.
+            </summary>
+            <param name="clientPreferenceRequestDto">get client preferences.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client.GetKeyList">
+            <summary>
+            get list of client preferences keys.
+            </summary>
+        </member>
+        <member name="M:CIAPI.Rpc.Client.BeginGetKeyList(Salient.JsonClient.ApiAsyncCallback{CIAPI.DTO.GetKeyListClientPreferenceResponseDTO},System.Object)">
+            <summary>
+            get list of client preferences keys.
+            </summary>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client.Delete(CIAPI.DTO.ClientPreferenceRequestDTO)">
+            <summary>
+            delete client preference key.
+            </summary>
+            <param name="clientPreferenceKey">delete client preference key.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client.BeginDelete(CIAPI.DTO.ClientPreferenceRequestDTO,Salient.JsonClient.ApiAsyncCallback{CIAPI.DTO.UpdateDeleteClientPreferenceResponseDTO},System.Object)">
+            <summary>
+            delete client preference key.
+            </summary>
+            <param name="clientPreferenceKey">delete client preference key.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client.GetClientApplicationMessageTranslationWithInterestingItems(CIAPI.DTO.ApiClientApplicationMessageTranslationRequestDTO)">
+            <summary>
+            Use the message translation service to get client specific translated textual strings for specific keys.
+            </summary>
+            <param name="apiClientApplicationMessageTranslationRequestDto">Dto of the required data for translation lookup for user.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client.BeginGetClientApplicationMessageTranslationWithInterestingItems(CIAPI.DTO.ApiClientApplicationMessageTranslationRequestDTO,Salient.JsonClient.ApiAsyncCallback{CIAPI.DTO.ApiClientApplicationMessageTranslationResponseDTO},System.Object)">
+            <summary>
+            Use the message translation service to get client specific translated textual strings for specific keys.
+            </summary>
+            <param name="apiClientApplicationMessageTranslationRequestDto">Dto of the required data for translation lookup for user.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
         </member>
         <member name="M:CIAPI.Rpc.Client.GetVersionInformation(System.String,System.Int32)">
             <summary>
