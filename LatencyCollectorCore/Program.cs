@@ -52,7 +52,7 @@ namespace LatencyCollectorCore
 				lock (Sync)
 				{
 					_terminated = true;
-					_data.Logout();
+					_thread.Interrupt();
 					_thread.Join(TimeSpan.FromMinutes(2));
 					_thread = null;
 
@@ -71,8 +71,6 @@ namespace LatencyCollectorCore
 
 			try
 			{
-				_data = new Data();
-
 				while (!_terminated)
 				{
 					try
@@ -100,17 +98,6 @@ namespace LatencyCollectorCore
 
 			try
 			{
-				if (_data != null)
-					_data.Dispose();
-				_data = null;
-			}
-			catch (Exception exc)
-			{
-				ReportEvent(exc.ToString());
-			}
-
-			try
-			{
 				Tracker.Terminate(true);
 			}
 			catch (Exception exc)
@@ -121,12 +108,40 @@ namespace LatencyCollectorCore
 
 		private static void PerformPolling()
 		{
-			_data.Login();
+			var data = new Data();
+			try
+			{
+				data.Login();
 
-			_data.GetMarketsList(MarketType.CFD, 100, "", "");
-			_data.GetMarketsList(MarketType.Spread, 100, "", "");
+				data.GetMarketsList(MarketType.CFD, 100, "", "");
+				data.GetMarketsList(MarketType.Spread, 100, "", "");
+			}
+			catch (Exception exc)
+			{
+				Report(exc);
+			}
+			finally
+			{
+				try
+				{
+					data.Logout();
+				}
+				catch (Exception exc)
+				{
+					Report(exc);
+				}
+				finally
+				{
+					data.Dispose();
+				}
+			}
+		}
 
-			_data.Logout();
+		static void Report(Exception exc)
+		{
+			if (exc is ThreadInterruptedException)
+				return;
+			ReportEvent(exc.ToString());
 		}
 
 		static void ReportEvent(string message)
@@ -149,7 +164,6 @@ namespace LatencyCollectorCore
 			return null;
 		}
 
-		private static Data _data;
 		private static volatile bool _terminated;
 		private static Thread _thread;
 		private static readonly object Sync = new object();
