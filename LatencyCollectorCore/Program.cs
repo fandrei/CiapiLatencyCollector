@@ -41,7 +41,7 @@ namespace LatencyCollectorCore
 			}
 			catch (Exception exc)
 			{
-				ReportEvent(exc.ToString());
+				Report(exc);
 			}
 		}
 
@@ -61,7 +61,7 @@ namespace LatencyCollectorCore
 			}
 			catch (Exception exc)
 			{
-				ReportEvent(exc.ToString());
+				Report(exc);
 			}
 		}
 
@@ -85,7 +85,7 @@ namespace LatencyCollectorCore
 					{ }
 					catch (Exception exc)
 					{
-						ReportEvent(exc.ToString());
+						Report(exc);
 					}
 
 					if (_terminated)
@@ -102,7 +102,7 @@ namespace LatencyCollectorCore
 			}
 			catch (Exception exc)
 			{
-				ReportEvent(exc.ToString());
+				Report(exc);
 			}
 		}
 
