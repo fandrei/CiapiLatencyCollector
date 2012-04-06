@@ -77,10 +77,6 @@ namespace LatencyCollectorCore
 					{
 						PerformPolling();
 					}
-					catch (ThreadInterruptedException)
-					{
-						break;
-					}
 					catch (NotConnectedException)
 					{ }
 					catch (Exception exc)
@@ -96,6 +92,8 @@ namespace LatencyCollectorCore
 			catch (ThreadInterruptedException)
 			{ }
 
+			StopStreaming();
+
 			try
 			{
 				Tracker.Terminate(true);
@@ -108,6 +106,8 @@ namespace LatencyCollectorCore
 
 		private static void PerformPolling()
 		{
+			StartStreaming();
+
 			var data = new Data();
 			try
 			{
@@ -137,6 +137,56 @@ namespace LatencyCollectorCore
 			}
 		}
 
+		static void StartStreaming()
+		{
+			try
+			{
+				lock (StreamingSync)
+				{
+					if (_streamingData != null)
+						return;
+
+					var streamingData = new Data();
+					streamingData.Login();
+					streamingData.SubscribePrice(99500);
+
+					_streamingData = streamingData;
+				}
+			}
+			catch (Exception exc)
+			{
+				Report(exc);
+			}
+		}
+
+		static void StopStreaming()
+		{
+			try
+			{
+				lock (StreamingSync)
+				{
+					if (_streamingData == null)
+						return;
+
+					try
+					{
+						_streamingData.Logout();
+					}
+					catch (Exception exc)
+					{
+						Report(exc);
+					}
+
+					_streamingData.Dispose();
+					_streamingData = null;
+				}
+			}
+			catch (Exception exc)
+			{
+				Report(exc);
+			}
+		}
+
 		static void Report(Exception exc)
 		{
 			if (exc is ThreadInterruptedException)
@@ -163,6 +213,9 @@ namespace LatencyCollectorCore
 			}
 			return null;
 		}
+
+		private static Data _streamingData;
+		private static readonly object StreamingSync = new object();
 
 		private static volatile bool _terminated;
 		private static Thread _thread;

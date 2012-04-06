@@ -134,6 +134,33 @@ namespace LatencyCollectorCore
 			}
 		}
 
+		public void SubscribePrice(int market)
+		{
+			lock (_sync)
+			{
+				var newListener = _streamingClient.BuildPricesListener(market);
+
+				_streamingStartTime = DateTime.UtcNow;
+				_latencyWatch = Stopwatch.StartNew();
+
+				newListener.MessageReceived += OnPriceUpdate;
+			}
+		}
+
+		private static Stopwatch _latencyWatch;
+		private static DateTime _streamingStartTime;
+
+		static void OnPriceUpdate(object sender, MessageEventArgs<PriceDTO> e)
+		{
+			var price = e.Data;
+			if (price.TickDate < _streamingStartTime) // outdated tick
+				return;
+
+			var diff = _latencyWatch.Elapsed - (price.TickDate - _streamingStartTime);
+			Trace.WriteLine(string.Format("latency {0}", diff.TotalSeconds));
+			//Tracker.Log("Latency PriceStream", diff.TotalSeconds);
+		}
+
 		readonly object _sync = new object();
 		private Client _client;
 		private IStreamingClient _streamingClient;
