@@ -148,7 +148,7 @@ namespace LatencyCollectorCore
 
 					var streamingData = new Data();
 					streamingData.Login();
-					streamingData.SubscribePrice(99524); // EUR/CAD (per 0.0001) CFD
+					streamingData.SubscribePrice(400481142); // GBP/USD
 
 					_streamingData = streamingData;
 				}
