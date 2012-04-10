@@ -157,8 +157,8 @@ namespace LatencyCollectorCore
 				return;
 
 			var diff = _latencyWatch.Elapsed - (price.TickDate - _streamingStartTime);
-			Trace.WriteLine(string.Format("latency {0}", diff.TotalSeconds));
-			//Tracker.Log("Latency PriceStream", diff.TotalSeconds);
+			//Trace.WriteLine(string.Format("latency {0}", diff.TotalSeconds));
+			Tracker.Log("Jitter PriceStream", diff.TotalSeconds);
 		}
 
 		readonly object _sync = new object();
