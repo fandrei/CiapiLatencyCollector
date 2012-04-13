@@ -106,7 +106,7 @@ namespace LatencyCollectorCore
 
 		private static void PerformPolling()
 		{
-			StartStreaming();
+			EnsureStreamingStarted();
 
 			var data = new Data();
 			try
@@ -137,7 +137,7 @@ namespace LatencyCollectorCore
 			}
 		}
 
-		static void StartStreaming()
+		static void EnsureStreamingStarted()
 		{
 			try
 			{
