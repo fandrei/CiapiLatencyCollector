@@ -191,13 +191,13 @@ namespace LatencyCollectorCore
 		{
 			if (exc is ThreadInterruptedException)
 				return;
-			ReportEvent(exc.ToString());
+			ReportEvent("Exception", exc.ToString());
 		}
 
-		static void ReportEvent(string message)
+		static void ReportEvent(string type, string message)
 		{
 			Trace.WriteLine(message);
-			Data.Tracker.Log("Exception", message);
+			Data.Tracker.Log(type, message);
 		}
 
 		// load assembly from the working folder, if impossible to resolve automatically
