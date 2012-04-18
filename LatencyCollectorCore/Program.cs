@@ -114,7 +114,6 @@ namespace LatencyCollectorCore
 				data.Login();
 
 				data.GetMarketsList(MarketType.CFD, 100, "", "");
-				data.GetMarketsList(MarketType.Spread, 100, "", "");
 			}
 			catch (Exception exc)
 			{
