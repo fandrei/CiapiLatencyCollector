@@ -75,6 +75,9 @@ namespace LatencyCollectorCore
 				var curAssembly = typeof(Data).Assembly;
 				Data.Tracker.Log("Info_LatencyCollectorVersion", curAssembly.FullName);
 
+				SntpClient.Init();
+
+
 				while (!_terminated)
 				{
 					try
@@ -110,6 +113,7 @@ namespace LatencyCollectorCore
 
 		private static void PerformPolling()
 		{
+			Data.AdjustTime();
 			EnsureStreamingStarted();
 
 			var data = new Data();

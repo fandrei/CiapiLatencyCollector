@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using AppMetrics.Client;
@@ -141,13 +142,11 @@ namespace LatencyCollectorCore
 				var newListener = _streamingClient.BuildPricesListener(market);
 
 				_streamingStartTime = DateTime.UtcNow;
-				_latencyWatch = Stopwatch.StartNew();
 
 				newListener.MessageReceived += OnPriceUpdate;
 			}
 		}
 
-		private static Stopwatch _latencyWatch;
 		private static DateTime _streamingStartTime;
 
 		static void OnPriceUpdate(object sender, MessageEventArgs<PriceDTO> e)
@@ -156,9 +155,10 @@ namespace LatencyCollectorCore
 			if (price.TickDate < _streamingStartTime) // outdated tick
 				return;
 
-			var diff = _latencyWatch.Elapsed - (price.TickDate - _streamingStartTime);
-			//Trace.WriteLine(string.Format("latency {0}", diff.TotalSeconds));
-			Tracker.Log("Jitter PriceStream", diff.TotalSeconds);
+			var diff = (DateTime.UtcNow + TimeSpan.FromSeconds(_timeOffsetSeconds)) - price.TickDate;
+
+			Trace.WriteLine(string.Format("latency {0}", diff.TotalSeconds));
+			//Tracker.Log("Latency PriceStream", diff.TotalSeconds);
 		}
 
 		readonly object _sync = new object();
@@ -228,6 +228,18 @@ namespace LatencyCollectorCore
 
 			Tracker.Log("Latency " + label, diff.TotalSeconds);
 		}
+
+		public static void AdjustTime()
+		{
+			var newTimeOffset = SntpClient.GetTimeOffset().TotalSeconds;
+			var message = string.Format(CultureInfo.InvariantCulture, "Time adjusted (offset {0}, offset changed {1})",
+				newTimeOffset, newTimeOffset - _timeOffsetSeconds);
+			Tracker.Log("Event", message);
+
+			_timeOffsetSeconds = newTimeOffset;
+		}
+
+		private static double _timeOffsetSeconds;
 
 		public static readonly Tracker Tracker = new Tracker("http://metrics.labs.cityindex.com/LogEvent.ashx",
 			"CiapiLatencyCollector");
