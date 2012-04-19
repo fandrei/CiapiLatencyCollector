@@ -71,6 +71,10 @@ namespace LatencyCollectorCore
 
 			try
 			{
+
+				var curAssembly = typeof(Data).Assembly;
+				Data.Tracker.Log("Info_LatencyCollectorVersion", curAssembly.FullName);
+
 				while (!_terminated)
 				{
 					try
