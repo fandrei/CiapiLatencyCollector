@@ -155,10 +155,8 @@ namespace LatencyCollectorCore
 			if (price.TickDate < _streamingStartTime) // outdated tick
 				return;
 
-			var diff = (DateTime.UtcNow + TimeSpan.FromSeconds(_timeOffsetSeconds)) - price.TickDate;
-
-			Trace.WriteLine(string.Format("latency {0}", diff.TotalSeconds));
-			//Tracker.Log("Latency PriceStream", diff.TotalSeconds);
+			var latency = (DateTime.UtcNow + TimeSpan.FromSeconds(_timeOffsetSeconds)) - price.TickDate;
+			Tracker.Log("Latency PriceStream", latency.TotalSeconds);
 		}
 
 		readonly object _sync = new object();
