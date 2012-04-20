@@ -112,7 +112,6 @@ namespace LatencyCollectorCore
 
 		private static void PerformPolling()
 		{
-			Data.AdjustTime();
 			EnsureStreamingStarted();
 
 			var data = new Data();

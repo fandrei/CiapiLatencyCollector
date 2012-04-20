@@ -155,7 +155,8 @@ namespace LatencyCollectorCore
 			if (price.TickDate < _streamingStartTime) // outdated tick
 				return;
 
-			var latency = (DateTime.UtcNow + TimeSpan.FromSeconds(_timeOffsetSeconds)) - price.TickDate;
+			var timeOffset = SntpClient.GetTimeOffset();
+			var latency = (DateTime.UtcNow + timeOffset) - price.TickDate;
 			Tracker.Log("Latency PriceStream", latency.TotalSeconds);
 		}
 
@@ -226,18 +227,6 @@ namespace LatencyCollectorCore
 
 			Tracker.Log("Latency " + label, diff.TotalSeconds);
 		}
-
-		public static void AdjustTime()
-		{
-			var newTimeOffset = SntpClient.GetTimeOffset().TotalSeconds;
-			var message = string.Format(CultureInfo.InvariantCulture, "Time adjusted (offset {0}, offset changed {1})",
-				newTimeOffset, newTimeOffset - _timeOffsetSeconds);
-			Tracker.Log("Event", message);
-
-			_timeOffsetSeconds = newTimeOffset;
-		}
-
-		private static double _timeOffsetSeconds;
 
 		public static readonly Tracker Tracker = new Tracker("http://metrics.labs.cityindex.com/LogEvent.ashx",
 			"CiapiLatencyCollector");

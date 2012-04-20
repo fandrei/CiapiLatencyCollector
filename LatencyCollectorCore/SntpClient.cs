@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -22,7 +23,7 @@ namespace LatencyCollectorCore
 			_timer.Start();
 
 			int i = 0;
-			while (!UpdateTime() && i < 100)
+			while (!_offsetInitialized && i < 100)
 			{
 				RequestTime();
 				Thread.Sleep(TimeSpan.FromSeconds(0.5));
@@ -55,14 +56,14 @@ namespace LatencyCollectorCore
 			return false;
 		}
 
-		static bool UpdateTime()
+		static void UpdateTime()
 		{
 			try
 			{
 				lock (Sync)
 				{
 					if (_requestResults.Count < MinRequestsCount)
-						return false;
+						return;
 
 					var bestNtpResults = FilterNtpResults(_requestResults);
 					_requestResults.Clear();
@@ -75,15 +76,17 @@ namespace LatencyCollectorCore
 					var middle2 = (int)Math.Ceiling(middle);
 					var newOffset = (offsets[middle1] + offsets[middle2]) / 2.0;
 
+					var message = string.Format(CultureInfo.InvariantCulture, "Time adjusted (offset {0}, offset changed {1})",
+						newOffset, newOffset - _timeOffset.TotalSeconds);
+					Data.Tracker.Log("Event", message);
+
 					_timeOffset = TimeSpan.FromSeconds(newOffset);
 				}
-
-				return true;
+				_offsetInitialized = true;
 			}
 			catch (Exception exc)
 			{
-				Trace.WriteLine(exc);
-				return false;
+				Data.Tracker.Log("Exception", exc);
 			}
 		}
 
@@ -157,6 +160,7 @@ namespace LatencyCollectorCore
 		private const int NtpPort = 123;
 
 		private static TimeSpan _timeOffset;
+		private static volatile bool _offsetInitialized;
 
 		private static Timer _timer;
 		private const int TimerInterval = 10 * 1000;
