@@ -70,10 +70,10 @@ namespace LatencyCollectorCore
 					var offsets = bestNtpResults.Select(val => val.Offset.TotalSeconds).ToList();
 					offsets.Sort();
 
-					var middle = (offsets.Count - 1)/2.0;
-					var middle1 = (int) Math.Floor(middle);
-					var middle2 = (int) Math.Ceiling(middle);
-					var newOffset = (offsets[middle1] + offsets[middle2])/2.0;
+					var middle = (offsets.Count - 1) / 2.0;
+					var middle1 = (int)Math.Floor(middle);
+					var middle2 = (int)Math.Ceiling(middle);
+					var newOffset = (offsets[middle1] + offsets[middle2]) / 2.0;
 
 					_timeOffset = TimeSpan.FromSeconds(newOffset);
 				}

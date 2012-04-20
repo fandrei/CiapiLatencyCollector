@@ -77,7 +77,6 @@ namespace LatencyCollectorCore
 
 				SntpClient.Init();
 
-
 				while (!_terminated)
 				{
 					try
