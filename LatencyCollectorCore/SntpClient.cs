@@ -17,61 +17,73 @@ namespace LatencyCollectorCore
 			_timer = new Timer { Interval = 1, AutoReset = false };
 
 			_timer.Elapsed +=
-				(state, args) => UpdateTime();
+				(state, args) => RequestTime();
 
-			while (!UpdateTime())
+			int i = 0;
+			while (!UpdateTime() && i < 100)
 			{
-				Thread.Sleep(TimeSpan.FromSeconds(1));
+				RequestTime();
+				Thread.Sleep(TimeSpan.FromSeconds(0.5));
+				i++;
 			}
 
 			_timer.Start();
 		}
 
-		private static bool UpdateTime()
+		private static bool RequestTime()
 		{
 			try
 			{
-				var ntpResults = GetNtpResults();
-				var bestNtpResults = FilterNtpResults(ntpResults);
-
-				var offsets = bestNtpResults.Select(val => val.Offset.TotalSeconds).ToList();
-				offsets.Sort();
-
-				var middle = (offsets.Count - 1) / 2.0;
-				var middle1 = (int)Math.Floor(middle);
-				var middle2 = (int)Math.Ceiling(middle);
-				var newOffset = (offsets[middle1] + offsets[middle2]) / 2.0;
-
+				var cur = RequestTimeOffset(Server);
 				lock (Sync)
 				{
-					_timeOffset = TimeSpan.FromSeconds(newOffset);
+					_requestResults.Add(cur);
 				}
 
 				return true;
 			}
 			catch (SocketException exc)
 			{
-				Trace.WriteLine(exc);
+				//Trace.WriteLine(exc);
 			}
 			finally
 			{
-				_timer.Interval = 1 * 1000;
+				_timer.Interval = TimerInterval;
 				_timer.Start();
 			}
 			return false;
 		}
 
-		private static List<NtpResult> GetNtpResults(int measureCount = 8)
+		static bool UpdateTime()
 		{
-			var ntpResults = new List<NtpResult>();
-
-			for (int i = 0; i < measureCount; i++)
+			try
 			{
-				var cur = GetTimeOffset(Server);
-				ntpResults.Add(cur);
-			}
+				lock (Sync)
+				{
+					if (_requestResults.Count < MinRequestsCount)
+						return false;
 
-			return ntpResults;
+					var bestNtpResults = FilterNtpResults(_requestResults);
+					_requestResults.Clear();
+
+					var offsets = bestNtpResults.Select(val => val.Offset.TotalSeconds).ToList();
+					offsets.Sort();
+
+					var middle = (offsets.Count - 1)/2.0;
+					var middle1 = (int) Math.Floor(middle);
+					var middle2 = (int) Math.Ceiling(middle);
+					var newOffset = (offsets[middle1] + offsets[middle2])/2.0;
+
+					_timeOffset = TimeSpan.FromSeconds(newOffset);
+				}
+
+				return true;
+			}
+			catch (Exception exc)
+			{
+				Trace.WriteLine(exc);
+				return false;
+			}
 		}
 
 		private static List<NtpResult> FilterNtpResults(List<NtpResult> ntpResults)
@@ -82,29 +94,7 @@ namespace LatencyCollectorCore
 			return res;
 		}
 
-		private static Timer _timer;
-
-		static readonly object Sync = new object();
-		private static TimeSpan _timeOffset;
-
-		public static DateTime GetUtcTime()
-		{
-			lock (Sync)
-			{
-				var res = DateTime.UtcNow + _timeOffset;
-				return res;
-			}
-		}
-
-		public static TimeSpan GetTimeOffset()
-		{
-			lock (Sync)
-			{
-				return _timeOffset;
-			}
-		}
-
-		static NtpResult GetTimeOffset(string server)
+		static NtpResult RequestTimeOffset(string server)
 		{
 			NtpData ntpData;
 			var watch = Stopwatch.StartNew();
@@ -145,8 +135,36 @@ namespace LatencyCollectorCore
 			return res;
 		}
 
+		public static DateTime GetUtcTime()
+		{
+			UpdateTime();
+			lock (Sync)
+			{
+				var res = DateTime.UtcNow + _timeOffset;
+				return res;
+			}
+		}
+
+		public static TimeSpan GetTimeOffset()
+		{
+			UpdateTime();
+			lock (Sync)
+			{
+				return _timeOffset;
+			}
+		}
+
 		private static readonly string Server = "pool.ntp.org";
 		private const int NtpPort = 123;
+
+		private static TimeSpan _timeOffset;
+
+		private static Timer _timer;
+		private const int TimerInterval = 10 * 1000;
+
+		static readonly object Sync = new object();
+		private static readonly List<NtpResult> _requestResults = new List<NtpResult>();
+		private const int MinRequestsCount = 8;
 	}
 
 	// see RFC 2030 for reference
