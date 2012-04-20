@@ -38,6 +38,7 @@ namespace LatencyCollectorCore
 				lock (Sync)
 				{
 					_requestResults.Add(cur);
+					UpdateTime();
 				}
 
 				return true;
@@ -137,7 +138,6 @@ namespace LatencyCollectorCore
 
 		public static DateTime GetUtcTime()
 		{
-			UpdateTime();
 			lock (Sync)
 			{
 				var res = DateTime.UtcNow + _timeOffset;
@@ -147,7 +147,6 @@ namespace LatencyCollectorCore
 
 		public static TimeSpan GetTimeOffset()
 		{
-			UpdateTime();
 			lock (Sync)
 			{
 				return _timeOffset;
