@@ -19,6 +19,8 @@ namespace LatencyCollectorCore
 			_timer.Elapsed +=
 				(state, args) => RequestTime();
 
+			_timer.Start();
+
 			int i = 0;
 			while (!UpdateTime() && i < 100)
 			{
@@ -26,8 +28,6 @@ namespace LatencyCollectorCore
 				Thread.Sleep(TimeSpan.FromSeconds(0.5));
 				i++;
 			}
-
-			_timer.Start();
 		}
 
 		private static bool RequestTime()
