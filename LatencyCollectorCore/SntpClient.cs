@@ -45,7 +45,7 @@ namespace LatencyCollectorCore
 			}
 			catch (SocketException exc)
 			{
-				//Trace.WriteLine(exc);
+				Data.Tracker.Log("Exception", exc);
 			}
 			finally
 			{
