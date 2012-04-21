@@ -67,8 +67,6 @@ namespace LatencyCollectorCore
 
 		static void ThreadProc()
 		{
-			var period = TimeSpan.FromMinutes(1.0 / AppSettings.Instance.DataPollingRate);
-
 			try
 			{
 
@@ -92,6 +90,8 @@ namespace LatencyCollectorCore
 
 					if (_terminated)
 						break;
+
+					var period = TimeSpan.FromMinutes(1.0 / AppSettings.Instance.DataPollingRate);
 					Thread.Sleep(period);
 				}
 			}
