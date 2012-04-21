@@ -69,6 +69,7 @@ namespace LatencyCollectorCore
 		{
 			try
 			{
+				AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
 
 				var curAssembly = typeof(Data).Assembly;
 				Data.Tracker.Log("Info_LatencyCollectorVersion", curAssembly.FullName);
@@ -108,6 +109,13 @@ namespace LatencyCollectorCore
 			{
 				Report(exc);
 			}
+		}
+
+		static void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+		{
+			var exception = e.ExceptionObject as Exception;
+			if (exception != null)
+				Report(exception);
 		}
 
 		private static void PerformPolling()
