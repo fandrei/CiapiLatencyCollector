@@ -70,15 +70,18 @@ namespace LatencyCollectorCore
 					{
 						var message = string.Format(CultureInfo.InvariantCulture, "Time sync: offset {0}, offset changed {1}",
 							newOffset, newOffset - _timeOffset.TotalSeconds);
-						Trace.WriteLine(message);
 						Data.Tracker.Log("Event", message);
 					}
 					else
 					{
 						var message = string.Format(CultureInfo.InvariantCulture, "Time sync: offset {0}", newOffset);
-						Trace.WriteLine(message);
 						Data.Tracker.Log("Event", message);
 					}
+
+					var diagMessage = string.Format(CultureInfo.InvariantCulture, 
+						"Time sync diagnostics: min latency {0}, max latency {1}",
+						bestNtpResults.First().Latency, bestNtpResults.Last().Latency);
+					Data.Tracker.Log("Event", diagMessage);
 
 					_timeOffset = TimeSpan.FromSeconds(newOffset);
 				}
