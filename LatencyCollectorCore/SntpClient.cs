@@ -40,8 +40,8 @@ namespace LatencyCollectorCore
 			}
 			finally
 			{
-				//_timer.Interval = TimeSynchronized ? TimerInterval : 1;
-				_timer.Interval = 1;
+				_timer.Interval = TimeSynchronized ? TimerInterval : 1;
+				//_timer.Interval = 1;
 				_timer.Start();
 			}
 		}
