@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading;
 using Timer = System.Timers.Timer;
 
 namespace LatencyCollectorCore
@@ -21,17 +20,9 @@ namespace LatencyCollectorCore
 				(state, args) => RequestTime();
 
 			_timer.Start();
-
-			int i = 0;
-			while (!_offsetInitialized && i < 100)
-			{
-				RequestTime();
-				Thread.Sleep(TimeSpan.FromSeconds(0.5));
-				i++;
-			}
 		}
 
-		private static bool RequestTime()
+		private static void RequestTime()
 		{
 			try
 			{
@@ -41,19 +32,18 @@ namespace LatencyCollectorCore
 					_requestResults.Add(cur);
 					UpdateTime();
 				}
-
-				return true;
 			}
 			catch (SocketException exc)
 			{
-				Data.Tracker.Log("Exception", exc);
+				if (exc.SocketErrorCode != SocketError.TimedOut)
+					Data.Tracker.Log("Exception", exc);
 			}
 			finally
 			{
-				_timer.Interval = TimerInterval;
+				//_timer.Interval = TimeSynchronized ? TimerInterval : 1;
+				_timer.Interval = 1;
 				_timer.Start();
 			}
-			return false;
 		}
 
 		static void UpdateTime()
@@ -76,13 +66,23 @@ namespace LatencyCollectorCore
 					var middle2 = (int)Math.Ceiling(middle);
 					var newOffset = (offsets[middle1] + offsets[middle2]) / 2.0;
 
-					var message = string.Format(CultureInfo.InvariantCulture, "Time adjusted (offset {0}, offset changed {1})",
-						newOffset, newOffset - _timeOffset.TotalSeconds);
-					Data.Tracker.Log("Event", message);
+					if (TimeSynchronized)
+					{
+						var message = string.Format(CultureInfo.InvariantCulture, "Time sync: offset {0}, offset changed {1}",
+							newOffset, newOffset - _timeOffset.TotalSeconds);
+						Trace.WriteLine(message);
+						Data.Tracker.Log("Event", message);
+					}
+					else
+					{
+						var message = string.Format(CultureInfo.InvariantCulture, "Time sync: offset {0}", newOffset);
+						Trace.WriteLine(message);
+						Data.Tracker.Log("Event", message);
+					}
 
 					_timeOffset = TimeSpan.FromSeconds(newOffset);
 				}
-				_offsetInitialized = true;
+				_timeSynchronized = true;
 			}
 			catch (Exception exc)
 			{
@@ -93,7 +93,7 @@ namespace LatencyCollectorCore
 		private static List<NtpResult> FilterNtpResults(List<NtpResult> ntpResults)
 		{
 			ntpResults.Sort((left, right) => left.Latency.CompareTo(right.Latency));
-			var index = (int)Math.Ceiling(ntpResults.Count / 2.0);
+			var index = (int)Math.Ceiling(ntpResults.Count / 4.0);
 			var res = ntpResults.Take(index).ToList();
 			return res;
 		}
@@ -106,7 +106,7 @@ namespace LatencyCollectorCore
 
 			using (var udpClient = new UdpClient(server, NtpPort))
 			{
-				udpClient.Client.ReceiveTimeout = 1000;
+				udpClient.Client.ReceiveTimeout = 5000;
 				var request = BuildNtpRequest();
 				udpClient.Send(request, request.Length);
 
@@ -160,14 +160,19 @@ namespace LatencyCollectorCore
 		private const int NtpPort = 123;
 
 		private static TimeSpan _timeOffset;
-		private static volatile bool _offsetInitialized;
+		private static volatile bool _timeSynchronized;
+
+		public static bool TimeSynchronized
+		{
+			get { return _timeSynchronized; }
+		}
 
 		private static Timer _timer;
 		private const int TimerInterval = 10 * 1000;
 
 		static readonly object Sync = new object();
 		private static readonly List<NtpResult> _requestResults = new List<NtpResult>();
-		private const int MinRequestsCount = 8;
+		private const int MinRequestsCount = 64;
 	}
 
 	// see RFC 2030 for reference
