@@ -93,11 +93,12 @@ namespace LatencyCollectorCore
 			}
 		}
 
-		private static List<NtpResult> FilterNtpResults(List<NtpResult> ntpResults)
+		private static List<NtpResult> FilterNtpResults(List<NtpResult> values)
 		{
-			ntpResults.Sort((left, right) => left.Latency.CompareTo(right.Latency));
-			var index = (int)Math.Ceiling(ntpResults.Count / 4.0);
-			var res = ntpResults.Take(index).ToList();
+			values.Sort((left, right) => left.Latency.CompareTo(right.Latency));
+			var minLatency = values.First().Latency;
+			var res = new List<NtpResult>(values.Count);
+			res.AddRange(values.Where(cur => cur.Latency < minLatency * 1.3));
 			return res;
 		}
 
