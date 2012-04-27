@@ -155,12 +155,17 @@ namespace LatencyCollectorCore
 			if (price.TickDate < _streamingStartTime) // outdated tick
 				return;
 
+			var now = DateTime.UtcNow;
+
 			//if (!SntpClient.TimeSynchronized)
 			//    return;
 			//var timeOffset = SntpClient.GetTimeOffset();
-			//var latency = (DateTime.UtcNow + timeOffset) - price.TickDate;
+			//var latency = (now + timeOffset) - price.TickDate;
 
-			var latency = DateTime.UtcNow - price.TickDate;
+			if (!NtpdInfo.IsTimeStable())
+				return;
+			var latency = now - price.TickDate;
+
 			Tracker.Log("Latency PriceStream", latency.TotalSeconds);
 		}
 
