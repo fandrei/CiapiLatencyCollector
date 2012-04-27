@@ -72,8 +72,9 @@ namespace LatencyCollectorCore
 				var offset = double.Parse(columns[2]);
 				if (Math.Abs(offset) >= MaxOffset)
 				{
+					var fileName = Path.GetFileName(filePath);
 					var message = string.Format(CultureInfo.InvariantCulture,
-						"ntpd: max offset exceeded, {0} in \"{1}\"", offset, filePath);
+						"ntpd: max offset exceeded, {0} in \"{1}\"", offset, fileName);
 					Data.Tracker.Log("Event", message);
 					return false;
 				}
