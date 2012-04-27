@@ -24,24 +24,32 @@ namespace LatencyCollectorCore
 
 		private static void OnTimer()
 		{
-			lock (Sync)
+			try
 			{
-				var now = DateTime.UtcNow;
-				if (now - _lastUpdatedOffset > OffsetUpdatePeriod)
+				lock (Sync)
 				{
-					RequestTime();
-					_lastUpdatedOffset = now;
-				}
-				else
-				{
-					if (_offsetInitialized)
+					var now = DateTime.UtcNow;
+					if (now - _lastUpdatedOffset > OffsetUpdatePeriod)
 					{
-						var driftSeconds = (now - _lastUpdatedOffset).TotalSeconds * _timeDrift;
-						_currentTimeOffset = _requestedTimeOffset + TimeSpan.FromSeconds(driftSeconds);
-						_timeSynchronized = true;
+						RequestTime();
+						_lastUpdatedOffset = now;
+					}
+					else
+					{
+						if (_offsetInitialized)
+						{
+							var driftSeconds = (now - _lastUpdatedOffset).TotalSeconds * _timeDrift;
+							_currentTimeOffset = _requestedTimeOffset + TimeSpan.FromSeconds(driftSeconds);
+							_timeSynchronized = true;
+						}
 					}
 				}
 			}
+			catch (Exception exc)
+			{
+				ReportException(exc);
+			}
+			_timer.Start();
 		}
 
 		private static void RequestTime()
@@ -58,11 +66,7 @@ namespace LatencyCollectorCore
 			catch (SocketException exc)
 			{
 				if (exc.SocketErrorCode != SocketError.TimedOut)
-					Data.Tracker.Log("Exception", exc);
-			}
-			finally
-			{
-				_timer.Start();
+					ReportException(exc);
 			}
 		}
 
@@ -86,7 +90,7 @@ namespace LatencyCollectorCore
 			}
 			catch (Exception exc)
 			{
-				Data.Tracker.Log("Exception", exc);
+				ReportException(exc);
 			}
 		}
 
@@ -193,6 +197,11 @@ namespace LatencyCollectorCore
 			{
 				return _currentTimeOffset;
 			}
+		}
+
+		static void ReportException(Exception exc)
+		{
+			Data.Tracker.Log("Exception", exc);
 		}
 
 		private static readonly string Server = "pool.ntp.org";
