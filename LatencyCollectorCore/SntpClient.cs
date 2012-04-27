@@ -145,7 +145,7 @@ namespace LatencyCollectorCore
 
 			using (var udpClient = new UdpClient(server, NtpPort))
 			{
-				udpClient.Client.ReceiveTimeout = 2000;
+				udpClient.Client.ReceiveTimeout = ReceiveTimeoutMsecs;
 				var request = BuildNtpRequest();
 				udpClient.Send(request, request.Length);
 
@@ -219,6 +219,7 @@ namespace LatencyCollectorCore
 		static readonly object Sync = new object();
 		private static readonly List<NtpResult> _requestResults = new List<NtpResult>();
 		private const int MinResultsCount = 16;
+		private const int ReceiveTimeoutMsecs = 2000;
 	}
 
 	// see RFC 2030 for reference
