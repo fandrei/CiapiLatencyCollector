@@ -74,7 +74,7 @@ namespace LatencyCollectorCore
 				var curAssembly = typeof(Data).Assembly;
 				Data.Tracker.Log("Info_LatencyCollectorVersion", curAssembly.FullName);
 
-				SntpClient.Init();
+				//SntpClient.Init();
 
 				while (!_terminated)
 				{
