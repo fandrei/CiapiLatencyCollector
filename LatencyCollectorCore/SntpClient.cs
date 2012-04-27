@@ -17,9 +17,31 @@ namespace LatencyCollectorCore
 			_timer = new Timer { Interval = 1, AutoReset = false };
 
 			_timer.Elapsed +=
-				(state, args) => RequestTime();
+				(state, args) => OnTimer();
 
 			_timer.Start();
+		}
+
+		private static void OnTimer()
+		{
+			lock (Sync)
+			{
+				var now = DateTime.UtcNow;
+				if (now - _lastUpdatedOffset > OffsetUpdatePeriod)
+				{
+					RequestTime();
+					_lastUpdatedOffset = now;
+				}
+				else
+				{
+					if (_offsetInitialized)
+					{
+						var driftSeconds = (now - _lastUpdatedOffset).TotalSeconds * _timeDrift;
+						_currentTimeOffset = _requestedTimeOffset + TimeSpan.FromSeconds(driftSeconds);
+						_timeSynchronized = true;
+					}
+				}
+			}
 		}
 
 		private static void RequestTime()
@@ -40,8 +62,6 @@ namespace LatencyCollectorCore
 			}
 			finally
 			{
-				_timer.Interval = TimeSynchronized ? TimerInterval : 1;
-				//_timer.Interval = 1;
 				_timer.Start();
 			}
 		}
@@ -52,40 +72,17 @@ namespace LatencyCollectorCore
 			{
 				lock (Sync)
 				{
-					if (_requestResults.Count < MinRequestsCount)
+					if (_requestResults.Count < MinResultsCount)
 						return;
 
 					var bestNtpResults = FilterNtpResults(_requestResults);
+					if (bestNtpResults.Count < MinResultsCount)
+						return;
+
+					SetTime(bestNtpResults);
+
 					_requestResults.Clear();
-
-					var offsets = bestNtpResults.Select(val => val.Offset.TotalSeconds).ToList();
-					offsets.Sort();
-
-					var middle = (offsets.Count - 1) / 2.0;
-					var middle1 = (int)Math.Floor(middle);
-					var middle2 = (int)Math.Ceiling(middle);
-					var newOffset = (offsets[middle1] + offsets[middle2]) / 2.0;
-
-					if (TimeSynchronized)
-					{
-						var message = string.Format(CultureInfo.InvariantCulture, "Time sync: offset {0}, offset changed {1}",
-							newOffset, newOffset - _timeOffset.TotalSeconds);
-						Data.Tracker.Log("Event", message);
-					}
-					else
-					{
-						var message = string.Format(CultureInfo.InvariantCulture, "Time sync: offset {0}", newOffset);
-						Data.Tracker.Log("Event", message);
-					}
-
-					var diagMessage = string.Format(CultureInfo.InvariantCulture, 
-						"Time sync diagnostics: min latency {0}, max latency {1}",
-						bestNtpResults.First().Latency, bestNtpResults.Last().Latency);
-					Data.Tracker.Log("Event", diagMessage);
-
-					_timeOffset = TimeSpan.FromSeconds(newOffset);
 				}
-				_timeSynchronized = true;
 			}
 			catch (Exception exc)
 			{
@@ -93,12 +90,50 @@ namespace LatencyCollectorCore
 			}
 		}
 
+		private static void SetTime(List<NtpResult> vals)
+		{
+			var offsets = vals.Select(val => val.Offset.TotalSeconds).ToList();
+			var newOffset = GetTimeOffset(offsets);
+
+			{
+				var message = string.Format(CultureInfo.InvariantCulture, "Time sync: offset {0}", newOffset);
+				Data.Tracker.Log("Event", message);
+			}
+
+			if (_offsetInitialized)
+			{
+				var message = string.Format(CultureInfo.InvariantCulture, "Time sync: offset changed {0}",
+					newOffset - _currentTimeOffset.TotalSeconds);
+				Data.Tracker.Log("Event", message);
+			}
+
+			var diagMessage = string.Format(CultureInfo.InvariantCulture,
+				"Time sync diagnostics: count {0}, min offset {1}, max offset {2}, max latency {3}",
+				vals.Count, offsets.First(), offsets.Last(), vals.Last().Latency);
+			Data.Tracker.Log("Event", diagMessage);
+
+			_requestedTimeOffset = TimeSpan.FromSeconds(newOffset);
+			_offsetInitialized = true;
+		}
+
+		private static double GetTimeOffset(List<double> offsets)
+		{
+			offsets.Sort();
+
+			var middle = (offsets.Count - 1) / 2.0;
+			var middle1 = (int)Math.Floor(middle);
+			var middle2 = (int)Math.Ceiling(middle);
+			var newOffset = (offsets[middle1] + offsets[middle2]) / 2.0;
+
+			return newOffset;
+		}
+
 		private static List<NtpResult> FilterNtpResults(List<NtpResult> values)
 		{
 			values.Sort((left, right) => left.Latency.CompareTo(right.Latency));
 			var minLatency = values.First().Latency;
 			var res = new List<NtpResult>(values.Count);
-			res.AddRange(values.Where(cur => cur.Latency < minLatency * 1.3));
+			res.AddRange(values.Where(cur => cur.Latency < minLatency * 1.5));
 			return res;
 		}
 
@@ -110,7 +145,7 @@ namespace LatencyCollectorCore
 
 			using (var udpClient = new UdpClient(server, NtpPort))
 			{
-				udpClient.Client.ReceiveTimeout = 5000;
+				udpClient.Client.ReceiveTimeout = 2000;
 				var request = BuildNtpRequest();
 				udpClient.Send(request, request.Length);
 
@@ -147,7 +182,7 @@ namespace LatencyCollectorCore
 		{
 			lock (Sync)
 			{
-				var res = DateTime.UtcNow + _timeOffset;
+				var res = DateTime.UtcNow + _currentTimeOffset;
 				return res;
 			}
 		}
@@ -156,14 +191,19 @@ namespace LatencyCollectorCore
 		{
 			lock (Sync)
 			{
-				return _timeOffset;
+				return _currentTimeOffset;
 			}
 		}
 
 		private static readonly string Server = "pool.ntp.org";
 		private const int NtpPort = 123;
 
-		private static TimeSpan _timeOffset;
+		private static TimeSpan _currentTimeOffset;
+		private static TimeSpan _requestedTimeOffset;
+		private static double _timeDrift;
+
+		private static volatile bool _offsetInitialized;
+
 		private static volatile bool _timeSynchronized;
 
 		public static bool TimeSynchronized
@@ -172,11 +212,13 @@ namespace LatencyCollectorCore
 		}
 
 		private static Timer _timer;
-		private const int TimerInterval = 10 * 1000;
+
+		private static readonly TimeSpan OffsetUpdatePeriod = TimeSpan.FromSeconds(5);
+		private static DateTime _lastUpdatedOffset = DateTime.MinValue;
 
 		static readonly object Sync = new object();
 		private static readonly List<NtpResult> _requestResults = new List<NtpResult>();
-		private const int MinRequestsCount = 64;
+		private const int MinResultsCount = 16;
 	}
 
 	// see RFC 2030 for reference
