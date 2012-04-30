@@ -29,10 +29,10 @@ namespace LatencyCollectorCore
 				lock (Sync)
 				{
 					var now = DateTime.UtcNow;
-					if (now - _lastUpdatedOffset > OffsetUpdatePeriod)
+					if (now - _lastRequestedOffset > OffsetUpdatePeriod)
 					{
 						RequestTime();
-						_lastUpdatedOffset = now;
+						_lastRequestedOffset = now;
 					}
 					else
 					{
@@ -40,7 +40,6 @@ namespace LatencyCollectorCore
 						{
 							var driftSeconds = (now - _lastUpdatedOffset).TotalSeconds * _timeDrift;
 							_currentTimeOffset = _requestedTimeOffset + TimeSpan.FromSeconds(driftSeconds);
-							_timeSynchronized = true;
 						}
 					}
 				}
@@ -101,22 +100,36 @@ namespace LatencyCollectorCore
 
 			{
 				var message = string.Format(CultureInfo.InvariantCulture, "Time sync: offset {0}", newOffset);
-				Data.Tracker.Log("Event", message);
+				Trace.WriteLine(message);
+				//Data.Tracker.Log("Event", message);
 			}
 
 			if (_offsetInitialized)
 			{
 				var message = string.Format(CultureInfo.InvariantCulture, "Time sync: offset changed {0}",
 					newOffset - _currentTimeOffset.TotalSeconds);
-				Data.Tracker.Log("Event", message);
+				Trace.WriteLine(message);
+				//Data.Tracker.Log("Event", message);
 			}
 
 			var diagMessage = string.Format(CultureInfo.InvariantCulture,
 				"Time sync diagnostics: count {0}, min offset {1}, max offset {2}, max latency {3}",
 				vals.Count, offsets.First(), offsets.Last(), vals.Last().Latency);
-			Data.Tracker.Log("Event", diagMessage);
+			Trace.WriteLine(diagMessage);
+			//Data.Tracker.Log("Event", diagMessage);
+
+			var now = DateTime.UtcNow;
+			if (_offsetInitialized)
+			{
+				_timeDrift = (newOffset - _requestedTimeOffset.TotalSeconds) / (now - _lastUpdatedOffset).TotalSeconds;
+				_timeSynchronized = true;
+
+				Trace.WriteLine("new time drift: " + _timeDrift);
+			}
 
 			_requestedTimeOffset = TimeSpan.FromSeconds(newOffset);
+			_currentTimeOffset = _requestedTimeOffset;
+			_lastUpdatedOffset = now;
 			_offsetInitialized = true;
 		}
 
@@ -186,6 +199,8 @@ namespace LatencyCollectorCore
 		{
 			lock (Sync)
 			{
+				if (!_timeSynchronized)
+					throw new InvalidOperationException();
 				var res = DateTime.UtcNow + _currentTimeOffset;
 				return res;
 			}
@@ -195,6 +210,8 @@ namespace LatencyCollectorCore
 		{
 			lock (Sync)
 			{
+				if (!_timeSynchronized)
+					throw new InvalidOperationException();
 				return _currentTimeOffset;
 			}
 		}
@@ -223,11 +240,12 @@ namespace LatencyCollectorCore
 		private static Timer _timer;
 
 		private static readonly TimeSpan OffsetUpdatePeriod = TimeSpan.FromSeconds(5);
+		private static DateTime _lastRequestedOffset = DateTime.MinValue;
 		private static DateTime _lastUpdatedOffset = DateTime.MinValue;
 
 		static readonly object Sync = new object();
 		private static readonly List<NtpResult> _requestResults = new List<NtpResult>();
-		private const int MinResultsCount = 16;
+		private const int MinResultsCount = 64;
 		private const int ReceiveTimeoutMsecs = 2000;
 	}
 
