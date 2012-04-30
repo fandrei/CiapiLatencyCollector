@@ -11,19 +11,26 @@ namespace LatencyCollectorCore
 	{
 		public static void CheckTimeIsStable()
 		{
-			var now = DateTime.UtcNow;
-
-			lock (Sync)
+			try
 			{
-				if (now - _lastCheckTime < CheckPeriod)
-					return;
+				var now = DateTime.UtcNow;
+
+				lock (Sync)
+				{
+					if (now - _lastCheckTime < CheckPeriod)
+						return;
+				}
+
+				CheckMaxOffset();
+
+				lock (Sync)
+				{
+					_lastCheckTime = now;
+				}
 			}
-
-			CheckMaxOffset();
-
-			lock (Sync)
+			catch (Exception exc)
 			{
-				_lastCheckTime = now;
+				Data.Tracker.Log("Exception", exc);
 			}
 		}
 
@@ -41,25 +48,18 @@ namespace LatencyCollectorCore
 			if (statFiles.Count > 2)
 				statFiles.RemoveRange(0, statFiles.Count - 2);
 
-			try
+			var text = new StringBuilder();
+			foreach (var file in statFiles)
 			{
-				var text = new StringBuilder();
-				foreach (var file in statFiles)
-				{
-					text.Append(File.ReadAllText(file));
-				}
-
-				if (text.Length == 0)
-				{
-					Data.Tracker.Log("Event", "ntpd: no stats data");
-				}
-
-				CheckMaxOffset(text.ToString());
+				text.Append(File.ReadAllText(file));
 			}
-			catch (Exception exc)
+
+			if (text.Length == 0)
 			{
-				Data.Tracker.Log("Exception", exc);
+				Data.Tracker.Log("Event", "ntpd: no stats data");
 			}
+
+			CheckMaxOffset(text.ToString());
 		}
 
 		static void FindStatFiles(string dirPath, List<string> res)
@@ -89,7 +89,7 @@ namespace LatencyCollectorCore
 			}
 
 			var lastOffset = GetOffset(lines.Last());
-			var message = string.Format(CultureInfo.InvariantCulture, "ntpd: last {0}, min {1}, max {2}", 
+			var message = string.Format(CultureInfo.InvariantCulture, "ntpd: last {0}, min {1}, max {2}",
 				lastOffset, minOffset, maxOffset);
 			Data.Tracker.Log("Info", message);
 		}
