@@ -157,7 +157,7 @@ namespace LatencyCollectorCore
 
 			var now = DateTime.UtcNow;
 
-			NtpdInfo.IsTimeStable(); //check and report ntpd accuracy
+			NtpdInfo.CheckTimeIsStable();
 
 			//if (!SntpClient.TimeSynchronized)
 			//    return;

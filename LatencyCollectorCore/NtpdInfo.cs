@@ -9,26 +9,25 @@ namespace LatencyCollectorCore
 {
 	static class NtpdInfo
 	{
-		public static bool IsTimeStable()
+		public static void CheckTimeIsStable()
 		{
 			var now = DateTime.UtcNow;
 
 			lock (Sync)
 			{
 				if (now - _lastCheckTime < CheckPeriod)
-					return _cachedResult;
+					return;
 			}
 
-			var res = CheckTimeIsStable();
+			CheckMaxOffset();
+
 			lock (Sync)
 			{
-				_cachedResult = res;
 				_lastCheckTime = now;
 			}
-			return res;
 		}
 
-		private static bool CheckTimeIsStable()
+		private static void CheckMaxOffset()
 		{
 			var statFiles = new List<string>();
 			FindStatFiles(StatsPath1, statFiles);
@@ -37,19 +36,29 @@ namespace LatencyCollectorCore
 			var now = DateTime.UtcNow;
 			statFiles.RemoveAll(file => (now - File.GetCreationTimeUtc(file)).TotalDays > 2);
 
-			statFiles.Sort((x, y) => File.GetCreationTimeUtc(x).CompareTo(File.GetCreationTimeUtc(y)));
+			statFiles.Sort();
 
-			if (statFiles.Count == 0)
-				return false;
+			if (statFiles.Count > 2)
+				statFiles.RemoveRange(0, statFiles.Count - 2);
 
 			try
 			{
-				return statFiles.All(MaxOffsetIsValid);
+				var text = new StringBuilder();
+				foreach (var file in statFiles)
+				{
+					text.Append(File.ReadAllText(file));
+				}
+
+				if (text.Length == 0)
+				{
+					Data.Tracker.Log("Event", "ntpd: no stats data");
+				}
+
+				CheckMaxOffset(text.ToString());
 			}
 			catch (Exception exc)
 			{
 				Data.Tracker.Log("Exception", exc);
-				return false;
 			}
 		}
 
@@ -61,25 +70,28 @@ namespace LatencyCollectorCore
 			res.AddRange(Directory.GetFiles(dirPath, "loopstats.*", SearchOption.TopDirectoryOnly));
 		}
 
-		static bool MaxOffsetIsValid(string filePath)
+		static void CheckMaxOffset(string text)
 		{
-			var text = File.ReadAllText(filePath);
 			var lines = text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+			if (lines.Length == 0)
+				throw new ApplicationException();
+
+			var minOffset = double.MaxValue;
+			var maxOffset = double.MinValue;
 
 			foreach (var line in lines)
 			{
 				var offset = GetOffset(line);
-				if (Math.Abs(offset) >= MaxOffset)
-				{
-					var fileName = Path.GetFileName(filePath);
-					var message = string.Format(CultureInfo.InvariantCulture,
-						"ntpd: max offset exceeded, {0} in \"{1}\"", offset, fileName);
-					Data.Tracker.Log("Event", message);
-					return false;
-				}
+				if (offset > maxOffset)
+					maxOffset = offset;
+				else if (offset < minOffset)
+					minOffset = offset;
 			}
 
-			return true;
+			var lastOffset = GetOffset(lines.Last());
+			var message = string.Format(CultureInfo.InvariantCulture, "ntpd: last {0}, min {1}, max {2}", 
+				lastOffset, minOffset, maxOffset);
+			Data.Tracker.Log("Info", message);
 		}
 
 		private static double GetOffset(string line)
@@ -91,11 +103,8 @@ namespace LatencyCollectorCore
 		private const string StatsPath1 = @"C:\Program Files\NTP\etc\";
 		private const string StatsPath2 = @"C:\Program Files (x86)\NTP\etc\";
 
-		private const double MaxOffset = 0.01;
-
 		private static DateTime _lastCheckTime = DateTime.MinValue;
-		private static readonly TimeSpan CheckPeriod = TimeSpan.FromMinutes(5);
-		private static bool _cachedResult;
+		private static readonly TimeSpan CheckPeriod = TimeSpan.FromMinutes(10);
 		private static readonly object Sync = new object();
 	}
 }
