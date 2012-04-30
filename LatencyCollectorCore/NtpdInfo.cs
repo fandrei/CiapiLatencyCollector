@@ -68,8 +68,7 @@ namespace LatencyCollectorCore
 
 			foreach (var line in lines)
 			{
-				var columns = line.Split(' ');
-				var offset = double.Parse(columns[2]);
+				var offset = GetOffset(line);
 				if (Math.Abs(offset) >= MaxOffset)
 				{
 					var fileName = Path.GetFileName(filePath);
@@ -81,6 +80,12 @@ namespace LatencyCollectorCore
 			}
 
 			return true;
+		}
+
+		private static double GetOffset(string line)
+		{
+			var columns = line.Split(' ');
+			return double.Parse(columns[2]);
 		}
 
 		private const string StatsPath1 = @"C:\Program Files\NTP\etc\";
