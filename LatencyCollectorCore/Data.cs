@@ -157,13 +157,16 @@ namespace LatencyCollectorCore
 
 			var now = DateTime.UtcNow;
 
+			NtpdInfo.IsTimeStable(); //check and report ntpd accuracy
+
 			//if (!SntpClient.TimeSynchronized)
 			//    return;
 			//var timeOffset = SntpClient.GetTimeOffset();
 			//var latency = (now + timeOffset) - price.TickDate;
 
-			if (!NtpdInfo.IsTimeStable())
-				return;
+			//if (!NtpdInfo.IsTimeStable())
+			//    return;
+
 			var latency = now - price.TickDate;
 
 			Tracker.Log("Latency PriceStream", latency.TotalSeconds);
