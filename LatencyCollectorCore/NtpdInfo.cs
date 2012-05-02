@@ -112,7 +112,7 @@ namespace LatencyCollectorCore
 		private const string StatsPath2 = @"C:\Program Files (x86)\NTP\etc\";
 
 		private static DateTime _lastCheckTime = DateTime.MinValue;
-		private static readonly TimeSpan CheckPeriod = TimeSpan.FromMinutes(10);
+		private static readonly TimeSpan CheckPeriod = TimeSpan.FromSeconds(10);
 		private static readonly object Sync = new object();
 	}
 }
