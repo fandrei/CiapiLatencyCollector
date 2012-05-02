@@ -40,6 +40,9 @@ namespace LatencyCollectorCore
 			FindStatFiles(StatsPath1, statFiles);
 			FindStatFiles(StatsPath2, statFiles);
 
+			if (statFiles.Count == 0)
+				return;
+
 			var now = DateTime.UtcNow;
 
 			if ((now - File.GetCreationTimeUtc(statFiles.Last())).TotalDays > 1)
