@@ -41,12 +41,12 @@ namespace LatencyCollectorCore
 			FindStatFiles(StatsPath2, statFiles);
 
 			var now = DateTime.UtcNow;
+
+			if ((now - File.GetCreationTimeUtc(statFiles.Last())).TotalDays > 1)
+				return;
+
 			statFiles.RemoveAll(file => (now - File.GetCreationTimeUtc(file)).TotalDays > 2);
-
 			statFiles.Sort();
-
-			if (statFiles.Count > 2)
-				statFiles.RemoveRange(0, statFiles.Count - 2);
 
 			var text = new StringBuilder();
 			foreach (var file in statFiles)
@@ -55,9 +55,7 @@ namespace LatencyCollectorCore
 			}
 
 			if (text.Length == 0)
-			{
-				Data.Tracker.Log("Event", "ntpd: no stats data");
-			}
+				return;
 
 			CheckMaxOffset(text.ToString());
 		}
