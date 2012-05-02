@@ -51,7 +51,14 @@ namespace LatencyCollectorCore
 			var text = new StringBuilder();
 			foreach (var file in statFiles)
 			{
-				text.Append(File.ReadAllText(file));
+				using (var stream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+				{
+					using (var reader = new StreamReader(stream))
+					{
+						var curText = reader.ReadToEnd();
+						text.Append(curText);
+					}
+				}
 			}
 
 			if (text.Length == 0)
