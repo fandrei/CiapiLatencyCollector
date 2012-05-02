@@ -79,7 +79,7 @@
       <RemoveExistingProducts After="InstallInitialize" />
 
       <Custom Action='RunConfig' After='InstallFiles'>
-        $ProductComponent = 3
+        $ProductComponent = 3 AND NOT UILevel = 2 <!-- product is installing and UILevel is not INSTALLUILEVEL_NONE -->
       </Custom>
 
       <Custom Action='InstallService' After='RunConfig' >
@@ -102,7 +102,7 @@
 
     <UI>
       <Error Id="2000">A newer version of this product is already installed</Error>
-      
+
       <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
       <TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="12" />
       <TextStyle Id="WixUI_Font_Title" FaceName="Tahoma" Size="9" Bold="yes" />
