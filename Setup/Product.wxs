@@ -83,11 +83,12 @@
       </Custom>
 
       <Custom Action='InstallService' Before='StartService' >
-        $ProductComponent = 3
+        <!-- Going to install, repair or no action -->
+        $ProductComponent = 3 OR $ProductComponent = 5 OR $ProductComponent = -1
       </Custom>
 
       <Custom Action='StartService' Before='InstallFinalize' >
-        $ProductComponent = 3
+        $ProductComponent = 3 OR $ProductComponent = 5 OR $ProductComponent = -1
       </Custom>
 
       <Custom Action='UninstallService' After='InstallInitialize' >
