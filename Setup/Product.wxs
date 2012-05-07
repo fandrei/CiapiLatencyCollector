@@ -82,7 +82,7 @@
         $ProductComponent = 3 AND NOT UILevel = 2 <!-- product is installing and UILevel is not INSTALLUILEVEL_NONE -->
       </Custom>
 
-      <Custom Action='InstallService' After='RunConfig' >
+      <Custom Action='InstallService' Before='StartService' >
         $ProductComponent = 3
       </Custom>
 
