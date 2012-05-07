@@ -98,25 +98,16 @@ namespace LatencyCollectorCore
 			var offsets = vals.Select(val => val.Offset.TotalSeconds).ToList();
 			var newOffset = GetTimeOffset(offsets);
 
-			{
-				var message = string.Format(CultureInfo.InvariantCulture, "Time sync: offset {0}", newOffset);
-				Trace.WriteLine(message);
-				//Data.Tracker.Log("Event", message);
-			}
+			Data.Tracker.LogFormat("Event", "Time sync: offset {0}", newOffset);
 
 			if (_offsetInitialized)
 			{
-				var message = string.Format(CultureInfo.InvariantCulture, "Time sync: offset changed {0}",
+				Data.Tracker.LogFormat("Event", "Time sync: offset changed {0}",
 					newOffset - _currentTimeOffset.TotalSeconds);
-				Trace.WriteLine(message);
-				//Data.Tracker.Log("Event", message);
 			}
 
-			var diagMessage = string.Format(CultureInfo.InvariantCulture,
-				"Time sync diagnostics: count {0}, min offset {1}, max offset {2}, max latency {3}",
+			Data.Tracker.LogFormat("Event", "Time sync diagnostics: count {0}, min offset {1}, max offset {2}, max latency {3}",
 				vals.Count, offsets.First(), offsets.Last(), vals.Last().Latency);
-			Trace.WriteLine(diagMessage);
-			//Data.Tracker.Log("Event", diagMessage);
 
 			var now = DateTime.UtcNow;
 			if (_offsetInitialized)
