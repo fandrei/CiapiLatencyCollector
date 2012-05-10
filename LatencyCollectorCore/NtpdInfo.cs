@@ -45,11 +45,15 @@ namespace LatencyCollectorCore
 
 			var now = DateTime.UtcNow;
 
+			statFiles.Sort();
+
 			if ((now - File.GetCreationTimeUtc(statFiles.Last())).TotalDays > 1)
 				return;
 
 			statFiles.RemoveAll(file => (now - File.GetCreationTimeUtc(file)).TotalDays > 2);
-			statFiles.Sort();
+
+			if (statFiles.Count > 2)
+				statFiles.RemoveRange(0, statFiles.Count - 2);
 
 			var text = new StringBuilder();
 			foreach (var file in statFiles)
