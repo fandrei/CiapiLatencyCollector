@@ -45,10 +45,7 @@ namespace LatencyCollectorCore
 
 			var now = DateTime.UtcNow;
 
-			statFiles.Sort();
-
-			if ((now - File.GetCreationTimeUtc(statFiles.Last())).TotalDays > 1)
-				return;
+			statFiles.Sort(); // file name reflects date of that file
 
 			statFiles.RemoveAll(file => (now - File.GetCreationTimeUtc(file)).TotalDays > 2);
 
@@ -84,9 +81,11 @@ namespace LatencyCollectorCore
 
 		static void CheckMaxOffset(string text)
 		{
-			var lines = text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-			if (lines.Length == 0)
-				throw new ApplicationException();
+			var lines = ReadLines(text, TimeSpan.FromHours(4));
+			if (lines.Count() == 0)
+				return;
+			if ((DateTime.UtcNow - GetLineTime(lines.Last())).TotalHours > 1)
+				return;
 
 			var minOffset = double.MaxValue;
 			var maxOffset = double.MinValue;
@@ -102,6 +101,33 @@ namespace LatencyCollectorCore
 
 			var lastOffset = GetOffset(lines.Last());
 			Data.Tracker.LogFormat("Info", "ntpd: last {0}, min {1}, max {2}", lastOffset, minOffset, maxOffset);
+		}
+
+		private static string[] ReadLines(string text, TimeSpan period)
+		{
+			var now = DateTime.UtcNow;
+			var lines = text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+			var res = new List<string>();
+
+			foreach (var line in lines)
+			{
+				var lineTime = GetLineTime(line);
+				if (now - lineTime < period)
+					res.Add(line);
+			}
+
+			return res.ToArray();
+		}
+
+		private static DateTime GetLineTime(string line)
+		{
+			// see http://en.wikipedia.org/wiki/Julian_day
+			var columns = line.Split(' ');
+			var modifiedJulianDate = int.Parse(columns[0]);
+			var date = new DateTime(1858, 11, 17).AddDays(modifiedJulianDate);
+			var timeNumber = double.Parse(columns[1]);
+			var res = date.AddSeconds(timeNumber);
+			return res;
 		}
 
 		private static double GetOffset(string line)
