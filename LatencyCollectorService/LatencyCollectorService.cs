@@ -89,6 +89,8 @@ namespace CiapiLatencyCollector
 		{
 			if (!Directory.Exists(Const.WorkingAreaBinPath))
 				Directory.CreateDirectory(Const.WorkingAreaBinPath);
+			if (!Directory.Exists(Const.WorkingAreaTempPath))
+				Directory.CreateDirectory(Const.WorkingAreaTempPath);
 
 			using (var client = new WebClient())
 			{
@@ -103,15 +105,17 @@ namespace CiapiLatencyCollector
 					ReportEvent(string.Format("Trying to update to version {0}", newVersion));
 				}
 
-				StopWorkerDomain();
-
-				DeleteAllFiles(Const.WorkingAreaBinPath);
-
 				const string zipFileName = "LatencyCollectorCore.zip";
-				var zipFilePath = Const.WorkingAreaBinPath + zipFileName;
+				var zipFilePath = Const.WorkingAreaTempPath + zipFileName;
+				if (File.Exists(zipFilePath))
+					File.Delete(zipFilePath);
 				client.DownloadFile(Const.AutoUpdateBaseUrl + zipFileName, zipFilePath);
+
 				using (var zipFile = new ZipFile(zipFilePath))
 				{
+					StopWorkerDomain();
+					DeleteAllFiles(Const.WorkingAreaBinPath);
+
 					zipFile.ExtractAll(Const.WorkingAreaBinPath);
 				}
 
