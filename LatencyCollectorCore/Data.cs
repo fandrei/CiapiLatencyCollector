@@ -23,7 +23,8 @@ namespace LatencyCollectorCore
 			{
 				if (_client == null)
 				{
-					var client = new Client(new Uri(AppSettings.Instance.ServerUrl), "{API_KEY}");
+					var client = new Client(new Uri(AppSettings.Instance.ServerUrl), 
+						new Uri(AppSettings.Instance.StreamingServerUrl), "{API_KEY}");
 					try
 					{
 						var measure = StartMeasure();
@@ -46,8 +47,7 @@ namespace LatencyCollectorCore
 					IStreamingClient streamingClient;
 					try
 					{
-						streamingClient = StreamingClientFactory.CreateStreamingClient(
-							new Uri(AppSettings.Instance.StreamingServerUrl), AppSettings.Instance.UserName, client.Session);
+						streamingClient = client.CreateStreamingClient();
 					}
 					catch (Exception exc)
 					{
