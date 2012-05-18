@@ -21,8 +21,6 @@ namespace LatencyCollectorCore
 		public string ServerUrl { get; set; }
 		public string StreamingServerUrl { get; set; }
 
-		public int DataPollingRate { get; set; }
-
 		public MonitorInfo[] Monitors { get; set; }
 
 		public string UserName { get; set; }
@@ -129,7 +127,6 @@ namespace LatencyCollectorCore
 
 		private void SetDefaults()
 		{
-			DataPollingRate = 10;
 		}
 
 		private const string DefaultServer = "https://ciapi.cityindex.com/TradingApi";

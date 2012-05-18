@@ -92,14 +92,12 @@ namespace LatencyCollectorCore
 					if (_terminated)
 						break;
 
-					var period = TimeSpan.FromMinutes(1.0 / AppSettings.Instance.DataPollingRate);
+					var period = TimeSpan.FromSeconds(1.0);
 					Thread.Sleep(period);
 				}
 			}
 			catch (ThreadInterruptedException)
 			{ }
-
-			StopStreaming();
 
 			try
 			{
@@ -120,83 +118,23 @@ namespace LatencyCollectorCore
 
 		private static void PerformPolling()
 		{
-			EnsureStreamingStarted();
+			var now = DateTime.UtcNow;
+			var monitors = GetMonitors();
 
-			var data = new Data();
-			try
+			foreach (var monitor in monitors)
 			{
-				data.Login();
-
-				data.GetMarketsList(MarketType.CFD, 100, "", "");
-			}
-			catch (Exception exc)
-			{
-				Report(exc);
-			}
-			finally
-			{
-				try
+				if ((now - monitor.LastExecution).TotalSeconds > monitor.Info.PeriodSeconds)
 				{
-					data.Logout();
-				}
-				catch (Exception exc)
-				{
-					Report(exc);
-				}
-				finally
-				{
-					data.Dispose();
-				}
-			}
-		}
-
-		static void EnsureStreamingStarted()
-		{
-			try
-			{
-				lock (StreamingSync)
-				{
-					if (_streamingData != null)
-						return;
-
-					var streamingData = new Data();
-					streamingData.Login();
-					streamingData.SubscribePrice(400481142); // GBP/USD
-
-					_streamingData = streamingData;
-				}
-			}
-			catch (Exception exc)
-			{
-				Report(exc);
-			}
-		}
-
-		static void StopStreaming()
-		{
-			try
-			{
-				lock (StreamingSync)
-				{
-					if (_streamingData == null)
-						return;
-
 					try
 					{
-						_streamingData.Logout();
+						monitor.Execute();
 					}
 					catch (Exception exc)
 					{
 						Report(exc);
 					}
-
-					_streamingData.Dispose();
-					_streamingData = null;
+					monitor.LastExecution = now;
 				}
-			}
-			catch (Exception exc)
-			{
-				Report(exc);
 			}
 		}
 
@@ -227,11 +165,34 @@ namespace LatencyCollectorCore
 			return null;
 		}
 
-		private static Data _streamingData;
-		private static readonly object StreamingSync = new object();
+		static Monitor[] GetMonitors()
+		{
+			lock (Sync)
+			{
+				if (_monitors == null)
+				{
+					var infoList = AppSettings.Instance.Monitors;
+					var res = new List<Monitor>();
+
+					foreach (var info in infoList)
+					{
+						var typeName = typeof(Monitor).Namespace + "." + info.Name;
+						var type = Assembly.GetExecutingAssembly().GetType(typeName);
+						var monitor = (Monitor)Activator.CreateInstance(type);
+						monitor.Info = info;
+						res.Add(monitor);
+					}
+
+					_monitors = res;
+				}
+				return _monitors.ToArray();
+			}
+		}
 
 		private static volatile bool _terminated;
 		private static Thread _thread;
 		private static readonly object Sync = new object();
+
+		private static List<Monitor> _monitors;
 	}
 }
