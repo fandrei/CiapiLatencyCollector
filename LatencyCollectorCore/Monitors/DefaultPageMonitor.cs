@@ -15,6 +15,8 @@ namespace LatencyCollectorCore.Monitors
 			{
 				var watch = AppMetrics.StartMeasure();
 				var resp = client.DownloadString("https://ciapi.cityindex.com/");
+				if (string.IsNullOrEmpty(resp))
+					throw new ApplicationException("No response from default page");
 				AppMetrics.EndMeasure(watch, "DefaultPage");
 			}
 		}
