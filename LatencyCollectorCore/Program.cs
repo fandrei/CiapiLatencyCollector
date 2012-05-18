@@ -176,11 +176,18 @@ namespace LatencyCollectorCore
 
 					foreach (var info in infoList)
 					{
-						var typeName = typeof(Monitor).Namespace + "." + info.Name;
-						var type = Assembly.GetExecutingAssembly().GetType(typeName);
-						var monitor = (Monitor)Activator.CreateInstance(type);
-						monitor.Info = info;
-						res.Add(monitor);
+						try
+						{
+							var typeName = typeof (Monitor).Namespace + "." + info.Name;
+							var type = Assembly.GetExecutingAssembly().GetType(typeName);
+							var monitor = (Monitor) Activator.CreateInstance(type);
+							monitor.Info = info;
+							res.Add(monitor);
+						}
+						catch (Exception exc)
+						{
+							Report(exc);
+						}
 					}
 
 					_monitors = res;
