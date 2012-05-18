@@ -125,6 +125,7 @@ namespace LatencyCollectorCore
 			{
 				if ((now - monitor.LastExecution).TotalSeconds > monitor.Info.PeriodSeconds)
 				{
+					monitor.LastExecution = now;
 					try
 					{
 						monitor.Execute();
@@ -133,7 +134,6 @@ namespace LatencyCollectorCore
 					{
 						Report(exc);
 					}
-					monitor.LastExecution = now;
 				}
 			}
 		}
