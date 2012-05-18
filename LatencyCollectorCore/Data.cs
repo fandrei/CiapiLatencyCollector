@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Text;
+
 using AppMetrics.Client;
+
 using CIAPI.DTO;
 using CIAPI.Rpc;
-using CIAPI.Streaming;
+
 using StreamingClient;
 using IStreamingClient = CIAPI.Streaming.IStreamingClient;
 
@@ -27,9 +28,9 @@ namespace LatencyCollectorCore
 						new Uri(AppSettings.Instance.StreamingServerUrl), "{API_KEY}");
 					try
 					{
-						var measure = StartMeasure();
+						var measure = AppMetrics.StartMeasure();
 						client.LogIn(AppSettings.Instance.UserName, AppSettings.Instance.Password);
-						EndMeasure(measure, "LogIn");
+						AppMetrics.EndMeasure(measure, "LogIn");
 					}
 					catch (Exception exc)
 					{
@@ -80,9 +81,9 @@ namespace LatencyCollectorCore
 
 				if (_client != null)
 				{
-					var measure = StartMeasure();
+					var measure = AppMetrics.StartMeasure();
 					_client.LogOut();
-					EndMeasure(measure, "LogOut");
+					AppMetrics.EndMeasure(measure, "LogOut");
 
 					_client.Dispose();
 					_client = null;
@@ -98,9 +99,9 @@ namespace LatencyCollectorCore
 			{
 				var client = GetClient();
 
-				var measure = StartMeasure();
+				var measure = AppMetrics.StartMeasure();
 				var accountInfo = client.AccountInformation.GetClientAndTradingAccount();
-				EndMeasure(measure, "GetClientAndTradingAccount");
+				AppMetrics.EndMeasure(measure, "GetClientAndTradingAccount");
 
 				lock (_sync)
 				{
@@ -116,18 +117,18 @@ namespace LatencyCollectorCore
 			{
 				case MarketType.CFD:
 					{
-						var measure = StartMeasure();
+						var measure = AppMetrics.StartMeasure();
 						var resp = client.CFDMarkets.ListCfdMarkets(nameFilter, codeFilter,
 							_accountInfo.ClientAccountId, maxCount, false);
-						EndMeasure(measure, "ListCfdMarkets");
+						AppMetrics.EndMeasure(measure, "ListCfdMarkets");
 						return resp.Markets;
 					}
 				case MarketType.Spread:
 					{
-						var measure = StartMeasure();
+						var measure = AppMetrics.StartMeasure();
 						var resp = client.SpreadMarkets.ListSpreadMarkets(nameFilter, codeFilter,
 							_accountInfo.ClientAccountId, maxCount, false);
-						EndMeasure(measure, "ListSpreadMarkets");
+						AppMetrics.EndMeasure(measure, "ListSpreadMarkets");
 						return resp.Markets;
 					}
 				default:
@@ -169,7 +170,7 @@ namespace LatencyCollectorCore
 
 			var latency = now - price.TickDate;
 
-			Tracker.Log("Latency PriceStream", latency.TotalSeconds);
+			AppMetrics.Tracker.Log("Latency PriceStream", latency.TotalSeconds);
 		}
 
 		readonly object _sync = new object();
@@ -224,22 +225,6 @@ namespace LatencyCollectorCore
 			if (_disposed)
 				throw new ObjectDisposedException("Data");
 		}
-
-		static Stopwatch StartMeasure()
-		{
-			return Stopwatch.StartNew();
-		}
-
-		static void EndMeasure(Stopwatch watch, string label)
-		{
-			var diff = watch.Elapsed;
-			watch.Stop();
-
-			Tracker.Log("Latency " + label, diff.TotalSeconds);
-		}
-
-		public static readonly Tracker Tracker = new Tracker("http://metrics.labs.cityindex.com/LogEvent.ashx",
-			"CiapiLatencyCollector");
 	}
 
 	enum MarketType { CFD, Spread, }

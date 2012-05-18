@@ -72,7 +72,7 @@ namespace LatencyCollectorCore
 				AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
 
 				var curAssembly = typeof(Data).Assembly;
-				Data.Tracker.Log("Info_LatencyCollectorVersion", curAssembly.FullName);
+				AppMetrics.Tracker.Log("Info_LatencyCollectorVersion", curAssembly.FullName);
 
 				//SntpClient.Init();
 
@@ -200,17 +200,17 @@ namespace LatencyCollectorCore
 			}
 		}
 
-		static void Report(Exception exc)
+		public static void Report(Exception exc)
 		{
 			if (exc is ThreadInterruptedException)
 				return;
 			ReportEvent("Exception", exc.ToString());
 		}
 
-		static void ReportEvent(string type, string message)
+		public static void ReportEvent(string type, string message)
 		{
 			Trace.WriteLine(message);
-			Data.Tracker.Log(type, message);
+			AppMetrics.Tracker.Log(type, message);
 		}
 
 		// load assembly from the working folder, if impossible to resolve automatically

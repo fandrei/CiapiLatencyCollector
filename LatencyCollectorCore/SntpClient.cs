@@ -98,15 +98,15 @@ namespace LatencyCollectorCore
 			var offsets = vals.Select(val => val.Offset.TotalSeconds).ToList();
 			var newOffset = GetTimeOffset(offsets);
 
-			Data.Tracker.LogFormat("Event", "Time sync: offset {0}", newOffset);
+			AppMetrics.Tracker.LogFormat("Event", "Time sync: offset {0}", newOffset);
 
 			if (_offsetInitialized)
 			{
-				Data.Tracker.LogFormat("Event", "Time sync: offset changed {0}",
+				AppMetrics.Tracker.LogFormat("Event", "Time sync: offset changed {0}",
 					newOffset - _currentTimeOffset.TotalSeconds);
 			}
 
-			Data.Tracker.LogFormat("Event", "Time sync diagnostics: count {0}, min offset {1}, max offset {2}, max latency {3}",
+			AppMetrics.Tracker.LogFormat("Event", "Time sync diagnostics: count {0}, min offset {1}, max offset {2}, max latency {3}",
 				vals.Count, offsets.First(), offsets.Last(), vals.Last().Latency);
 
 			var now = DateTime.UtcNow;
@@ -209,7 +209,7 @@ namespace LatencyCollectorCore
 
 		static void ReportException(Exception exc)
 		{
-			Data.Tracker.Log("Exception", exc);
+			AppMetrics.Tracker.Log("Exception", exc);
 		}
 
 		private static readonly string Server = "pool.ntp.org";
