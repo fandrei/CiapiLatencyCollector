@@ -9,6 +9,8 @@ using System.Threading;
 
 using AppMetrics.Client;
 
+using Monitor = LatencyCollectorCore.Monitors.Monitor;
+
 namespace LatencyCollectorCore
 {
 	public class Program
@@ -178,9 +180,9 @@ namespace LatencyCollectorCore
 					{
 						try
 						{
-							var typeName = typeof (Monitor).Namespace + "." + info.Name;
+							var typeName = typeof(Monitor).Namespace + "." + info.Name;
 							var type = Assembly.GetExecutingAssembly().GetType(typeName);
-							var monitor = (Monitor) Activator.CreateInstance(type);
+							var monitor = (Monitor)Activator.CreateInstance(type);
 							monitor.Info = info;
 							res.Add(monitor);
 						}
