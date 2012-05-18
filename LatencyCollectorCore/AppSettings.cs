@@ -8,6 +8,7 @@ using System.Text;
 using System.Xml.Serialization;
 
 using CiapiLatencyCollector;
+using LatencyCollectorCore.Monitors;
 
 namespace LatencyCollectorCore
 {
@@ -131,39 +132,5 @@ namespace LatencyCollectorCore
 
 		private const string DefaultServer = "https://ciapi.cityindex.com/TradingApi";
 		private const string DefaultStreamingServer = "https://push.cityindex.com";
-	}
-
-	public class MonitorInfo
-	{
-		public string Name { get; set; }
-		public double PeriodSeconds { get; set; }
-
-		public override string ToString()
-		{
-			return string.Format("{0} {1}\r\n", Name, PeriodSeconds);
-		}
-
-		public static string ToString(IEnumerable<MonitorInfo> vals)
-		{
-			var buf = new StringBuilder();
-			foreach (var val in vals)
-			{
-				buf.Append(val.ToString());
-			}
-			return buf.ToString();
-		}
-
-		public static MonitorInfo[] Parse(string text)
-		{
-			var lines = text.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-			var monitors = new List<MonitorInfo>();
-			foreach (var line in lines)
-			{
-				var columns = line.Split(new[] { '\t', ' ' });
-				var monitor = new MonitorInfo { Name = columns[0], PeriodSeconds = double.Parse(columns[1]) };
-				monitors.Add(monitor);
-			}
-			return monitors.ToArray();
-		}
 	}
 }

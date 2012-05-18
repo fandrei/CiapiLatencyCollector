@@ -74,6 +74,7 @@
     <Compile Include="Monitors\DefaultPageMonitor.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="Monitors\Monitor.cs" />
+    <Compile Include="Monitors\MonitorInfo.cs" />
     <Compile Include="NtpdInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

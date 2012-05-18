@@ -6,6 +6,7 @@ using System.Windows.Forms;
 
 using CiapiLatencyCollector;
 using LatencyCollectorCore;
+using LatencyCollectorCore.Monitors;
 
 namespace LatencyCollectorConfig
 {
