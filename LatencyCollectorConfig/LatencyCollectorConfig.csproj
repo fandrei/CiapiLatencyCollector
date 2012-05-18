@@ -54,9 +54,6 @@
       <DependentUpon>ConfigForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
-    <Compile Include="..\Shared\Const.cs" />
-    <Compile Include="..\LatencyCollectorCore\AppSettings.cs" />
-    <Compile Include="..\Shared\Util.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ConfigForm.resx">
       <DependentUpon>ConfigForm.cs</DependentUpon>
@@ -79,6 +76,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LatencyCollectorCore\LatencyCollectorCore.csproj">
+      <Project>{0715852F-3503-4916-8E4F-0D2950F6AF1D}</Project>
+      <Name>LatencyCollectorCore</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

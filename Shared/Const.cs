@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CiapiLatencyCollector
 {
-	class Const
+	public class Const
 	{
 		public const string AppName = "CIAPI Latency Collector";
 
