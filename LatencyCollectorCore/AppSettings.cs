@@ -23,11 +23,12 @@ namespace LatencyCollectorCore
 
 		public int DataPollingRate { get; set; }
 
+		public MonitorInfo[] Monitors { get; set; }
+
 		public string UserName { get; set; }
+		public string UserId { get; set; }
 
 		public string PasswordEncrypted { get; set; }
-
-		public string UserId { get; set; }
 
 		static readonly byte[] AdditionalEntropy = { 0x43, 0x71, 0xDE, 0x5B, 0x44, 0x72, 0x45, 0xE3, 0xBE, 0x1E, 0x98, 0x2B, 0xAA };
 
@@ -133,5 +134,39 @@ namespace LatencyCollectorCore
 
 		private const string DefaultServer = "https://ciapi.cityindex.com/TradingApi";
 		private const string DefaultStreamingServer = "https://push.cityindex.com";
+	}
+
+	public class MonitorInfo
+	{
+		public string Name { get; set; }
+		public double PeriodSeconds { get; set; }
+
+		public override string ToString()
+		{
+			return string.Format("{0} {1}\r\n", Name, PeriodSeconds);
+		}
+
+		public static string ToString(IEnumerable<MonitorInfo> vals)
+		{
+			var buf = new StringBuilder();
+			foreach (var val in vals)
+			{
+				buf.Append(val.ToString());
+			}
+			return buf.ToString();
+		}
+
+		public static MonitorInfo[] Parse(string text)
+		{
+			var lines = text.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+			var monitors = new List<MonitorInfo>();
+			foreach (var line in lines)
+			{
+				var columns = line.Split(new[] { '\t', ' ' });
+				var monitor = new MonitorInfo { Name = columns[0], PeriodSeconds = double.Parse(columns[1]) };
+				monitors.Add(monitor);
+			}
+			return monitors.ToArray();
+		}
 	}
 }

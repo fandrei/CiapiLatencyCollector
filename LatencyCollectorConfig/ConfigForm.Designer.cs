@@ -37,16 +37,16 @@
 			this.UserNameEdit = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
-			this.label5 = new System.Windows.Forms.Label();
-			this.DataPollingRateEdit = new System.Windows.Forms.TextBox();
 			this.CancelButton = new System.Windows.Forms.Button();
+			this.label6 = new System.Windows.Forms.Label();
+			this.MonitorsEdit = new System.Windows.Forms.TextBox();
 			this.SuspendLayout();
 			// 
 			// OkButton
 			// 
 			this.OkButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.OkButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.OkButton.Location = new System.Drawing.Point(356, 159);
+			this.OkButton.Location = new System.Drawing.Point(363, 340);
 			this.OkButton.Name = "OkButton";
 			this.OkButton.Size = new System.Drawing.Size(75, 23);
 			this.OkButton.TabIndex = 5;
@@ -60,7 +60,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.StreamingUrlEdit.Location = new System.Drawing.Point(98, 33);
 			this.StreamingUrlEdit.Name = "StreamingUrlEdit";
-			this.StreamingUrlEdit.Size = new System.Drawing.Size(414, 20);
+			this.StreamingUrlEdit.Size = new System.Drawing.Size(421, 20);
 			this.StreamingUrlEdit.TabIndex = 1;
 			// 
 			// label4
@@ -78,7 +78,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.ServerUrlEdit.Location = new System.Drawing.Point(98, 7);
 			this.ServerUrlEdit.Name = "ServerUrlEdit";
-			this.ServerUrlEdit.Size = new System.Drawing.Size(414, 20);
+			this.ServerUrlEdit.Size = new System.Drawing.Size(421, 20);
 			this.ServerUrlEdit.TabIndex = 0;
 			// 
 			// label3
@@ -123,26 +123,11 @@
 			this.label1.TabIndex = 29;
 			this.label1.Text = "User name";
 			// 
-			// label5
-			// 
-			this.label5.Location = new System.Drawing.Point(12, 128);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(70, 34);
-			this.label5.TabIndex = 32;
-			this.label5.Text = "Data polling rate (per min)";
-			// 
-			// DataPollingRateEdit
-			// 
-			this.DataPollingRateEdit.Location = new System.Drawing.Point(100, 128);
-			this.DataPollingRateEdit.Name = "DataPollingRateEdit";
-			this.DataPollingRateEdit.Size = new System.Drawing.Size(249, 20);
-			this.DataPollingRateEdit.TabIndex = 4;
-			// 
 			// CancelButton
 			// 
 			this.CancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.CancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.CancelButton.Location = new System.Drawing.Point(437, 159);
+			this.CancelButton.Location = new System.Drawing.Point(444, 340);
 			this.CancelButton.Name = "CancelButton";
 			this.CancelButton.Size = new System.Drawing.Size(75, 23);
 			this.CancelButton.TabIndex = 6;
@@ -150,15 +135,35 @@
 			this.CancelButton.UseVisualStyleBackColor = true;
 			this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
 			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.Location = new System.Drawing.Point(14, 128);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(204, 13);
+			this.label6.TabIndex = 33;
+			this.label6.Text = "Monitors list (name and period in seconds)";
+			// 
+			// MonitorsEdit
+			// 
+			this.MonitorsEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.MonitorsEdit.Location = new System.Drawing.Point(17, 144);
+			this.MonitorsEdit.Multiline = true;
+			this.MonitorsEdit.Name = "MonitorsEdit";
+			this.MonitorsEdit.Size = new System.Drawing.Size(502, 190);
+			this.MonitorsEdit.TabIndex = 34;
+			// 
 			// ConfigForm
 			// 
 			this.AcceptButton = this.OkButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(527, 194);
+			this.ClientSize = new System.Drawing.Size(534, 375);
+			this.Controls.Add(this.MonitorsEdit);
+			this.Controls.Add(this.label6);
 			this.Controls.Add(this.CancelButton);
-			this.Controls.Add(this.DataPollingRateEdit);
-			this.Controls.Add(this.label5);
 			this.Controls.Add(this.PasswordEdit);
 			this.Controls.Add(this.UserNameEdit);
 			this.Controls.Add(this.label2);
@@ -189,8 +194,8 @@
 		private System.Windows.Forms.TextBox UserNameEdit;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.TextBox DataPollingRateEdit;
 		private System.Windows.Forms.Button CancelButton;
+		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.TextBox MonitorsEdit;
 	}
 }

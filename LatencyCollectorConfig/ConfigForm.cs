@@ -29,7 +29,7 @@ namespace LatencyCollectorConfig
 				UserNameEdit.Text = AppSettings.Instance.UserName;
 				PasswordEdit.Text = AppSettings.Instance.Password;
 
-				DataPollingRateEdit.Text = AppSettings.Instance.DataPollingRate.ToString();
+				MonitorsEdit.Text = MonitorInfo.ToString(AppSettings.Instance.Monitors);
 			}
 			catch (Exception exc)
 			{
@@ -47,7 +47,7 @@ namespace LatencyCollectorConfig
 				AppSettings.Instance.UserName = UserNameEdit.Text;
 				AppSettings.Instance.Password = PasswordEdit.Text;
 
-				AppSettings.Instance.DataPollingRate = int.Parse(DataPollingRateEdit.Text);
+				AppSettings.Instance.Monitors = MonitorInfo.Parse(MonitorsEdit.Text);
 
 				AppSettings.Instance.Save();
 
