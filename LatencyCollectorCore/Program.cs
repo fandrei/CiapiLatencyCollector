@@ -130,7 +130,13 @@ namespace LatencyCollectorCore
 					monitor.LastExecution = now;
 					try
 					{
-						monitor.Execute();
+						var tmp = monitor;
+						ThreadPool.QueueUserWorkItem(
+							s => tmp.Execute());
+					}
+					catch (ThreadInterruptedException)
+					{
+						break;
 					}
 					catch (Exception exc)
 					{
