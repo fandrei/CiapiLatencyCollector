@@ -32,7 +32,11 @@ namespace LatencyCollectorCore.Monitors
 			foreach (var line in lines)
 			{
 				var columns = line.Split(new[] { '\t', ' ' });
-				var monitor = new MonitorInfo { Name = columns[0], PeriodSeconds = double.Parse(columns[1]) };
+				var monitor = new MonitorInfo
+					{
+						Name = columns[0],
+						PeriodSeconds = double.Parse(columns[1]),
+					};
 				monitors.Add(monitor);
 			}
 			return monitors.ToArray();
