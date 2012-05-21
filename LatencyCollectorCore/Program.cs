@@ -128,20 +128,22 @@ namespace LatencyCollectorCore
 				if ((now - monitor.LastExecution).TotalSeconds > monitor.Info.PeriodSeconds)
 				{
 					monitor.LastExecution = now;
-					try
-					{
-						var tmp = monitor;
-						ThreadPool.QueueUserWorkItem(
-							s => tmp.Execute());
-					}
-					catch (ThreadInterruptedException)
-					{
-						break;
-					}
-					catch (Exception exc)
-					{
-						Report(exc);
-					}
+					var tmp = monitor;
+					ThreadPool.QueueUserWorkItem(
+						s =>
+						{
+							try
+							{
+								tmp.Execute();
+							}
+							catch (ThreadInterruptedException)
+							{
+							}
+							catch (Exception exc)
+							{
+								Report(exc);
+							}
+						});
 				}
 			}
 		}
