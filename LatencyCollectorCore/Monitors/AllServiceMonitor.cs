@@ -63,9 +63,7 @@ namespace LatencyCollectorCore.Monitors
 
 				var price = GetPrice(client);
 
-				var measure1 = AppMetrics.StartMeasure();
 				var orderId = Trade(client, accountInfo, price, 1M, "buy", new int[0]);
-				AppMetrics.EndMeasure(measure1, "Trade");
 
 				{
 					var measure = AppMetrics.StartMeasure();
@@ -73,11 +71,7 @@ namespace LatencyCollectorCore.Monitors
 					AppMetrics.EndMeasure(measure, "ListOpenPositions");
 				}
 
-				{
-					var measure = AppMetrics.StartMeasure();
-					Trade(client, accountInfo, price, 1M, "sell", new[] { orderId });
-					AppMetrics.EndMeasure(measure, "Trade");
-				}
+				Trade(client, accountInfo, price, 1M, "sell", new[] { orderId });
 
 				{
 					var measure = AppMetrics.StartMeasure();
