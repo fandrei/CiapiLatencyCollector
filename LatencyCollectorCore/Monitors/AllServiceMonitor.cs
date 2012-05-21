@@ -125,11 +125,25 @@ namespace LatencyCollectorCore.Monitors
 			if (resp.OrderId == 0)
 			{
 				client.MagicNumberResolver.ResolveMagicNumbers(resp);
-				var message = resp.Status_Resolved + " " + resp.StatusReason_Resolved;
+				var message = GetResponseDescription(resp);
 				throw new ApplicationException(message);
 			}
 
 			return resp.OrderId;
+		}
+
+		private static string GetResponseDescription(ApiTradeOrderResponseDTO resp)
+		{
+			var statusText = string.Format("\r\n{0}: {1}\r\n\r\n",
+				resp.Status_Resolved, resp.StatusReason_Resolved);
+
+			foreach (var apiOrderResponseDto in resp.Orders)
+			{
+				statusText += string.Format("{0}: {1}\r\n",
+					apiOrderResponseDto.Status_Resolved, apiOrderResponseDto.StatusReason_Resolved);
+			}
+
+			return statusText;
 		}
 
 		private static PriceDTO GetPrice(Client client)
