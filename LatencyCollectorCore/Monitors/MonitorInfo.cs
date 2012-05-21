@@ -17,6 +17,9 @@ namespace LatencyCollectorCore.Monitors
 
 		public static string ToString(IEnumerable<MonitorInfo> vals)
 		{
+			if (vals == null)
+				return null;
+
 			var buf = new StringBuilder();
 			foreach (var val in vals)
 			{
