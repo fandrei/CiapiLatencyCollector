@@ -34,7 +34,7 @@
         Regex="ProductVersion *= *&quot;.*?&quot;"
         ReplacementText="ProductVersion = &quot;$(FullVersion)&quot;" />
     <FileUpdate
-        Files="$(MSBuildProjectDirectory)\LatencyCollectorCore\Data.cs"
+        Files="$(MSBuildProjectDirectory)\LatencyCollectorCore\Monitors\*.cs"
         Regex="{API_KEY}"
         ReplacementText="$(API_KEY)" />
   </Target>
