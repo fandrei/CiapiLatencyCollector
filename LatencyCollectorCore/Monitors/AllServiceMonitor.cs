@@ -11,6 +11,8 @@ namespace LatencyCollectorCore.Monitors
 {
 	class AllServiceMonitor : Monitor
 	{
+		public bool AllowTrading { get; set; }
+
 		// GBP/USD market
 		private const int MarketId = 400481142;
 
@@ -62,17 +64,26 @@ namespace LatencyCollectorCore.Monitors
 					AppMetrics.EndMeasure(measure, "GetPriceBars");
 				}
 
-				var price = GetPrice(client);
+				if (AllowTrading)
+				{
+					var price = GetPrice(client);
 
-				var orderId = Trade(client, accountInfo, price, 1M, "buy", new int[0]);
+					var orderId = Trade(client, accountInfo, price, 1M, "buy", new int[0]);
 
+					{
+						var measure = AppMetrics.StartMeasure();
+						client.TradesAndOrders.ListOpenPositions(accountInfo.CFDAccount.TradingAccountId);
+						AppMetrics.EndMeasure(measure, "ListOpenPositions");
+					}
+
+					Trade(client, accountInfo, price, 1M, "sell", new[] {orderId});
+				}
+				else
 				{
 					var measure = AppMetrics.StartMeasure();
 					client.TradesAndOrders.ListOpenPositions(accountInfo.CFDAccount.TradingAccountId);
 					AppMetrics.EndMeasure(measure, "ListOpenPositions");
 				}
-
-				Trade(client, accountInfo, price, 1M, "sell", new[] { orderId });
 
 				{
 					var measure = AppMetrics.StartMeasure();
