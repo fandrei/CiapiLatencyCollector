@@ -40,18 +40,12 @@ namespace LatencyCollectorConfig
 						}
 					}
 
-					string userName;
-					argsDic.TryGetValue("username", out userName);
+					string monitors;
+					argsDic.TryGetValue("monitors", out monitors);
 
-					string password;
-					argsDic.TryGetValue("password", out password);
-
-					if (!string.IsNullOrEmpty(userName))
+					if (!string.IsNullOrEmpty(monitors))
 					{
-						AppSettings.Instance.UserName = userName;
-						AppSettings.Instance.Password = password;
-
-						AppSettings.Instance.Save();
+						AppSettings.Instance.SetMonitors(monitors);
 					}
 				}
 				else

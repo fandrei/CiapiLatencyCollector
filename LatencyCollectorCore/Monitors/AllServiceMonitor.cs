@@ -9,8 +9,17 @@ using CIAPI.Rpc;
 
 namespace LatencyCollectorCore.Monitors
 {
-	class AllServiceMonitor : Monitor
+	public class AllServiceMonitor : AuthenticatedMonitor
 	{
+		public AllServiceMonitor()
+		{
+			ServerUrl = "";
+			StreamingServerUrl = "";
+		}
+
+		public string ServerUrl { get; set; }
+		public string StreamingServerUrl { get; set; }
+
 		public bool AllowTrading { get; set; }
 
 		// GBP/USD market
@@ -21,14 +30,13 @@ namespace LatencyCollectorCore.Monitors
 			Client client = null;
 			try
 			{
-				client = new Client(new Uri(AppSettings.Instance.ServerUrl),
-					new Uri(AppSettings.Instance.StreamingServerUrl), "{API_KEY}");
+				client = new Client(new Uri(ServerUrl), new Uri(StreamingServerUrl), "{API_KEY}");
 				client.AppKey = "CiapiLatencyCollector." + GetType().Name;
 				client.StartMetrics();
 
 				{
 					var measure = AppMetrics.StartMeasure();
-					client.LogIn(AppSettings.Instance.UserName, AppSettings.Instance.Password);
+					client.LogIn(UserName, Password);
 					AppMetrics.EndMeasure(measure, "LogIn");
 				}
 

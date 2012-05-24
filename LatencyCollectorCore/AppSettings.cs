@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using System.Xml;
 using System.Xml.Serialization;
 
 using CiapiLatencyCollector;
@@ -19,38 +20,9 @@ namespace LatencyCollectorCore
 			SetDefaults();
 		}
 
-		public string ServerUrl { get; set; }
-		public string StreamingServerUrl { get; set; }
+		public LatencyMonitor[] Monitors { get; set; }
 
-		public MonitorInfo[] Monitors { get; set; }
-
-		public string UserName { get; set; }
 		public string UserId { get; set; }
-
-		public string PasswordEncrypted { get; set; }
-
-		static readonly byte[] AdditionalEntropy = { 0x43, 0x71, 0xDE, 0x5B, 0x44, 0x72, 0x45, 0xE3, 0xBE, 0x1E, 0x98, 0x2B, 0xAA };
-
-		[XmlIgnore]
-		public string Password
-		{
-			get
-			{
-				if (PasswordEncrypted.IsNullOrEmpty())
-					return null;
-
-				var encrypted = Convert.FromBase64String(PasswordEncrypted);
-				var data = ProtectedData.Unprotect(encrypted, AdditionalEntropy, DataProtectionScope.LocalMachine);
-				var res = Encoding.UTF8.GetString(data);
-				return res;
-			}
-			set
-			{
-				var data = Encoding.UTF8.GetBytes(value);
-				var encrypted = ProtectedData.Protect(data, AdditionalEntropy, DataProtectionScope.LocalMachine);
-				PasswordEncrypted = Convert.ToBase64String(encrypted);
-			}
-		}
 
 		private static AppSettings _instance;
 
@@ -110,27 +82,55 @@ namespace LatencyCollectorCore
 
 		private void SetDefaultsIfEmpty()
 		{
-			if (ServerUrl.IsNullOrEmpty())
-				ServerUrl = DefaultServer;
-
-			if (StreamingServerUrl.IsNullOrEmpty() ||
-				string.Equals(StreamingServerUrl, DefaultStreamingServer, StringComparison.OrdinalIgnoreCase))
-			{
-				StreamingServerUrl = DefaultStreamingServer;
-			}
-
 			if (UserId.IsNullOrEmpty())
 			{
 				UserId = Guid.NewGuid().ToString();
 				Save();
 			}
+
+			if (Monitors == null)
+				Monitors = new LatencyMonitor[] { new DefaultPageMonitor() };
 		}
 
 		private void SetDefaults()
 		{
 		}
 
-		private const string DefaultServer = "https://ciapi.cityindex.com/TradingApi";
-		private const string DefaultStreamingServer = "https://push.cityindex.com";
+		private static XmlSerializer CreateSerializer()
+		{
+			var overrides = new XmlAttributeOverrides();
+			var rootAttr = new XmlRootAttribute("Monitors");
+			return new XmlSerializer(typeof(LatencyMonitor[]), overrides, new Type[0], rootAttr, "");
+		}
+
+		public void SetMonitors(string text)
+		{
+			var s = CreateSerializer();
+			using (var rd = new StringReader(text))
+			{
+				var tmp = s.Deserialize(rd);
+				Monitors = (LatencyMonitor[])tmp;
+			}
+
+			Save();
+		}
+
+		public string GetMonitors()
+		{
+			var s = CreateSerializer();
+			using (var stringWriter = new StringWriter())
+			{
+				var writerSettings = new XmlWriterSettings
+				{
+					OmitXmlDeclaration = true,
+					Indent = true,
+				};
+				using (var xmlWriter = XmlWriter.Create(stringWriter, writerSettings))
+				{
+					s.Serialize(xmlWriter, Monitors);
+				}
+				return stringWriter.ToString();
+			}
+		}
 	}
 }

@@ -72,18 +72,16 @@
     <Compile Include="Monitors\AllServiceMonitor.cs" />
     <Compile Include="AppSettings.cs" />
     <Compile Include="..\Shared\Const.cs" />
-    <Compile Include="Data.cs" />
+    <Compile Include="Monitors\AuthenticatedMonitor.cs" />
     <Compile Include="Monitors\DefaultPageMonitor.cs" />
     <Compile Include="Exceptions.cs" />
-    <Compile Include="Monitors\Monitor.cs" />
-    <Compile Include="Monitors\MonitorInfo.cs" />
+    <Compile Include="Monitors\LatencyMonitor.cs" />
     <Compile Include="NtpdInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxy.cs" />
     <Compile Include="..\Shared\Util.cs" />
     <Compile Include="SntpClient.cs" />
-    <Compile Include="Monitors\StreamingMonitor.cs" />
     <Compile Include="AppMetrics.cs" />
   </ItemGroup>
   <ItemGroup>

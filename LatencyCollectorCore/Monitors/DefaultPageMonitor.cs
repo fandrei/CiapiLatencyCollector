@@ -7,7 +7,7 @@ using System.Text;
 
 namespace LatencyCollectorCore.Monitors
 {
-	class DefaultPageMonitor : Monitor
+	public class DefaultPageMonitor : LatencyMonitor
 	{
 		public override void Execute()
 		{

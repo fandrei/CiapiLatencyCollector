@@ -8,8 +8,7 @@ using System.Text;
 using System.Threading;
 
 using AppMetrics.Client;
-
-using Monitor = LatencyCollectorCore.Monitors.Monitor;
+using LatencyCollectorCore.Monitors;
 
 namespace LatencyCollectorCore
 {
@@ -73,7 +72,7 @@ namespace LatencyCollectorCore
 			{
 				AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
 
-				var curAssembly = typeof(Data).Assembly;
+				var curAssembly = typeof(AppSettings).Assembly;
 				AppMetrics.Tracker.Log("Info_LatencyCollectorVersion", curAssembly.FullName);
 
 				//SntpClient.Init();
@@ -125,7 +124,7 @@ namespace LatencyCollectorCore
 
 			foreach (var monitor in monitors)
 			{
-				if ((now - monitor.LastExecution).TotalSeconds > monitor.Info.PeriodSeconds)
+				if ((now - monitor.LastExecution).TotalSeconds > monitor.PeriodSeconds)
 				{
 					monitor.LastExecution = now;
 					var tmp = monitor;
@@ -175,32 +174,13 @@ namespace LatencyCollectorCore
 			return null;
 		}
 
-		static Monitor[] GetMonitors()
+		static LatencyMonitor[] GetMonitors()
 		{
 			lock (Sync)
 			{
 				if (_monitors == null)
 				{
-					var infoList = AppSettings.Instance.Monitors;
-					var res = new List<Monitor>();
-
-					foreach (var info in infoList)
-					{
-						try
-						{
-							var typeName = typeof(Monitor).Namespace + "." + info.Name;
-							var type = Assembly.GetExecutingAssembly().GetType(typeName);
-							var monitor = (Monitor)Activator.CreateInstance(type);
-							monitor.Info = info;
-							res.Add(monitor);
-						}
-						catch (Exception exc)
-						{
-							Report(exc);
-						}
-					}
-
-					_monitors = res;
+					_monitors = AppSettings.Instance.Monitors.ToList();
 				}
 				return _monitors.ToArray();
 			}
@@ -210,6 +190,6 @@ namespace LatencyCollectorCore
 		private static Thread _thread;
 		private static readonly object Sync = new object();
 
-		private static List<Monitor> _monitors;
+		private static List<LatencyMonitor> _monitors;
 	}
 }
