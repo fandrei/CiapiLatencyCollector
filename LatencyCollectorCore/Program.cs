@@ -181,15 +181,15 @@ namespace LatencyCollectorCore
 			return null;
 		}
 
-		static LatencyMonitor[] GetMonitors()
+		static IList<LatencyMonitor> GetMonitors()
 		{
 			lock (Sync)
 			{
 				if (_monitors == null)
 				{
-					_monitors = AppSettings.Instance.Monitors.ToList();
+					_monitors = AppSettings.Instance.Monitors.ToList().AsReadOnly();
 				}
-				return _monitors.ToArray();
+				return _monitors;
 			}
 		}
 
@@ -197,6 +197,6 @@ namespace LatencyCollectorCore
 		private static Thread _thread;
 		private static readonly object Sync = new object();
 
-		private static List<LatencyMonitor> _monitors;
+		private static IList<LatencyMonitor> _monitors;
 	}
 }
