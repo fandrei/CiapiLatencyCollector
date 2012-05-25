@@ -25,7 +25,7 @@ namespace LatencyCollectorCore.Monitors
 		// GBP/USD market
 		private const int MarketId = 400481142;
 
-		public override void Execute()
+		protected override void Execute()
 		{
 			Client client = null;
 			try
