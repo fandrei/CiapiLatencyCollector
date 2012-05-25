@@ -17,6 +17,7 @@ namespace LatencyCollectorCore.Monitors
 		}
 
 		public abstract void Execute();
+		public bool IsExecuting { get; set; }
 
 		public int PeriodSeconds { get; set; }
 

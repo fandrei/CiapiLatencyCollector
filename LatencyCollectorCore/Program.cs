@@ -124,27 +124,34 @@ namespace LatencyCollectorCore
 
 			foreach (var monitor in monitors)
 			{
-				if ((now - monitor.LastExecution).TotalSeconds > monitor.PeriodSeconds)
+				if (!monitor.IsExecuting && (now - monitor.LastExecution).TotalSeconds > monitor.PeriodSeconds)
 				{
-					monitor.LastExecution = now;
-					var tmp = monitor;
-					ThreadPool.QueueUserWorkItem(
-						s =>
-						{
-							try
-							{
-								tmp.Execute();
-							}
-							catch (ThreadInterruptedException)
-							{
-							}
-							catch (Exception exc)
-							{
-								Report(exc);
-							}
-						});
+					RunMonitorAsync(monitor);
 				}
 			}
+		}
+
+		private static void RunMonitorAsync(LatencyMonitor monitor)
+		{
+			monitor.IsExecuting = true;
+			monitor.LastExecution = DateTime.UtcNow;
+
+			ThreadPool.QueueUserWorkItem(
+				s =>
+				{
+					try
+					{
+						monitor.Execute();
+					}
+					catch (ThreadInterruptedException)
+					{
+					}
+					catch (Exception exc)
+					{
+						Report(exc);
+					}
+					monitor.IsExecuting = false;
+				});
 		}
 
 		public static void Report(Exception exc)
