@@ -49,8 +49,14 @@ namespace LatencyCollectorCore.Monitors
 
 		protected abstract void Execute();
 
+		private volatile bool _isExecuting;
+
 		[XmlIgnore]
-		public bool IsExecuting { get; private set; }
+		public bool IsExecuting
+		{
+			get { return _isExecuting; }
+			private set { _isExecuting = value; }
+		}
 
 		private Thread _thread;
 
