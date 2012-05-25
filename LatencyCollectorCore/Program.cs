@@ -54,6 +54,12 @@ namespace LatencyCollectorCore
 				{
 					_terminated = true;
 					_thread.Interrupt();
+
+					foreach (var monitor in _monitors)
+					{
+						monitor.Interrupt();
+					}
+
 					_thread.Join(TimeSpan.FromMinutes(2));
 					_thread = null;
 

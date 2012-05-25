@@ -24,27 +24,42 @@ namespace LatencyCollectorCore.Monitors
 			IsExecuting = true;
 			LastExecution = DateTime.UtcNow;
 
-			ThreadPool.QueueUserWorkItem(
-				s =>
-				{
-					try
-					{
-						Execute();
-					}
-					catch (ThreadInterruptedException)
-					{
-					}
-					catch (Exception exc)
-					{
-						Program.Report(exc);
-					}
-					IsExecuting = false;
-				});
+			lock (_sync)
+			{
+				_thread = new Thread(ThreadEntry);
+				_thread.Start();
+			}
+		}
+
+		private void ThreadEntry()
+		{
+			try
+			{
+				Execute();
+			}
+			catch (ThreadInterruptedException)
+			{
+			}
+			catch (Exception exc)
+			{
+				Program.Report(exc);
+			}
+
+			lock (_sync)
+			{
+				IsExecuting = false;
+				_thread = null;
+			}
 		}
 
 		public void Interrupt()
 		{
-			_thread.Interrupt();
+			lock (_sync)
+			{
+				if (_thread == null)
+					return;
+				_thread.Interrupt();
+			}
 		}
 
 		protected abstract void Execute();
@@ -59,6 +74,7 @@ namespace LatencyCollectorCore.Monitors
 		}
 
 		private Thread _thread;
+		private readonly object _sync = new object();
 
 		[XmlIgnore]
 		public DateTime LastExecution { get; set; }
