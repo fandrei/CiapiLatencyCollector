@@ -115,6 +115,8 @@ namespace LatencyCollectorCore
 			var exception = e.ExceptionObject as Exception;
 			if (exception != null)
 				Report(exception);
+
+			Tracker.Terminate();
 		}
 
 		private static void PerformPolling()
