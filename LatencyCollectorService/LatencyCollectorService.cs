@@ -141,8 +141,14 @@ namespace CiapiLatencyCollector
 			{
 				InvokeCrossDomain(newDomain, "Start");
 			}
-			catch (Exception)
+			catch (AppDomainUnloadedException exc)
 			{
+				Report(exc);
+				newDomain = null;
+			}
+			catch (Exception exc)
+			{
+				Report(exc);
 				AppDomain.Unload(newDomain);
 				throw;
 			}
@@ -175,6 +181,19 @@ namespace CiapiLatencyCollector
 
 		private void EnsureWorkerDomainStarted()
 		{
+			if (_appDomain != null)
+			{
+				try
+				{
+					var tmp = _appDomain.Id;
+				}
+				catch (AppDomainUnloadedException exc)
+				{
+					Report(exc);
+					_appDomain = null;
+				}
+			}
+
 			if (_appDomain == null)
 				StartWorkerDomain();
 		}
