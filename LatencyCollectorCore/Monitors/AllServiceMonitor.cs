@@ -32,7 +32,7 @@ namespace LatencyCollectorCore.Monitors
 			{
 				client = new Client(new Uri(ServerUrl), new Uri(StreamingServerUrl), "{API_KEY}");
 				client.AppKey = "CiapiLatencyCollector." + GetType().Name;
-				client.StartMetrics();
+				//client.StartMetrics();
 
 				{
 					var measure = AppMetrics.StartMeasure();
