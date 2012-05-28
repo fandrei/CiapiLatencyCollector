@@ -13,8 +13,9 @@ namespace LatencyCollectorCore.Monitors
 	{
 		public AllServiceMonitor()
 		{
-			ServerUrl = "";
-			StreamingServerUrl = "";
+			ServerUrl = "https://ciapi.cityindex.com/TradingApi";
+			StreamingServerUrl = "https://push.cityindex.com";
+			PeriodSeconds = 5;
 		}
 
 		public string ServerUrl { get; set; }
