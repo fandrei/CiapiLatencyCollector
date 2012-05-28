@@ -52,7 +52,7 @@ namespace CiapiLatencyCollector
 				}
 				catch (Exception exc)
 				{
-					ReportEvent(exc.ToString(), EventLogEntryType.Warning);
+					Report(exc);
 				}
 			}
 		}
@@ -74,7 +74,7 @@ namespace CiapiLatencyCollector
 					}
 					catch (Exception exc)
 					{
-						ReportEvent(exc.ToString(), EventLogEntryType.Warning);
+						Report(exc);
 					}
 
 					Thread.Sleep(AutoUpdateCheckPeriod);
@@ -198,6 +198,11 @@ namespace CiapiLatencyCollector
 			{
 				Trace.WriteLine(exc);
 			}
+		}
+
+		public static void Report(Exception exc)
+		{
+			ReportEvent(exc.ToString(), EventLogEntryType.Warning);
 		}
 
 		private readonly object _sync = new object();
