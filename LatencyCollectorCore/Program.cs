@@ -60,7 +60,14 @@ namespace LatencyCollectorCore
 						monitor.Interrupt();
 					}
 
+					// it's important to wait for this threads to pump pending AppMetrics messages
 					_thread.Join(TimeSpan.FromMinutes(2));
+
+					foreach (var monitor in _monitors)
+					{
+						monitor.WaitForFinish();
+					}
+
 					_thread = null;
 
 					AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;

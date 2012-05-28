@@ -62,6 +62,16 @@ namespace LatencyCollectorCore.Monitors
 			}
 		}
 
+		public void WaitForFinish()
+		{
+			lock (_sync)
+			{
+				if (_thread == null)
+					return;
+				_thread.Join(TimeSpan.FromSeconds(10));
+			}
+		}
+
 		protected abstract void Execute();
 
 		private volatile bool _isExecuting;
