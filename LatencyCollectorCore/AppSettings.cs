@@ -96,9 +96,14 @@ namespace LatencyCollectorCore
 		{
 		}
 
-		private static XmlSerializer CreateSerializer()
+		private static XmlSerializer CreateSerializer(XmlAttributeOverrides overrides = null)
 		{
-			var overrides = new XmlAttributeOverrides();
+			if (overrides == null)
+				overrides = new XmlAttributeOverrides();
+
+			overrides.Add(typeof(AuthenticatedMonitor), "PasswordEncrypted", new XmlAttributes { XmlIgnore = true });
+			overrides.Add(typeof(AuthenticatedMonitor), "Password", new XmlAttributes { XmlIgnore = false });
+
 			var rootAttr = new XmlRootAttribute("Monitors");
 			return new XmlSerializer(typeof(LatencyMonitor[]), overrides, new Type[0], rootAttr, "");
 		}
