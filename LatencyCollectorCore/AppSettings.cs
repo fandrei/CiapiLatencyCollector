@@ -101,6 +101,7 @@ namespace LatencyCollectorCore
 							PeriodSeconds = (int)(60.0 / DataPollingRate),
 						};
 					Monitors = new LatencyMonitor[] { monitor };
+					Save();
 				}
 				else
 					Monitors = new LatencyMonitor[] { new DefaultPageMonitor(), new AllServiceMonitor() };
