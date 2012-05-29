@@ -30,14 +30,7 @@ namespace LatencyCollectorCore
 			{
 				lock (Sync)
 				{
-					AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-
-					if (_thread != null)
-						throw new InvalidOperationException();
-
-					_terminated = false;
-					_thread = new Thread(ThreadProc);
-					_thread.Start();
+					StartPolling();
 				}
 			}
 			catch (Exception exc)
@@ -52,8 +45,6 @@ namespace LatencyCollectorCore
 			{
 				lock (Sync)
 				{
-					_terminated = true;
-
 					foreach (var monitor in _monitors)
 					{
 						monitor.Interrupt();
@@ -64,13 +55,6 @@ namespace LatencyCollectorCore
 						monitor.WaitForFinish();
 					}
 
-					_thread.Interrupt();
-
-					// it's important to wait for this threads because it needs to pump pending AppMetrics messages
-					_thread.Join(TimeSpan.FromMinutes(2));
-
-					_thread = null;
-
 					AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
 				}
 			}
@@ -78,41 +62,6 @@ namespace LatencyCollectorCore
 			{
 				Report(exc);
 			}
-		}
-
-		static void ThreadProc()
-		{
-			try
-			{
-				AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
-
-				var curAssembly = typeof(AppSettings).Assembly;
-				AppMetrics.Tracker.Log("Info_LatencyCollectorVersion", curAssembly.FullName);
-
-				//SntpClient.Init();
-
-				while (!_terminated)
-				{
-					try
-					{
-						PerformPolling();
-					}
-					catch (NotConnectedException)
-					{ }
-					catch (Exception exc)
-					{
-						Report(exc);
-					}
-
-					if (_terminated)
-						break;
-
-					var period = TimeSpan.FromSeconds(1.0);
-					Thread.Sleep(period);
-				}
-			}
-			catch (ThreadInterruptedException)
-			{ }
 
 			try
 			{
@@ -124,6 +73,22 @@ namespace LatencyCollectorCore
 			}
 		}
 
+		private static void StartPolling()
+		{
+			AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
+
+			var curAssembly = typeof(AppSettings).Assembly;
+			AppMetrics.Tracker.Log("Info_LatencyCollectorVersion", curAssembly.FullName);
+
+			//SntpClient.Init();
+
+			var monitors = GetMonitors();
+			foreach (var monitor in monitors)
+			{
+				monitor.Start();
+			}
+		}
+
 		static void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
 		{
 			var exception = e.ExceptionObject as Exception;
@@ -131,20 +96,6 @@ namespace LatencyCollectorCore
 				Report(exception);
 
 			Tracker.Terminate();
-		}
-
-		private static void PerformPolling()
-		{
-			var now = DateTime.UtcNow;
-			var monitors = GetMonitors();
-
-			foreach (var monitor in monitors)
-			{
-				if (!monitor.IsExecuting && (now - monitor.LastExecution).TotalSeconds > monitor.PeriodSeconds)
-				{
-					monitor.Run();
-				}
-			}
 		}
 
 		public static void Report(Exception exc)
@@ -186,8 +137,6 @@ namespace LatencyCollectorCore
 			}
 		}
 
-		private static volatile bool _terminated;
-		private static Thread _thread;
 		private static readonly object Sync = new object();
 
 		private static IList<LatencyMonitor> _monitors;

@@ -100,6 +100,8 @@ namespace LatencyCollectorCore.Monitors
 					AppMetrics.EndMeasure(measure, "ListTradeHistory");
 				}
 			}
+			catch (NotConnectedException)
+			{ }
 			finally
 			{
 				try

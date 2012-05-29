@@ -19,9 +19,8 @@ namespace LatencyCollectorCore.Monitors
 
 		public int PeriodSeconds { get; set; }
 
-		public void Run()
+		public void Start()
 		{
-			IsExecuting = true;
 			LastExecution = DateTime.UtcNow;
 
 			lock (_sync)
@@ -35,7 +34,11 @@ namespace LatencyCollectorCore.Monitors
 		{
 			try
 			{
-				Execute();
+				while (!_terminated)
+				{
+					Execute();
+					Thread.Sleep(TimeSpan.FromSeconds(PeriodSeconds));
+				}
 			}
 			catch (ThreadInterruptedException)
 			{
@@ -47,7 +50,6 @@ namespace LatencyCollectorCore.Monitors
 
 			lock (_sync)
 			{
-				IsExecuting = false;
 				_thread = null;
 			}
 		}
@@ -56,6 +58,7 @@ namespace LatencyCollectorCore.Monitors
 		{
 			lock (_sync)
 			{
+				_terminated = true;
 				if (_thread == null)
 					return;
 				_thread.Interrupt();
@@ -74,17 +77,10 @@ namespace LatencyCollectorCore.Monitors
 
 		protected abstract void Execute();
 
-		private volatile bool _isExecuting;
-
-		[XmlIgnore]
-		public bool IsExecuting
-		{
-			get { return _isExecuting; }
-			private set { _isExecuting = value; }
-		}
-
 		private Thread _thread;
 		private readonly object _sync = new object();
+
+		private volatile bool _terminated;
 
 		[XmlIgnore]
 		public DateTime LastExecution { get; set; }
