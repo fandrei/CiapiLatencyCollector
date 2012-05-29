@@ -38,6 +38,7 @@ namespace CiapiLatencyCollector
 						try
 						{
 							ManagedInstallerClass.InstallHelper(new[] { ExePath, "/LogFile=" });
+							SetRecoveryOptions(Const.AppName);
 						}
 						catch (InvalidOperationException)
 						{
@@ -117,6 +118,30 @@ namespace CiapiLatencyCollector
 		{
 			OkOnly = 0x000000,
 			Topmost = 0x040000
+		}
+
+		// set windows service options to restart after failure
+		static void SetRecoveryOptions(string serviceName)
+		{
+			int exitCode;
+			using (var process = new Process())
+			{
+				var startInfo = process.StartInfo;
+				startInfo.FileName = "sc";
+				startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+
+				startInfo.Arguments = string.Format("failure \"{0}\" reset= 0 actions= restart/60000", serviceName);
+
+				process.Start();
+				process.WaitForExit();
+
+				exitCode = process.ExitCode;
+
+				process.Close();
+			}
+
+			if (exitCode != 0)
+				throw new InvalidOperationException();
 		}
 
 		private static readonly string ExePath = Assembly.GetExecutingAssembly().Location;
