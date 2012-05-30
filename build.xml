@@ -57,7 +57,9 @@
     <ItemGroup>
       <!-- All files from build -->
       <ZipFiles Include="$(TargetDir)\**\*.*"
-                Exclude="$(TargetDir)\**\*.zip;$(TargetDir)\**\CiapiLatencyCollector.*" />
+                Exclude="$(TargetDir)\**\*.zip;$(TargetDir)\**\*.pdb;$(TargetDir)\**\*.xml;
+                $(TargetDir)\**\*.vshost.exe;$(TargetDir)\**\*.vshost.exe.*;
+                $(TargetDir)\**\CiapiLatencyCollector.*;$(TargetDir)\**\Ionic.Zip.dll" />
     </ItemGroup>
     <Zip Files="@(ZipFiles)"
          WorkingDirectory="$(TargetDir)"
