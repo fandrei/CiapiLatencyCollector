@@ -38,6 +38,8 @@
               Source='..\_bin\Release\Ionic.Zip.dll' Vital='yes' />
         <File Id='CiapiLatencyCollectorConfig.exe' Name='CiapiLatencyCollectorConfig.exe'
               Source='..\_bin\Release\CiapiLatencyCollectorConfig.exe' Vital='yes' />
+        <File Id='CiapiLatencyCollectorCore.exe' Name='CiapiLatencyCollectorCore.exe'
+              Source='..\_bin\Release\CiapiLatencyCollectorCore.exe' Vital='yes' />
       </Component>
     </DirectoryRef>
 
