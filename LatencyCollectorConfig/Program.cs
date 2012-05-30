@@ -33,9 +33,13 @@ namespace LatencyCollectorConfig
 							else
 							{
 								var parts = tmp.Split(':');
-								if (parts.Count() != 2)
-									throw new ArgumentException("Invalid parameter", arg);
-								argsDic.Add(parts[0], parts[1]);
+								var value = parts[1];
+								if (parts.Count() > 2)
+								{
+									value = string.Join(":", parts.Skip(1));
+								}
+									
+								argsDic.Add(parts[0], value);
 							}
 						}
 					}
