@@ -33,8 +33,12 @@
         Files="$(MSBuildProjectDirectory)\Setup\Variables.wxi"
         Regex="ProductVersion *= *&quot;.*?&quot;"
         ReplacementText="ProductVersion = &quot;$(FullVersion)&quot;" />
+
+    <ItemGroup>
+      <MonitorFiles Include="$(MSBuildProjectDirectory)\LatencyCollectorCore\Monitors\*.cs" />
+    </ItemGroup>
     <FileUpdate
-        Files="$(MSBuildProjectDirectory)\LatencyCollectorCore\Monitors\*.cs"
+        Files="@(MonitorFiles)"
         Regex="{API_KEY}"
         ReplacementText="$(API_KEY)" />
   </Target>
