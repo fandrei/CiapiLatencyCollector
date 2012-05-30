@@ -19,10 +19,11 @@ namespace LatencyCollectorCore.Monitors
 
 		public int PeriodSeconds { get; set; }
 
+		[XmlIgnore]
+		public TimeSpan Period { get { return TimeSpan.FromSeconds(PeriodSeconds); } }
+
 		public void Start()
 		{
-			LastExecution = DateTime.UtcNow;
-
 			lock (_sync)
 			{
 				_thread = new Thread(ThreadEntry);
@@ -36,8 +37,13 @@ namespace LatencyCollectorCore.Monitors
 			{
 				while (!_terminated)
 				{
+					LastExecution = DateTime.UtcNow;
 					Execute();
-					Thread.Sleep(TimeSpan.FromSeconds(PeriodSeconds));
+
+					var executionTime = DateTime.UtcNow - LastExecution;
+					var period = Period - executionTime;
+					if (period.TotalSeconds > 0)
+						Thread.Sleep(period);
 				}
 			}
 			catch (ThreadInterruptedException)
