@@ -10,7 +10,7 @@ namespace LatencyCollectorCore.Monitors
 	[XmlInclude(typeof(DefaultPageMonitor))]
 	[XmlInclude(typeof(AuthenticatedMonitor))]
 	[XmlInclude(typeof(AllServiceMonitor))]
-	public abstract class LatencyMonitor
+	public abstract class LatencyMonitor : IDisposable
 	{
 		protected LatencyMonitor()
 		{
@@ -39,7 +39,14 @@ namespace LatencyCollectorCore.Monitors
 				while (!_terminated)
 				{
 					LastExecution = DateTime.UtcNow;
-					Execute();
+					try
+					{
+						Execute();
+					}
+					catch (Exception exc)
+					{
+						Program.Report(exc);
+					}
 
 					var executionTime = DateTime.UtcNow - LastExecution;
 					var period = Period - executionTime;
@@ -80,6 +87,11 @@ namespace LatencyCollectorCore.Monitors
 					return;
 				_thread.Join(TimeSpan.FromSeconds(10));
 			}
+		}
+
+		public void Dispose()
+		{
+			Interrupt();
 		}
 
 		protected abstract void Execute();
