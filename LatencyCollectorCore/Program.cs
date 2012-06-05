@@ -85,12 +85,14 @@ namespace LatencyCollectorCore
 		{
 			lock (Sync)
 			{
-				foreach (var monitor in _monitors)
+				var monitors = GetMonitors();
+
+				foreach (var monitor in monitors)
 				{
 					monitor.Interrupt();
 				}
 
-				foreach (var monitor in _monitors)
+				foreach (var monitor in monitors)
 				{
 					monitor.WaitForFinish();
 				}
@@ -137,16 +139,11 @@ namespace LatencyCollectorCore
 		{
 			lock (Sync)
 			{
-				if (_monitors == null)
-				{
-					_monitors = AppSettings.Instance.Monitors.ToList().AsReadOnly();
-				}
-				return _monitors;
+				var res = AppSettings.Instance.Monitors.ToList().AsReadOnly();
+				return res;
 			}
 		}
 
 		private static readonly object Sync = new object();
-
-		private static IList<LatencyMonitor> _monitors;
 	}
 }
