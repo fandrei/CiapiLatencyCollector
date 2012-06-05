@@ -49,18 +49,12 @@ namespace LatencyCollectorCore
 			}
 		}
 
-		const int UpdatePeriodSeconds = 60;
-		private DateTime _lastUpdated = DateTime.MinValue;
 		private string _lastConfigText;
 
-		void CheckUpdates()
+		public void CheckUpdates()
 		{
 			try
 			{
-				var now = DateTime.UtcNow;
-				if ((now - _lastUpdated).TotalSeconds < UpdatePeriodSeconds)
-					return;
-
 				var configAddress = string.Format(Const.ConfigBaseUrl, UserId);
 
 				using (var client = new WebClient())
@@ -80,8 +74,6 @@ namespace LatencyCollectorCore
 					SetMonitors(text);
 					_lastConfigText = text;
 				}
-
-				_lastUpdated = now;
 			}
 			catch (Exception exc)
 			{
@@ -91,15 +83,11 @@ namespace LatencyCollectorCore
 
 		#endregion
 
-		private LatencyMonitor[] _monitors;
+		private LatencyMonitor[] _monitors = new LatencyMonitor[0];
 
 		public LatencyMonitor[] Monitors
 		{
-			get
-			{
-				CheckUpdates();
-				return _monitors;
-			}
+			get { return _monitors; }
 		}
 
 		public string UserId { get; set; }

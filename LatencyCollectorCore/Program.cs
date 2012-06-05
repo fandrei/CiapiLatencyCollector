@@ -74,6 +74,12 @@ namespace LatencyCollectorCore
 
 			//SntpClient.Init();
 
+			lock (Sync)
+			{
+				AppSettings.Instance.CheckUpdates();
+				SettingsUpdater.Start();
+			}
+
 			var monitors = GetMonitors();
 			foreach (var monitor in monitors)
 			{
@@ -87,11 +93,13 @@ namespace LatencyCollectorCore
 			{
 				var monitors = GetMonitors();
 
+				SettingsUpdater.Interrupt();
 				foreach (var monitor in monitors)
 				{
 					monitor.Interrupt();
 				}
 
+				SettingsUpdater.WaitForFinish();
 				foreach (var monitor in monitors)
 				{
 					monitor.WaitForFinish();
@@ -145,5 +153,6 @@ namespace LatencyCollectorCore
 		}
 
 		private static readonly object Sync = new object();
+		private static readonly SettingsUpdateChecker SettingsUpdater = new SettingsUpdateChecker();
 	}
 }

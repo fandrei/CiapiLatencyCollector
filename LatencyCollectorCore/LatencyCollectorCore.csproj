@@ -76,6 +76,7 @@
     <Compile Include="Monitors\DefaultPageMonitor.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="Monitors\LatencyMonitor.cs" />
+    <Compile Include="Monitors\SettingsUpdateChecker.cs" />
     <Compile Include="NtpdInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
