@@ -187,9 +187,9 @@ namespace LatencyCollectorCore
 				ConfigVersion = ActualConfigVersion;
 				UserName = UserId;
 				Password = Guid.NewGuid().ToString();
-			}
 
-			Save();
+				Save();
+			}
 		}
 
 		#endregion
