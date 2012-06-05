@@ -49,9 +49,9 @@ namespace LatencyCollectorCore
 			}
 		}
 
-		public const int UpdatePeriodSeconds = 60;
-
+		const int UpdatePeriodSeconds = 60;
 		private DateTime _lastUpdated = DateTime.MinValue;
+		private string _lastConfigText;
 
 		void CheckUpdates()
 		{
@@ -66,7 +66,19 @@ namespace LatencyCollectorCore
 				using (var client = new WebClient())
 				{
 					var text = client.DownloadString(configAddress);
+					if (text == _lastConfigText)
+						return;
+
+					if (_monitors != null)
+					{
+						foreach (var monitor in _monitors)
+						{
+							monitor.Dispose();
+						}
+					}
+
 					SetMonitors(text);
+					_lastConfigText = text;
 				}
 
 				_lastUpdated = now;
