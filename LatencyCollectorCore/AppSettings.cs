@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
@@ -20,7 +21,74 @@ namespace LatencyCollectorCore
 			SetDefaults();
 		}
 
-		public LatencyMonitor[] Monitors { get; set; }
+		#region Updating settings from the central repository
+
+		public string UserName { get; set; }
+
+		public string PasswordEncrypted { get; set; }
+		static readonly byte[] AdditionalEntropy = { 0x43, 0x71, 0xDE, 0x5B, 0x44, 0x72, 0x45, 0xE3, 0xBE, 0x1E, 0x98, 0x2B, 0xAA };
+
+		[XmlIgnore]
+		public string Password
+		{
+			get
+			{
+				if (PasswordEncrypted.IsNullOrEmpty())
+					return "";
+
+				var encrypted = Convert.FromBase64String(PasswordEncrypted);
+				var data = ProtectedData.Unprotect(encrypted, AdditionalEntropy, DataProtectionScope.LocalMachine);
+				var res = Encoding.UTF8.GetString(data);
+				return res;
+			}
+			set
+			{
+				var data = Encoding.UTF8.GetBytes(value);
+				var encrypted = ProtectedData.Protect(data, AdditionalEntropy, DataProtectionScope.LocalMachine);
+				PasswordEncrypted = Convert.ToBase64String(encrypted);
+			}
+		}
+
+		public const int UpdatePeriodSeconds = 60;
+
+		private DateTime _lastUpdated = DateTime.MinValue;
+
+		void CheckUpdates()
+		{
+			try
+			{
+				var now = DateTime.UtcNow;
+				if ((now - _lastUpdated).TotalSeconds < UpdatePeriodSeconds)
+					return;
+
+				var configAddress = string.Format(Const.ConfigBaseUrl, UserId);
+
+				using (var client = new WebClient())
+				{
+					var text = client.DownloadString(configAddress);
+					SetMonitors(text);
+				}
+
+				_lastUpdated = now;
+			}
+			catch (Exception exc)
+			{
+				AppMetrics.Tracker.Log(exc);
+			}
+		}
+
+		#endregion
+
+		private LatencyMonitor[] _monitors;
+
+		public LatencyMonitor[] Monitors
+		{
+			get
+			{
+				CheckUpdates();
+				return _monitors;
+			}
+		}
 
 		public string UserId { get; set; }
 
@@ -63,6 +131,7 @@ namespace LatencyCollectorCore
 				settings = new AppSettings();
 
 			settings.SetDefaultsIfEmpty();
+			settings.UpdateConfigVersion();
 
 			return settings;
 		}
@@ -87,105 +156,40 @@ namespace LatencyCollectorCore
 				UserId = Guid.NewGuid().ToString();
 				Save();
 			}
-
-			if (Monitors == null)
-			{
-				if (!string.IsNullOrEmpty(UserName))
-				{
-					var monitor = new AllServiceMonitor
-						{
-							UserName = UserName,
-							Password = Password,
-							ServerUrl = ServerUrl,
-							StreamingServerUrl = StreamingServerUrl,
-							PeriodSeconds = (int)(60.0 / DataPollingRate),
-						};
-					Monitors = new LatencyMonitor[] { monitor };
-					Save();
-				}
-				else
-					Monitors = new LatencyMonitor[] { new DefaultPageMonitor(), new AllServiceMonitor() };
-			}
 		}
 
 		private void SetDefaults()
 		{
 		}
 
-		private static XmlSerializer CreateSerializer(XmlAttributeOverrides overrides = null)
-		{
-			if (overrides == null)
-				overrides = new XmlAttributeOverrides();
-
-			overrides.Add(typeof(AuthenticatedMonitor), "PasswordEncrypted", new XmlAttributes { XmlIgnore = true });
-			overrides.Add(typeof(AuthenticatedMonitor), "Password", new XmlAttributes { XmlIgnore = false });
-
-			var rootAttr = new XmlRootAttribute("Monitors");
-			return new XmlSerializer(typeof(LatencyMonitor[]), overrides, new Type[0], rootAttr, "");
-		}
-
 		public void SetMonitors(string text)
 		{
-			var s = CreateSerializer();
+			var overrides = new XmlAttributeOverrides();
+			var rootAttr = new XmlRootAttribute("Monitors");
+			var s = new XmlSerializer(typeof(LatencyMonitor[]), overrides, new Type[0], rootAttr, "");
+
 			using (var rd = new StringReader(text))
 			{
 				var tmp = s.Deserialize(rd);
-				Monitors = (LatencyMonitor[])tmp;
-			}
-
-			Save();
-		}
-
-		public string GetMonitors()
-		{
-			var s = CreateSerializer();
-			using (var stringWriter = new StringWriter())
-			{
-				var writerSettings = new XmlWriterSettings
-				{
-					OmitXmlDeclaration = true,
-					Indent = true,
-				};
-				using (var xmlWriter = XmlWriter.Create(stringWriter, writerSettings))
-				{
-					s.Serialize(xmlWriter, Monitors);
-				}
-				return stringWriter.ToString();
+				_monitors = (LatencyMonitor[])tmp;
 			}
 		}
 
 		#region Conversion from old versions
 
-		public string ServerUrl { get; set; }
-		public string StreamingServerUrl { get; set; }
+		public int ConfigVersion { get; set; }
+		private const int ActualConfigVersion = 1;
 
-		public int DataPollingRate { get; set; }
-
-		public string UserName { get; set; }
-
-		public string PasswordEncrypted { get; set; }
-
-		static readonly byte[] AdditionalEntropy = { 0x43, 0x71, 0xDE, 0x5B, 0x44, 0x72, 0x45, 0xE3, 0xBE, 0x1E, 0x98, 0x2B, 0xAA };
-
-		[XmlIgnore]
-		public string Password
+		void UpdateConfigVersion()
 		{
-			get
+			if (ConfigVersion == 0)
 			{
-				if (PasswordEncrypted.IsNullOrEmpty())
-					return "";
+				ConfigVersion = ActualConfigVersion;
+				UserName = UserId;
+				Password = Guid.NewGuid().ToString();
+			}
 
-				var encrypted = Convert.FromBase64String(PasswordEncrypted);
-				var data = ProtectedData.Unprotect(encrypted, AdditionalEntropy, DataProtectionScope.LocalMachine);
-				var res = Encoding.UTF8.GetString(data);
-				return res;
-			}
-			set
-			{
-				var data = Encoding.UTF8.GetBytes(value);
-				var encrypted = ProtectedData.Protect(data, AdditionalEntropy, DataProtectionScope.LocalMachine);
-				PasswordEncrypted = Convert.ToBase64String(encrypted);
-			}
+			Save();
 		}
 
 		#endregion

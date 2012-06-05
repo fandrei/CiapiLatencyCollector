@@ -22,7 +22,7 @@ namespace LatencyCollectorConfig
 			{
 				base.OnLoad(e);
 
-				MonitorsEdit.Text = AppSettings.Instance.GetMonitors();
+				//MonitorsEdit.Text = AppSettings.Instance.GetMonitors();
 			}
 			catch (Exception exc)
 			{
@@ -34,7 +34,7 @@ namespace LatencyCollectorConfig
 		{
 			try
 			{
-				AppSettings.Instance.SetMonitors(MonitorsEdit.Text);
+				//AppSettings.Instance.SetMonitors(MonitorsEdit.Text);
 
 				Close();
 			}

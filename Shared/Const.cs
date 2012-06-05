@@ -11,6 +11,9 @@ namespace CiapiLatencyCollector
 
 		public const string AutoUpdateBaseUrl = "http://ci.labs.cityindex.com:8080/job/CiapiLatencyCollector/ws/_bin/Release/";
 
+		public const string ConfigBaseUrl = 
+			"http://config.metrics.labs.cityindex.com/CIAPILatencyCollectorConfig/{0}/AppSettings.xml";
+
 		public static string WorkingAreaPath
 		{
 			get
