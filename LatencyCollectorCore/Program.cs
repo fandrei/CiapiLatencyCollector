@@ -45,15 +45,7 @@ namespace LatencyCollectorCore
 			{
 				lock (Sync)
 				{
-					foreach (var monitor in _monitors)
-					{
-						monitor.Interrupt();
-					}
-
-					foreach (var monitor in _monitors)
-					{
-						monitor.WaitForFinish();
-					}
+					StopPolling();
 
 					AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
 				}
@@ -86,6 +78,22 @@ namespace LatencyCollectorCore
 			foreach (var monitor in monitors)
 			{
 				monitor.Start();
+			}
+		}
+
+		static void StopPolling()
+		{
+			lock (Sync)
+			{
+				foreach (var monitor in _monitors)
+				{
+					monitor.Interrupt();
+				}
+
+				foreach (var monitor in _monitors)
+				{
+					monitor.WaitForFinish();
+				}
 			}
 		}
 
