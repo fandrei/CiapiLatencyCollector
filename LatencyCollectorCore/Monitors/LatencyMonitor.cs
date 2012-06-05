@@ -26,6 +26,7 @@ namespace LatencyCollectorCore.Monitors
 		{
 			lock (_sync)
 			{
+				_terminated = false;
 				_thread = new Thread(ThreadEntry);
 				_thread.Start();
 			}
