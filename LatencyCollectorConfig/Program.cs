@@ -38,18 +38,24 @@ namespace LatencyCollectorConfig
 								{
 									value = string.Join(":", parts.Skip(1));
 								}
-									
+
 								argsDic.Add(parts[0], value);
 							}
 						}
 					}
 
-					string monitors;
-					argsDic.TryGetValue("monitors", out monitors);
+					string userName;
+					argsDic.TryGetValue("username", out userName);
 
-					if (!string.IsNullOrEmpty(monitors))
+					string password;
+					argsDic.TryGetValue("password", out password);
+
+					if (!string.IsNullOrEmpty(userName))
 					{
-						AppSettings.Instance.SetMonitors(monitors);
+						AppSettings.Instance.UserName = userName;
+						AppSettings.Instance.Password = password;
+						
+						AppSettings.Instance.Save();
 					}
 				}
 				else

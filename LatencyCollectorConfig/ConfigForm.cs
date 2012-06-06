@@ -22,7 +22,8 @@ namespace LatencyCollectorConfig
 			{
 				base.OnLoad(e);
 
-				//MonitorsEdit.Text = AppSettings.Instance.GetMonitors();
+				UserNameEdit.Text = AppSettings.Instance.UserName;
+				PasswordEdit.Text = AppSettings.Instance.Password;
 			}
 			catch (Exception exc)
 			{
@@ -34,7 +35,10 @@ namespace LatencyCollectorConfig
 		{
 			try
 			{
-				//AppSettings.Instance.SetMonitors(MonitorsEdit.Text);
+				AppSettings.Instance.UserName = UserNameEdit.Text;
+				AppSettings.Instance.Password = PasswordEdit.Text;
+
+				AppSettings.Instance.Save();
 
 				Close();
 			}

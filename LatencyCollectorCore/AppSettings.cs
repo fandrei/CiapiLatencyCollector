@@ -59,6 +59,8 @@ namespace LatencyCollectorCore
 
 				using (var client = new WebClient())
 				{
+					client.Credentials = new NetworkCredential(UserName, Password);
+
 					var text = client.DownloadString(configAddress);
 					if (text == _lastConfigText)
 						return;
@@ -185,8 +187,8 @@ namespace LatencyCollectorCore
 			if (ConfigVersion == 0)
 			{
 				ConfigVersion = ActualConfigVersion;
-				UserName = UserId;
-				Password = Guid.NewGuid().ToString();
+				UserName = "";
+				Password = "";
 
 				Save();
 			}
