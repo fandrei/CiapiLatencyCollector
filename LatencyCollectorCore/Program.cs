@@ -28,8 +28,18 @@ namespace LatencyCollectorCore
 		{
 			try
 			{
+				AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
+
+				var curAssembly = typeof(AppSettings).Assembly;
+				AppMetrics.Tracker.Log("Info_LatencyCollectorVersion", curAssembly.FullName);
+
+				//SntpClient.Init();
+
 				lock (Sync)
 				{
+					AppSettings.Instance.CheckUpdates();
+					SettingsUpdater.Start();
+
 					StartPolling();
 				}
 			}
@@ -67,19 +77,6 @@ namespace LatencyCollectorCore
 
 		private static void StartPolling()
 		{
-			AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
-
-			var curAssembly = typeof(AppSettings).Assembly;
-			AppMetrics.Tracker.Log("Info_LatencyCollectorVersion", curAssembly.FullName);
-
-			//SntpClient.Init();
-
-			lock (Sync)
-			{
-				AppSettings.Instance.CheckUpdates();
-				SettingsUpdater.Start();
-			}
-
 			var monitors = GetMonitors();
 			foreach (var monitor in monitors)
 			{
