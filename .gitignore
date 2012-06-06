@@ -8,5 +8,6 @@ _bin/
 _setup/
 _ReSharper*/
 temp/
+_WebPackage/
 
 !packages/
