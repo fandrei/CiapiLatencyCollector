@@ -51,7 +51,7 @@ namespace LatencyCollectorCore
 
 		private string _lastConfigText;
 
-		public void CheckUpdates()
+		public bool CheckUpdates()
 		{
 			try
 			{
@@ -63,7 +63,7 @@ namespace LatencyCollectorCore
 
 					var text = client.DownloadString(configAddress);
 					if (text == _lastConfigText)
-						return;
+						return false;
 
 					if (_monitors != null)
 					{
@@ -75,12 +75,15 @@ namespace LatencyCollectorCore
 
 					SetMonitors(text);
 					_lastConfigText = text;
+
+					return true;
 				}
 			}
 			catch (Exception exc)
 			{
 				AppMetrics.Tracker.Log(exc);
 			}
+			return false;
 		}
 
 		#endregion

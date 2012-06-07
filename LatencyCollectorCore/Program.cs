@@ -38,6 +38,7 @@ namespace LatencyCollectorCore
 				lock (Sync)
 				{
 					AppSettings.Instance.CheckUpdates();
+					SettingsUpdater.OnExecute += UpdateSettings;
 					SettingsUpdater.Start();
 
 					StartPolling();
@@ -101,6 +102,15 @@ namespace LatencyCollectorCore
 				{
 					monitor.WaitForFinish();
 				}
+			}
+		}
+
+		private static void UpdateSettings()
+		{
+			if (AppSettings.Instance.CheckUpdates())
+			{
+				StopPolling();
+				StartPolling();
 			}
 		}
 

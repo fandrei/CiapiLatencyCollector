@@ -12,9 +12,12 @@ namespace LatencyCollectorCore.Monitors
 			PeriodSeconds = 60;
 		}
 
+		public event Action OnExecute;
+
 		protected override void Execute()
 		{
-			AppSettings.Instance.CheckUpdates();
+			if (OnExecute != null)
+				OnExecute();
 		}
 	}
 }
