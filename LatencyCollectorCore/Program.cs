@@ -30,6 +30,7 @@ namespace LatencyCollectorCore
 			{
 				AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
 
+				AppMetrics.Tracker.Log("UserId", AppSettings.Instance.UserId);
 				var curAssembly = typeof(AppSettings).Assembly;
 				AppMetrics.Tracker.Log("Info_LatencyCollectorVersion", curAssembly.FullName);
 
