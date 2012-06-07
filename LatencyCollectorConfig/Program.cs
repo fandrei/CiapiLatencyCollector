@@ -57,6 +57,15 @@ namespace LatencyCollectorConfig
 						
 						AppSettings.Instance.Save();
 					}
+
+					string nodeName;
+					argsDic.TryGetValue("nodename", out nodeName);
+					if (!string.IsNullOrEmpty(nodeName))
+					{
+						AppSettings.Instance.NodeName = nodeName;
+
+						AppSettings.Instance.Save();
+					}
 				}
 				else
 				{

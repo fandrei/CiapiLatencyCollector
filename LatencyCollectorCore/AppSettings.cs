@@ -55,7 +55,7 @@ namespace LatencyCollectorCore
 		{
 			try
 			{
-				var configAddress = string.Format(Const.ConfigBaseUrl, UserId);
+				var configAddress = string.Format(Const.ConfigBaseUrl, NodeName);
 
 				using (var client = new WebClient())
 				{
@@ -96,6 +96,8 @@ namespace LatencyCollectorCore
 		}
 
 		public string UserId { get; set; }
+
+		public string NodeName { get; set; }
 
 		private static AppSettings _instance;
 

@@ -24,6 +24,8 @@ namespace LatencyCollectorConfig
 
 				UserNameEdit.Text = AppSettings.Instance.UserName;
 				PasswordEdit.Text = AppSettings.Instance.Password;
+
+				NodeNameEdit.Text = AppSettings.Instance.NodeName;
 			}
 			catch (Exception exc)
 			{
@@ -37,6 +39,8 @@ namespace LatencyCollectorConfig
 			{
 				AppSettings.Instance.UserName = UserNameEdit.Text;
 				AppSettings.Instance.Password = PasswordEdit.Text;
+
+				AppSettings.Instance.NodeName = NodeNameEdit.Text;
 
 				AppSettings.Instance.Save();
 
