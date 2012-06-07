@@ -56,7 +56,9 @@ namespace LatencyCollectorCore
 			{
 				lock (Sync)
 				{
+					SettingsUpdater.Interrupt();
 					StopPolling();
+					SettingsUpdater.WaitForFinish();
 
 					AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
 				}
@@ -91,13 +93,11 @@ namespace LatencyCollectorCore
 			{
 				var monitors = GetMonitors();
 
-				SettingsUpdater.Interrupt();
 				foreach (var monitor in monitors)
 				{
 					monitor.Interrupt();
 				}
 
-				SettingsUpdater.WaitForFinish();
 				foreach (var monitor in monitors)
 				{
 					monitor.WaitForFinish();
@@ -107,10 +107,13 @@ namespace LatencyCollectorCore
 
 		private static void UpdateSettings()
 		{
-			if (AppSettings.Instance.CheckUpdates())
+			lock (Sync)
 			{
-				StopPolling();
-				StartPolling();
+				if (AppSettings.Instance.CheckUpdates())
+				{
+					StopPolling();
+					StartPolling();
+				}
 			}
 		}
 
