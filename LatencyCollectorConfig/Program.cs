@@ -28,7 +28,7 @@ namespace LatencyCollectorConfig
 							var tmp = arg.Substring(1);
 							if (!tmp.Contains(":"))
 							{
-								argsDic.Add(tmp, "");
+								argsDic.Add(tmp.ToLower(), "");
 							}
 							else
 							{
@@ -39,7 +39,7 @@ namespace LatencyCollectorConfig
 									value = string.Join(":", parts.Skip(1));
 								}
 
-								argsDic.Add(parts[0], value);
+								argsDic.Add(parts[0].ToLower(), value);
 							}
 						}
 					}
