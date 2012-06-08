@@ -51,6 +51,9 @@
     <!-- Store version number for auto update -->
     <WriteLinesToFile File="$(TargetDir)\version.txt" Lines="$(FullVersion)" Overwrite="true" />
 
+    <MSBuild Projects="$(MSBuildProjectDirectory)\LatencyCollectorConfigSite\LatencyCollectorConfigSite.csproj" Targets="Package"
+      Properties="Configuration=$(Configuration)" />
+
   </Target>
 
   <Target Name="Package" DependsOnTargets="Build" >
