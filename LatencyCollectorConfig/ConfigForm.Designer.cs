@@ -45,7 +45,7 @@
 			this.OkButton.Location = new System.Drawing.Point(189, 123);
 			this.OkButton.Name = "OkButton";
 			this.OkButton.Size = new System.Drawing.Size(75, 23);
-			this.OkButton.TabIndex = 5;
+			this.OkButton.TabIndex = 3;
 			this.OkButton.Text = "OK";
 			this.OkButton.UseVisualStyleBackColor = true;
 			this.OkButton.Click += new System.EventHandler(this.OkButton_Click);
@@ -58,7 +58,7 @@
 			this.PasswordEdit.Name = "PasswordEdit";
 			this.PasswordEdit.PasswordChar = '*';
 			this.PasswordEdit.Size = new System.Drawing.Size(249, 20);
-			this.PasswordEdit.TabIndex = 3;
+			this.PasswordEdit.TabIndex = 1;
 			// 
 			// UserNameEdit
 			// 
@@ -67,7 +67,7 @@
 			this.UserNameEdit.Location = new System.Drawing.Point(95, 12);
 			this.UserNameEdit.Name = "UserNameEdit";
 			this.UserNameEdit.Size = new System.Drawing.Size(249, 20);
-			this.UserNameEdit.TabIndex = 2;
+			this.UserNameEdit.TabIndex = 0;
 			// 
 			// label2
 			// 
@@ -94,7 +94,7 @@
 			this.CancelButton.Location = new System.Drawing.Point(270, 123);
 			this.CancelButton.Name = "CancelButton";
 			this.CancelButton.Size = new System.Drawing.Size(75, 23);
-			this.CancelButton.TabIndex = 6;
+			this.CancelButton.TabIndex = 4;
 			this.CancelButton.Text = "Cancel";
 			this.CancelButton.UseVisualStyleBackColor = true;
 			this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
@@ -106,7 +106,7 @@
 			this.NodeNameEdit.Location = new System.Drawing.Point(96, 77);
 			this.NodeNameEdit.Name = "NodeNameEdit";
 			this.NodeNameEdit.Size = new System.Drawing.Size(249, 20);
-			this.NodeNameEdit.TabIndex = 31;
+			this.NodeNameEdit.TabIndex = 2;
 			// 
 			// label3
 			// 
