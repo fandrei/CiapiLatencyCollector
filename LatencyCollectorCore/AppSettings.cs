@@ -55,6 +55,9 @@ namespace LatencyCollectorCore
 		{
 			try
 			{
+				if (string.IsNullOrEmpty(UserName))
+					return false;
+
 				var configAddress = string.Format(Const.ConfigBaseUrl, NodeName);
 
 				using (var client = new WebClient())
