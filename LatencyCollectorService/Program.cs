@@ -89,14 +89,16 @@ namespace CiapiLatencyCollector
 		static void InitWorkingArea()
 		{
 			EnsureFolderExists(Const.WorkingAreaPath);
-			EnsureFolderExists(Const.WorkingAreaBinPath);
 
-			var accessRights = Directory.GetAccessControl(Const.WorkingAreaBinPath);
+			var accessRights = Directory.GetAccessControl(Const.WorkingAreaPath);
 			var accessRule = new FileSystemAccessRule("NETWORK SERVICE", FileSystemRights.FullControl,
 				InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None,
 				AccessControlType.Allow);
 			accessRights.AddAccessRule(accessRule);
-			Directory.SetAccessControl(Const.WorkingAreaBinPath, accessRights);
+			Directory.SetAccessControl(Const.WorkingAreaPath, accessRights);
+
+			EnsureFolderExists(Const.WorkingAreaBinPath);
+			EnsureFolderExists(Const.WorkingAreaTempPath);
 		}
 
 		private static void EnsureFolderExists(string path)
