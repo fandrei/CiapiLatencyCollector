@@ -30,9 +30,17 @@ namespace LatencyCollectorCore
 			{
 				AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
 
-				AppMetrics.Tracker.Log("UserId", AppSettings.Instance.UserId);
-				var curAssembly = typeof(AppSettings).Assembly;
-				AppMetrics.Tracker.Log("Info_LatencyCollectorVersion", curAssembly.FullName);
+				try
+				{
+					AppMetrics.Tracker.Log("Info_UserId", AppSettings.Instance.UserId);
+					AppMetrics.Tracker.Log("Info_NodeName", AppSettings.Instance.NodeName);
+					var curAssembly = typeof (AppSettings).Assembly;
+					AppMetrics.Tracker.Log("Info_LatencyCollectorVersion", curAssembly.FullName);
+				}
+				catch (Exception exc)
+				{
+					Report(exc);
+				}
 
 				//SntpClient.Init();
 
