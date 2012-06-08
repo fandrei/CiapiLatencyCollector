@@ -49,9 +49,9 @@
     <DirectoryRef Id="AppWorkingDataBin">
       <Component Id="ConfigComponent" Guid="{218DA4C3-EE06-43D4-8130-C7D7A492448A}" Permanent="yes">
         <File Id='CiapiLatencyCollectorConfig.exe' Name='CiapiLatencyCollectorConfig.exe'
-              Source='..\_bin\Release\CiapiLatencyCollectorConfig.exe' Vital='no' />
+              Source='..\_bin\Release\CiapiLatencyCollectorConfig.exe' Vital='yes' />
         <File Id='CiapiLatencyCollectorCore.exe' Name='CiapiLatencyCollectorCore.exe'
-              Source='..\_bin\Release\CiapiLatencyCollectorCore.exe' Vital='no' />
+              Source='..\_bin\Release\CiapiLatencyCollectorCore.exe' Vital='yes' />
       </Component>
     </DirectoryRef>
 
