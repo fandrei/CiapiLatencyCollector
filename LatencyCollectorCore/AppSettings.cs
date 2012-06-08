@@ -23,6 +23,8 @@ namespace LatencyCollectorCore
 
 		#region Updating settings from the central repository
 
+		public string ConfigBaseUrl { get; set; }
+
 		public string UserName { get; set; }
 
 		public string PasswordEncrypted { get; set; }
@@ -58,7 +60,7 @@ namespace LatencyCollectorCore
 				if (string.IsNullOrEmpty(UserName))
 					return false;
 
-				var configAddress = string.Format(Const.ConfigBaseUrl, NodeName);
+				var configAddress = string.Format(ConfigBaseUrl, NodeName);
 
 				using (var client = new WebClient())
 				{
@@ -165,6 +167,9 @@ namespace LatencyCollectorCore
 			{
 				UserId = Guid.NewGuid().ToString();
 			}
+
+			if (string.IsNullOrEmpty(ConfigBaseUrl))
+				ConfigBaseUrl = "http://config.metrics.labs.cityindex.com/CIAPILatencyCollectorConfig/{0}/AppSettings.xml";
 		}
 
 		private void SetDefaults()

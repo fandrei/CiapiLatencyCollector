@@ -22,6 +22,8 @@ namespace LatencyCollectorConfig
 			{
 				base.OnLoad(e);
 
+				ConfigServerEdit.Text = AppSettings.Instance.ConfigBaseUrl;
+
 				UserNameEdit.Text = AppSettings.Instance.UserName;
 				PasswordEdit.Text = AppSettings.Instance.Password;
 
@@ -37,6 +39,8 @@ namespace LatencyCollectorConfig
 		{
 			try
 			{
+				AppSettings.Instance.ConfigBaseUrl = ConfigServerEdit.Text;
+
 				AppSettings.Instance.UserName = UserNameEdit.Text;
 				AppSettings.Instance.Password = PasswordEdit.Text;
 

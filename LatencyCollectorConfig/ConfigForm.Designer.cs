@@ -36,13 +36,15 @@
 			this.CancelButton = new System.Windows.Forms.Button();
 			this.NodeNameEdit = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
+			this.ConfigServerEdit = new System.Windows.Forms.TextBox();
+			this.label4 = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// OkButton
 			// 
 			this.OkButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.OkButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.OkButton.Location = new System.Drawing.Point(189, 123);
+			this.OkButton.Location = new System.Drawing.Point(183, 170);
 			this.OkButton.Name = "OkButton";
 			this.OkButton.Size = new System.Drawing.Size(75, 23);
 			this.OkButton.TabIndex = 3;
@@ -54,25 +56,25 @@
 			// 
 			this.PasswordEdit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.PasswordEdit.Location = new System.Drawing.Point(95, 38);
+			this.PasswordEdit.Location = new System.Drawing.Point(96, 61);
 			this.PasswordEdit.Name = "PasswordEdit";
 			this.PasswordEdit.PasswordChar = '*';
-			this.PasswordEdit.Size = new System.Drawing.Size(249, 20);
+			this.PasswordEdit.Size = new System.Drawing.Size(243, 20);
 			this.PasswordEdit.TabIndex = 1;
 			// 
 			// UserNameEdit
 			// 
 			this.UserNameEdit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.UserNameEdit.Location = new System.Drawing.Point(95, 12);
+			this.UserNameEdit.Location = new System.Drawing.Point(96, 35);
 			this.UserNameEdit.Name = "UserNameEdit";
-			this.UserNameEdit.Size = new System.Drawing.Size(249, 20);
+			this.UserNameEdit.Size = new System.Drawing.Size(243, 20);
 			this.UserNameEdit.TabIndex = 0;
 			// 
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(9, 38);
+			this.label2.Location = new System.Drawing.Point(10, 61);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(53, 13);
 			this.label2.TabIndex = 30;
@@ -81,7 +83,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(7, 12);
+			this.label1.Location = new System.Drawing.Point(8, 35);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(58, 13);
 			this.label1.TabIndex = 29;
@@ -91,7 +93,7 @@
 			// 
 			this.CancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.CancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.CancelButton.Location = new System.Drawing.Point(270, 123);
+			this.CancelButton.Location = new System.Drawing.Point(264, 170);
 			this.CancelButton.Name = "CancelButton";
 			this.CancelButton.Size = new System.Drawing.Size(75, 23);
 			this.CancelButton.TabIndex = 4;
@@ -103,25 +105,45 @@
 			// 
 			this.NodeNameEdit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.NodeNameEdit.Location = new System.Drawing.Point(96, 77);
+			this.NodeNameEdit.Location = new System.Drawing.Point(97, 100);
 			this.NodeNameEdit.Name = "NodeNameEdit";
-			this.NodeNameEdit.Size = new System.Drawing.Size(249, 20);
+			this.NodeNameEdit.Size = new System.Drawing.Size(243, 20);
 			this.NodeNameEdit.TabIndex = 2;
 			// 
 			// label3
 			// 
-			this.label3.Location = new System.Drawing.Point(8, 77);
+			this.label3.Location = new System.Drawing.Point(9, 100);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(82, 33);
 			this.label3.TabIndex = 32;
 			this.label3.Text = "Node friendly name";
+			// 
+			// ConfigServerEdit
+			// 
+			this.ConfigServerEdit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.ConfigServerEdit.Location = new System.Drawing.Point(97, 9);
+			this.ConfigServerEdit.Name = "ConfigServerEdit";
+			this.ConfigServerEdit.Size = new System.Drawing.Size(243, 20);
+			this.ConfigServerEdit.TabIndex = 33;
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(9, 9);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(69, 13);
+			this.label4.TabIndex = 34;
+			this.label4.Text = "Config server";
 			// 
 			// ConfigForm
 			// 
 			this.AcceptButton = this.OkButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(360, 158);
+			this.ClientSize = new System.Drawing.Size(354, 205);
+			this.Controls.Add(this.ConfigServerEdit);
+			this.Controls.Add(this.label4);
 			this.Controls.Add(this.NodeNameEdit);
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.CancelButton);
@@ -150,5 +172,7 @@
 		private System.Windows.Forms.Button CancelButton;
 		private System.Windows.Forms.TextBox NodeNameEdit;
 		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.TextBox ConfigServerEdit;
+		private System.Windows.Forms.Label label4;
 	}
 }

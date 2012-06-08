@@ -66,6 +66,15 @@ namespace LatencyCollectorConfig
 
 						AppSettings.Instance.Save();
 					}
+
+					string configServer;
+					argsDic.TryGetValue("configserver", out configServer);
+					if (!string.IsNullOrEmpty(configServer))
+					{
+						AppSettings.Instance.ConfigBaseUrl = configServer;
+
+						AppSettings.Instance.Save();
+					}
 				}
 				else
 				{
