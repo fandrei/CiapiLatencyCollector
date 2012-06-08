@@ -161,7 +161,6 @@ namespace LatencyCollectorCore
 			if (UserId.IsNullOrEmpty())
 			{
 				UserId = Guid.NewGuid().ToString();
-				Save();
 			}
 		}
 
@@ -194,8 +193,6 @@ namespace LatencyCollectorCore
 				ConfigVersion = ActualConfigVersion;
 				UserName = "";
 				Password = "";
-
-				Save();
 			}
 		}
 
