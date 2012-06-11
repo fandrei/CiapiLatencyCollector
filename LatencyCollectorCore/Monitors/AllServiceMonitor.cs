@@ -24,7 +24,7 @@ namespace LatencyCollectorCore.Monitors
 		public bool AllowTrading { get; set; }
 
 		// GBP/USD market
-		private const int MarketId = 400481142;
+        private const int MarketId = 400616150;
 
 		protected override void Execute()
 		{
@@ -50,9 +50,9 @@ namespace LatencyCollectorCore.Monitors
 
 				{
 					var measure = AppMetrics.StartMeasure();
-					var resp = client.CFDMarkets.ListCfdMarkets("", "",
+					var resp = client.SpreadMarkets.ListSpreadMarkets("", "",
 						accountInfo.ClientAccountId, 100, false);
-					AppMetrics.EndMeasure(measure, "ListCfdMarkets");
+                    AppMetrics.EndMeasure(measure, "ListSpreadMarkets");
 				}
 
 				{
@@ -81,7 +81,7 @@ namespace LatencyCollectorCore.Monitors
 
 					{
 						var measure = AppMetrics.StartMeasure();
-						client.TradesAndOrders.ListOpenPositions(accountInfo.CFDAccount.TradingAccountId);
+						client.TradesAndOrders.ListOpenPositions(accountInfo.SpreadBettingAccount.TradingAccountId);
 						AppMetrics.EndMeasure(measure, "ListOpenPositions");
 					}
 
@@ -90,13 +90,13 @@ namespace LatencyCollectorCore.Monitors
 				else
 				{
 					var measure = AppMetrics.StartMeasure();
-					client.TradesAndOrders.ListOpenPositions(accountInfo.CFDAccount.TradingAccountId);
+					client.TradesAndOrders.ListOpenPositions(accountInfo.SpreadBettingAccount.TradingAccountId);
 					AppMetrics.EndMeasure(measure, "ListOpenPositions");
 				}
 
 				{
 					var measure = AppMetrics.StartMeasure();
-					var tradeHistory = client.TradesAndOrders.ListTradeHistory(accountInfo.CFDAccount.TradingAccountId, 20);
+                    var tradeHistory = client.TradesAndOrders.ListTradeHistory(accountInfo.SpreadBettingAccount.TradingAccountId, 20);
 					AppMetrics.EndMeasure(measure, "ListTradeHistory");
 				}
 			}
@@ -130,7 +130,7 @@ namespace LatencyCollectorCore.Monitors
 					MarketId = MarketId,
 					Quantity = quantity,
 					Direction = direction,
-					TradingAccountId = accountInfo.CFDAccount.TradingAccountId,
+					TradingAccountId = accountInfo.SpreadBettingAccount.TradingAccountId,
 					AuditId = price.AuditId,
 					BidPrice = price.Bid,
 					OfferPrice = price.Offer,
