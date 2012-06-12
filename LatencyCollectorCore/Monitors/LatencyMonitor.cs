@@ -94,7 +94,7 @@ namespace LatencyCollectorCore.Monitors
 			Interrupt();
 		}
 
-		protected abstract void Execute();
+		public abstract void Execute();
 
 		private Thread _thread;
 		private readonly object _sync = new object();

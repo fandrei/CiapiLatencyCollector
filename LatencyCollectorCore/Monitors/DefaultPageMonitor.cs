@@ -9,7 +9,7 @@ namespace LatencyCollectorCore.Monitors
 {
 	public class DefaultPageMonitor : LatencyMonitor
 	{
-		protected override void Execute()
+	    public override void Execute()
 		{
 			using (var client = new WebClient())
 			{

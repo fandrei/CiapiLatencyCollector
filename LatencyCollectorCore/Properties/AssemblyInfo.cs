@@ -30,3 +30,4 @@ using System.Runtime.InteropServices;
 //      Revision
 //
 [assembly: AssemblyVersion("1.0.*")]
+[assembly: InternalsVisibleTo("LatencyCollectorCore.Tests")]

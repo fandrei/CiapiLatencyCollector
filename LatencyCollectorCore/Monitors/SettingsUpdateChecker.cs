@@ -14,7 +14,7 @@ namespace LatencyCollectorCore.Monitors
 
 		public event Action OnExecute;
 
-		protected override void Execute()
+	    public override void Execute()
 		{
 			if (OnExecute != null)
 				OnExecute();
