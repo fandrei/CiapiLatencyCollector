@@ -9,3 +9,5 @@ _setup/
 _ReSharper*/
 temp/
 _WebPackage/
+#Don't ignore the above when below the packages/ folder
+!packages/
