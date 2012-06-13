@@ -9,5 +9,3 @@ _setup/
 _ReSharper*/
 temp/
 _WebPackage/
-
-!packages/
