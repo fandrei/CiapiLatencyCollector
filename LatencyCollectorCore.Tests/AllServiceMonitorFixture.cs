@@ -21,7 +21,7 @@ namespace LatencyCollectorCore.Tests
                               {
                                   ServerUrl = "https://ciapipreprod.cityindextest9.co.uk/tradingapi",
                                   StreamingServerUrl = "https://pushpreprod.cityindextest9.co.uk",
-                                  UserName = "DM366183",
+                                  UserName = "XX019353",
                                   Password = "password",
                                   AllowTrading = true
                               };
