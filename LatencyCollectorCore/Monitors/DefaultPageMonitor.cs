@@ -13,11 +13,11 @@ namespace LatencyCollectorCore.Monitors
 		{
 			using (var client = new WebClient())
 			{
-				var watch = AppMetrics.StartMeasure();
+				var watch = Tracker.StartMeasure();
 				var resp = client.DownloadString("https://ciapi.cityindex.com/");
 				if (string.IsNullOrEmpty(resp))
 					throw new ApplicationException("No response from default page");
-				AppMetrics.EndMeasure(watch, "DefaultPage");
+				Tracker.EndMeasure(watch, "DefaultPage");
 			}
 		}
 	}

@@ -46,41 +46,41 @@ namespace LatencyCollectorCore.Monitors
 			try
 			{
 				{
-					var measure = AppMetrics.StartMeasure();
+					var measure = Tracker.StartMeasure();
 					ApiClient.LogIn(UserName, Password);
-					AppMetrics.EndMeasure(measure, "LogIn");
+					Tracker.EndMeasure(measure, "LogIn");
 				}
 
 				AccountInformationResponseDTO accountInfo;
 				{
-					var measure = AppMetrics.StartMeasure();
+					var measure = Tracker.StartMeasure();
 					accountInfo = ApiClient.AccountInformation.GetClientAndTradingAccount();
-					AppMetrics.EndMeasure(measure, "GetClientAndTradingAccount");
+					Tracker.EndMeasure(measure, "GetClientAndTradingAccount");
 				}
 
 				{
-					var measure = AppMetrics.StartMeasure();
+					var measure = Tracker.StartMeasure();
 					var resp = ApiClient.SpreadMarkets.ListSpreadMarkets("", "",
 						accountInfo.ClientAccountId, 100, false);
-					AppMetrics.EndMeasure(measure, "ListSpreadMarkets");
+					Tracker.EndMeasure(measure, "ListSpreadMarkets");
 				}
 
 				{
-					var measure = AppMetrics.StartMeasure();
+					var measure = Tracker.StartMeasure();
 					var resp = ApiClient.News.ListNewsHeadlinesWithSource("dj", "UK", 10);
-					AppMetrics.EndMeasure(measure, "ListNewsHeadlinesWithSource");
+					Tracker.EndMeasure(measure, "ListNewsHeadlinesWithSource");
 				}
 
 				{
-					var measure = AppMetrics.StartMeasure();
+					var measure = Tracker.StartMeasure();
 					var resp = ApiClient.Market.GetMarketInformation(MarketId.ToString());
-					AppMetrics.EndMeasure(measure, "GetMarketInformation");
+					Tracker.EndMeasure(measure, "GetMarketInformation");
 				}
 
 				{
-					var measure = AppMetrics.StartMeasure();
+					var measure = Tracker.StartMeasure();
 					var resp = ApiClient.PriceHistory.GetPriceBars(MarketId.ToString(), "MINUTE", 1, "20");
-					AppMetrics.EndMeasure(measure, "GetPriceBars");
+					Tracker.EndMeasure(measure, "GetPriceBars");
 				}
 
 				if (AllowTrading)
@@ -90,24 +90,24 @@ namespace LatencyCollectorCore.Monitors
 					var orderId = Trade(ApiClient, accountInfo, price, 1M, "buy", new int[0]);
 
 					{
-						var measure = AppMetrics.StartMeasure();
+						var measure = Tracker.StartMeasure();
 						ApiClient.TradesAndOrders.ListOpenPositions(accountInfo.SpreadBettingAccount.TradingAccountId);
-						AppMetrics.EndMeasure(measure, "ListOpenPositions");
+						Tracker.EndMeasure(measure, "ListOpenPositions");
 					}
 
 					Trade(ApiClient, accountInfo, price, 1M, "sell", new[] { orderId });
 				}
 				else
 				{
-					var measure = AppMetrics.StartMeasure();
+					var measure = Tracker.StartMeasure();
 					ApiClient.TradesAndOrders.ListOpenPositions(accountInfo.SpreadBettingAccount.TradingAccountId);
-					AppMetrics.EndMeasure(measure, "ListOpenPositions");
+					Tracker.EndMeasure(measure, "ListOpenPositions");
 				}
 
 				{
-					var measure = AppMetrics.StartMeasure();
+					var measure = Tracker.StartMeasure();
 					var tradeHistory = ApiClient.TradesAndOrders.ListTradeHistory(accountInfo.SpreadBettingAccount.TradingAccountId, 20);
-					AppMetrics.EndMeasure(measure, "ListTradeHistory");
+					Tracker.EndMeasure(measure, "ListTradeHistory");
 				}
 			}
 			catch (NotConnectedException)
@@ -121,15 +121,15 @@ namespace LatencyCollectorCore.Monitors
 				}
 				catch (Exception exc)
 				{
-					Program.Report(exc);
+					Report(exc);
 				}
 			}
 		}
 
-		private static int Trade(Client client, AccountInformationResponseDTO accountInfo, PriceDTO price,
+		private int Trade(Client client, AccountInformationResponseDTO accountInfo, PriceDTO price,
 			decimal quantity, string direction, IEnumerable<int> closeOrderIds)
 		{
-			var measure = AppMetrics.StartMeasure();
+			var measure = Tracker.StartMeasure();
 			var tradeRequest = new NewTradeOrderRequestDTO
 				{
 					MarketId = MarketId,
@@ -142,7 +142,7 @@ namespace LatencyCollectorCore.Monitors
 					Close = closeOrderIds.ToArray(),
 				};
 			var resp = client.TradesAndOrders.Trade(tradeRequest);
-			AppMetrics.EndMeasure(measure, "Trade");
+			Tracker.EndMeasure(measure, "Trade");
 
 			if (resp.OrderId == 0)
 			{
