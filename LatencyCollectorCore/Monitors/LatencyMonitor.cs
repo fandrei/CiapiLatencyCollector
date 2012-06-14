@@ -62,6 +62,15 @@ namespace LatencyCollectorCore.Monitors
 				Program.Report(exc);
 			}
 
+			try
+			{
+				Cleanup();
+			}
+			catch (Exception exc)
+			{
+				Program.Report(exc);
+			}
+
 			lock (_sync)
 			{
 				_thread = null;
@@ -92,6 +101,10 @@ namespace LatencyCollectorCore.Monitors
 		public void Dispose()
 		{
 			Interrupt();
+		}
+
+		protected virtual void Cleanup()
+		{
 		}
 
 		public abstract void Execute();

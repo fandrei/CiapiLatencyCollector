@@ -123,11 +123,6 @@ namespace LatencyCollectorCore.Monitors
 				{
 					Program.Report(exc);
 				}
-				finally
-				{
-					if (ApiClient != null)
-						ApiClient.Dispose();
-				}
 			}
 		}
 
@@ -199,6 +194,15 @@ namespace LatencyCollectorCore.Monitors
 			{
 				listener.Stop();
 				streamingClient.Dispose();
+			}
+		}
+
+		protected override void Cleanup()
+		{
+			if (ApiClient != null)
+			{
+				ApiClient.Dispose();
+				ApiClient = null;
 			}
 		}
 	}
