@@ -11,9 +11,9 @@ namespace LatencyCollectorCore.Monitors
 {
 	public class AllServiceMonitor : AuthenticatedMonitor
 	{
-	    public AllServiceMonitor()
-	    {
-	        ServerUrl = "https://ciapi.cityindex.com/TradingApi";
+		public AllServiceMonitor()
+		{
+			ServerUrl = "https://ciapi.cityindex.com/TradingApi";
 			StreamingServerUrl = "https://push.cityindex.com";
 			PeriodSeconds = 5;
 		}
@@ -23,27 +23,27 @@ namespace LatencyCollectorCore.Monitors
 
 		public bool AllowTrading { get; set; }
 
-        private Client _client = null;
-	    internal Client ApiClient
-	    {
-	        get
-	        {
-                if (_client == null)
-                {
-                    _client = new Client(new Uri(ServerUrl), new Uri(StreamingServerUrl), "{API_KEY}");
-                    _client.AppKey = "CiapiLatencyCollector." + GetType().Name;
-                }
-                return _client;
-	        }
-            set { _client = value; }
-	    }
+		private Client _client = null;
+		internal Client ApiClient
+		{
+			get
+			{
+				if (_client == null)
+				{
+					_client = new Client(new Uri(ServerUrl), new Uri(StreamingServerUrl), "{API_KEY}");
+					_client.AppKey = "CiapiLatencyCollector." + GetType().Name;
+				}
+				return _client;
+			}
+			set { _client = value; }
+		}
 
-	    // GBP/USD markets
-        private const int MarketId = 400616150;
+		// GBP/USD markets
+		private const int MarketId = 400616150;
 
-	    public override void Execute()
-	    {
-	        try
+		public override void Execute()
+		{
+			try
 			{
 				{
 					var measure = AppMetrics.StartMeasure();
@@ -62,7 +62,7 @@ namespace LatencyCollectorCore.Monitors
 					var measure = AppMetrics.StartMeasure();
 					var resp = ApiClient.SpreadMarkets.ListSpreadMarkets("", "",
 						accountInfo.ClientAccountId, 100, false);
-                    AppMetrics.EndMeasure(measure, "ListSpreadMarkets");
+					AppMetrics.EndMeasure(measure, "ListSpreadMarkets");
 				}
 
 				{
@@ -95,7 +95,7 @@ namespace LatencyCollectorCore.Monitors
 						AppMetrics.EndMeasure(measure, "ListOpenPositions");
 					}
 
-					Trade(ApiClient, accountInfo, price, 1M, "sell", new[] {orderId});
+					Trade(ApiClient, accountInfo, price, 1M, "sell", new[] { orderId });
 				}
 				else
 				{
@@ -106,7 +106,7 @@ namespace LatencyCollectorCore.Monitors
 
 				{
 					var measure = AppMetrics.StartMeasure();
-                    var tradeHistory = ApiClient.TradesAndOrders.ListTradeHistory(accountInfo.SpreadBettingAccount.TradingAccountId, 20);
+					var tradeHistory = ApiClient.TradesAndOrders.ListTradeHistory(accountInfo.SpreadBettingAccount.TradingAccountId, 20);
 					AppMetrics.EndMeasure(measure, "ListTradeHistory");
 				}
 			}
@@ -129,9 +129,9 @@ namespace LatencyCollectorCore.Monitors
 						ApiClient.Dispose();
 				}
 			}
-	    }
+		}
 
-	    private static int Trade(Client client, AccountInformationResponseDTO accountInfo, PriceDTO price,
+		private static int Trade(Client client, AccountInformationResponseDTO accountInfo, PriceDTO price,
 			decimal quantity, string direction, IEnumerable<int> closeOrderIds)
 		{
 			var measure = AppMetrics.StartMeasure();
