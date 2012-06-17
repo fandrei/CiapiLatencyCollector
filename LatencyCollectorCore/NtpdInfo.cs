@@ -30,7 +30,7 @@ namespace LatencyCollectorCore
 			}
 			catch (Exception exc)
 			{
-				AppMetrics.Tracker.Log("Exception", exc);
+				Program.Tracker.Log("Exception", exc);
 			}
 		}
 
@@ -100,7 +100,7 @@ namespace LatencyCollectorCore
 			}
 
 			var lastOffset = GetOffset(lines.Last());
-			AppMetrics.Tracker.LogFormat("Info", "ntpd: last {0}, min {1}, max {2}", lastOffset, minOffset, maxOffset);
+			Program.Tracker.LogFormat("Info", "ntpd: last {0}, min {1}, max {2}", lastOffset, minOffset, maxOffset);
 		}
 
 		private static string[] ReadLines(string text, TimeSpan period)

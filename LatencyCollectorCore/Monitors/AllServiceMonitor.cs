@@ -46,41 +46,41 @@ namespace LatencyCollectorCore.Monitors
 			try
 			{
 				{
-					var measure = Tracker.StartMeasure();
+					var measure = Program.Tracker.StartMeasure();
 					ApiClient.LogIn(UserName, Password);
-					Tracker.EndMeasure(measure, "LogIn");
+					Program.Tracker.EndMeasure(measure, "LogIn");
 				}
 
 				AccountInformationResponseDTO accountInfo;
 				{
-					var measure = Tracker.StartMeasure();
+					var measure = Program.Tracker.StartMeasure();
 					accountInfo = ApiClient.AccountInformation.GetClientAndTradingAccount();
-					Tracker.EndMeasure(measure, "GetClientAndTradingAccount");
+					Program.Tracker.EndMeasure(measure, "GetClientAndTradingAccount");
 				}
 
 				{
-					var measure = Tracker.StartMeasure();
+					var measure = Program.Tracker.StartMeasure();
 					var resp = ApiClient.SpreadMarkets.ListSpreadMarkets("", "",
 						accountInfo.ClientAccountId, 100, false);
-					Tracker.EndMeasure(measure, "ListSpreadMarkets");
+					Program.Tracker.EndMeasure(measure, "ListSpreadMarkets");
 				}
 
 				{
-					var measure = Tracker.StartMeasure();
+					var measure = Program.Tracker.StartMeasure();
 					var resp = ApiClient.News.ListNewsHeadlinesWithSource("dj", "UK", 10);
-					Tracker.EndMeasure(measure, "ListNewsHeadlinesWithSource");
+					Program.Tracker.EndMeasure(measure, "ListNewsHeadlinesWithSource");
 				}
 
 				{
-					var measure = Tracker.StartMeasure();
+					var measure = Program.Tracker.StartMeasure();
 					var resp = ApiClient.Market.GetMarketInformation(MarketId.ToString());
-					Tracker.EndMeasure(measure, "GetMarketInformation");
+					Program.Tracker.EndMeasure(measure, "GetMarketInformation");
 				}
 
 				{
-					var measure = Tracker.StartMeasure();
+					var measure = Program.Tracker.StartMeasure();
 					var resp = ApiClient.PriceHistory.GetPriceBars(MarketId.ToString(), "MINUTE", 1, "20");
-					Tracker.EndMeasure(measure, "GetPriceBars");
+					Program.Tracker.EndMeasure(measure, "GetPriceBars");
 				}
 
 				if (AllowTrading)
@@ -90,24 +90,24 @@ namespace LatencyCollectorCore.Monitors
 					var orderId = Trade(ApiClient, accountInfo, price, 1M, "buy", new int[0]);
 
 					{
-						var measure = Tracker.StartMeasure();
+						var measure = Program.Tracker.StartMeasure();
 						ApiClient.TradesAndOrders.ListOpenPositions(accountInfo.SpreadBettingAccount.TradingAccountId);
-						Tracker.EndMeasure(measure, "ListOpenPositions");
+						Program.Tracker.EndMeasure(measure, "ListOpenPositions");
 					}
 
 					Trade(ApiClient, accountInfo, price, 1M, "sell", new[] { orderId });
 				}
 				else
 				{
-					var measure = Tracker.StartMeasure();
+					var measure = Program.Tracker.StartMeasure();
 					ApiClient.TradesAndOrders.ListOpenPositions(accountInfo.SpreadBettingAccount.TradingAccountId);
-					Tracker.EndMeasure(measure, "ListOpenPositions");
+					Program.Tracker.EndMeasure(measure, "ListOpenPositions");
 				}
 
 				{
-					var measure = Tracker.StartMeasure();
+					var measure = Program.Tracker.StartMeasure();
 					var tradeHistory = ApiClient.TradesAndOrders.ListTradeHistory(accountInfo.SpreadBettingAccount.TradingAccountId, 20);
-					Tracker.EndMeasure(measure, "ListTradeHistory");
+					Program.Tracker.EndMeasure(measure, "ListTradeHistory");
 				}
 			}
 			catch (NotConnectedException)
@@ -121,7 +121,7 @@ namespace LatencyCollectorCore.Monitors
 				}
 				catch (Exception exc)
 				{
-					Report(exc);
+					Program.Report(exc);
 				}
 			}
 		}
@@ -129,7 +129,7 @@ namespace LatencyCollectorCore.Monitors
 		private int Trade(Client client, AccountInformationResponseDTO accountInfo, PriceDTO price,
 			decimal quantity, string direction, IEnumerable<int> closeOrderIds)
 		{
-			var measure = Tracker.StartMeasure();
+			var measure = Program.Tracker.StartMeasure();
 			var tradeRequest = new NewTradeOrderRequestDTO
 				{
 					MarketId = MarketId,
@@ -142,7 +142,7 @@ namespace LatencyCollectorCore.Monitors
 					Close = closeOrderIds.ToArray(),
 				};
 			var resp = client.TradesAndOrders.Trade(tradeRequest);
-			Tracker.EndMeasure(measure, "Trade");
+			Program.Tracker.EndMeasure(measure, "Trade");
 
 			if (resp.OrderId == 0)
 			{

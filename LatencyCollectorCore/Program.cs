@@ -32,10 +32,12 @@ namespace LatencyCollectorCore
 
 				try
 				{
-					AppMetrics.Tracker.Log("Info_UserId", AppSettings.Instance.UserId);
-					AppMetrics.Tracker.Log("Info_NodeName", AppSettings.Instance.NodeName);
-					var curAssembly = typeof (AppSettings).Assembly;
-					AppMetrics.Tracker.Log("Info_LatencyCollectorVersion", curAssembly.FullName);
+					InitTracker("http://metrics.labs.cityindex.com/LogEvent.ashx");
+
+					Tracker.Log("Info_UserId", AppSettings.Instance.UserId);
+					Tracker.Log("Info_NodeName", AppSettings.Instance.NodeName);
+					var curAssembly = typeof(AppSettings).Assembly;
+					Tracker.Log("Info_LatencyCollectorVersion", curAssembly.FullName);
 				}
 				catch (Exception exc)
 				{
@@ -119,8 +121,9 @@ namespace LatencyCollectorCore
 			{
 				lock (Sync)
 				{
-					if (AppSettings.Instance.CheckUpdates())
+					if (AppSettings.Instance.CheckRemoteSettings())
 					{
+						InitTracker(AppSettings.Instance.MonitorSettings.LogEventUrl);
 						StopPolling();
 						StartPolling();
 					}
@@ -151,7 +154,7 @@ namespace LatencyCollectorCore
 		public static void ReportEvent(string type, string message)
 		{
 			Trace.WriteLine(message);
-			AppMetrics.Tracker.Log(type, message);
+			Tracker.Log(type, message);
 		}
 
 		// load assembly from the working folder, if impossible to resolve automatically
@@ -172,8 +175,34 @@ namespace LatencyCollectorCore
 		{
 			lock (Sync)
 			{
-				var res = AppSettings.Instance.Monitors.ToList().AsReadOnly();
+				var res = AppSettings.Instance.MonitorSettings.Monitors.ToList().AsReadOnly();
 				return res;
+			}
+		}
+
+		private static void InitTracker(string url)
+		{
+			lock (Sync)
+			{
+				if (_tracker != null)
+				{
+					_tracker.Dispose();
+					_tracker = null;
+				}
+				_tracker = new Tracker(url, "CiapiLatencyCollector");
+			}
+		}
+
+		private static Tracker _tracker;
+
+		public static Tracker Tracker
+		{
+			get
+			{
+				lock (Sync)
+				{
+					return _tracker;
+				}
 			}
 		}
 

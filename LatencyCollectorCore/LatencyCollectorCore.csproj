@@ -76,6 +76,7 @@
     <Compile Include="Monitors\DefaultPageMonitor.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="Monitors\LatencyMonitor.cs" />
+    <Compile Include="Monitors\MonitorSettings.cs" />
     <Compile Include="Monitors\SettingsUpdateChecker.cs" />
     <Compile Include="NtpdInfo.cs" />
     <Compile Include="Program.cs" />
@@ -83,7 +84,6 @@
     <Compile Include="Proxy.cs" />
     <Compile Include="..\Shared\Util.cs" />
     <Compile Include="SntpClient.cs" />
-    <Compile Include="AppMetrics.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

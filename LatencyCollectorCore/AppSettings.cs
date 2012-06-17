@@ -53,7 +53,7 @@ namespace LatencyCollectorCore
 
 		private string _lastConfigText;
 
-		public bool CheckUpdates()
+		public bool CheckRemoteSettings()
 		{
 			try
 			{
@@ -70,15 +70,12 @@ namespace LatencyCollectorCore
 					if (text == _lastConfigText)
 						return false;
 
-					if (_monitors != null)
+					if (_monitorSettings != null)
 					{
-						foreach (var monitor in _monitors)
-						{
-							monitor.Dispose();
-						}
+						_monitorSettings.Dispose();
 					}
 
-					SetMonitors(text);
+					ApplyRemoteSettings(text);
 					_lastConfigText = text;
 
 					return true;
@@ -86,18 +83,28 @@ namespace LatencyCollectorCore
 			}
 			catch (Exception exc)
 			{
-				AppMetrics.Tracker.Log(exc);
+				Program.Tracker.Log(exc);
 			}
 			return false;
 		}
 
+		void ApplyRemoteSettings(string text)
+		{
+			var serializer = new XmlSerializer(typeof(MonitorSettings));
+
+			using (var rd = new StringReader(text))
+			{
+				_monitorSettings = (MonitorSettings)serializer.Deserialize(rd);
+			}
+		}
+
 		#endregion
 
-		private LatencyMonitor[] _monitors = new LatencyMonitor[0];
+		private MonitorSettings _monitorSettings = new MonitorSettings();
 
-		public LatencyMonitor[] Monitors
+		public MonitorSettings MonitorSettings
 		{
-			get { return _monitors; }
+			get { return _monitorSettings; }
 		}
 
 		public string UserId { get; set; }
@@ -176,22 +183,10 @@ namespace LatencyCollectorCore
 		{
 		}
 
-		public void SetMonitors(string text)
-		{
-			var overrides = new XmlAttributeOverrides();
-			var rootAttr = new XmlRootAttribute("Monitors");
-			var s = new XmlSerializer(typeof(LatencyMonitor[]), overrides, new Type[0], rootAttr, "");
-
-			using (var rd = new StringReader(text))
-			{
-				var tmp = s.Deserialize(rd);
-				_monitors = (LatencyMonitor[])tmp;
-			}
-		}
-
 		#region Conversion from old versions
 
 		public int ConfigVersion { get; set; }
+
 		private const int ActualConfigVersion = 1;
 
 		void UpdateConfigVersion()

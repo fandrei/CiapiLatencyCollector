@@ -5,8 +5,6 @@ using System.Text;
 using System.Threading;
 using System.Xml.Serialization;
 
-using AppMetrics.Client;
-
 namespace LatencyCollectorCore.Monitors
 {
 	[XmlInclude(typeof(DefaultPageMonitor))]
@@ -17,7 +15,7 @@ namespace LatencyCollectorCore.Monitors
 		protected LatencyMonitor()
 		{
 			PeriodSeconds = 10;
-			LogEventUrl = "http://metrics.labs.cityindex.com/LogEvent.ashx";		}
+		}
 
 		public int PeriodSeconds { get; set; }
 
@@ -28,13 +26,6 @@ namespace LatencyCollectorCore.Monitors
 		{
 			lock (_sync)
 			{
-				if (Tracker != null)
-				{
-					Tracker.Dispose();
-					Tracker = null;
-				}
-				Tracker = new Tracker(LogEventUrl, "CiapiLatencyCollector");
-
 				_terminated = false;
 				_thread = new Thread(ThreadEntry);
 				_thread.Start();
@@ -54,7 +45,7 @@ namespace LatencyCollectorCore.Monitors
 					}
 					catch (Exception exc)
 					{
-						Report(exc);
+						Program.Report(exc);
 					}
 
 					var executionTime = DateTime.UtcNow - LastExecution;
@@ -68,7 +59,7 @@ namespace LatencyCollectorCore.Monitors
 			}
 			catch (Exception exc)
 			{
-				Report(exc);
+				Program.Report(exc);
 			}
 
 			try
@@ -77,7 +68,7 @@ namespace LatencyCollectorCore.Monitors
 			}
 			catch (Exception exc)
 			{
-				Report(exc);
+				Program.Report(exc);
 			}
 
 			lock (_sync)
@@ -116,13 +107,6 @@ namespace LatencyCollectorCore.Monitors
 		{
 		}
 
-		public void Report(Exception exc)
-		{
-			if (exc is ThreadInterruptedException)
-				return;
-			Tracker.Log(exc);
-		}
-
 		public abstract void Execute();
 
 		private Thread _thread;
@@ -132,9 +116,5 @@ namespace LatencyCollectorCore.Monitors
 
 		[XmlIgnore]
 		public DateTime LastExecution { get; set; }
-
-		public string LogEventUrl { get; set; }
-
-		protected Tracker Tracker;
 	}
 }
