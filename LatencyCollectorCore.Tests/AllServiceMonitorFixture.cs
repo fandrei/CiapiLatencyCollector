@@ -19,12 +19,15 @@ namespace LatencyCollectorCore.Tests
         {
             var monitor = new AllServiceMonitor
                               {
-                                  ServerUrl = "https://ciapipreprod.cityindextest9.co.uk/tradingapi",
-                                  StreamingServerUrl = "https://pushpreprod.cityindextest9.co.uk",
-                                  UserName = "XX019353",
+                                  ServerUrl = "https://ciapi.cityindex.com/tradingapi",
+                                  StreamingServerUrl = "https://push.cityindex.com",
+                                  UserName = "DM603751",
                                   Password = "password",
                                   AllowTrading = true
                               };
+
+            // sky: apparently you have to start the monitor before executing it
+            monitor.Start();
             monitor.Execute();
         }
     }
