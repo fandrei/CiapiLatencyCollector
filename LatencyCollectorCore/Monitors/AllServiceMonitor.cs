@@ -45,6 +45,7 @@ namespace LatencyCollectorCore.Monitors
 		{
 			try
 			{
+                
 				{
 					var measure = Tracker.StartMeasure();
 					ApiClient.LogIn(UserName, Password);

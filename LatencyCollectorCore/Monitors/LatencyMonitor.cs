@@ -17,7 +17,8 @@ namespace LatencyCollectorCore.Monitors
 		protected LatencyMonitor()
 		{
 			PeriodSeconds = 10;
-			LogEventUrl = "http://metrics.labs.cityindex.com/LogEvent.ashx";		}
+			LogEventUrl = "http://metrics.labs.cityindex.com/LogEvent.ashx";
+		}
 
 		public int PeriodSeconds { get; set; }
 
