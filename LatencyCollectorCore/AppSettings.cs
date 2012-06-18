@@ -60,32 +60,52 @@ namespace LatencyCollectorCore
 				if (string.IsNullOrEmpty(UserName))
 					return false;
 
-				var configAddress = string.Format(ConfigBaseUrl + "/CIAPILatencyCollectorConfig/{0}/AppSettings.xml", NodeName);
+				var text = DownloadConfigText();
+				if (text == _lastConfigText)
+					return false;
 
-				using (var client = new WebClient())
+				if (_monitorSettings != null)
 				{
-					client.Credentials = new NetworkCredential(UserName, Password);
-
-					var text = client.DownloadString(configAddress);
-					if (text == _lastConfigText)
-						return false;
-
-					if (_monitorSettings != null)
-					{
-						_monitorSettings.Dispose();
-					}
-
-					ApplyRemoteSettings(text);
-					_lastConfigText = text;
-
-					return true;
+					_monitorSettings.Dispose();
 				}
+
+				ApplyRemoteSettings(text);
+				_lastConfigText = text;
+
+				return true;
 			}
 			catch (Exception exc)
 			{
 				Program.Tracker.Log(exc);
 			}
 			return false;
+		}
+
+		private string DownloadConfigText()
+		{
+			var configAddress = string.Format(ConfigBaseUrl + "/CIAPILatencyCollectorConfig/{0}/AppSettings.xml", NodeName);
+			var defaultConfigAddress = ConfigBaseUrl + "/CIAPILatencyCollectorConfig/AppSettings.xml";
+
+			using (var client = new WebClient())
+			{
+				client.Credentials = new NetworkCredential(UserName, Password);
+
+				try
+				{
+					return client.DownloadString(configAddress);
+				}
+				catch (WebException exc)
+				{
+					if (exc.Status == WebExceptionStatus.ProtocolError)
+					{
+						if (((HttpWebResponse)exc.Response).StatusCode == HttpStatusCode.NotFound)
+						{
+							return client.DownloadString(defaultConfigAddress);
+						}
+					}
+					throw;
+				}
+			}
 		}
 
 		void ApplyRemoteSettings(string text)
