@@ -116,7 +116,7 @@ namespace LatencyCollectorCore.Monitors
 			{
 				try
 				{
-					if (ApiClient != null)
+					if (ApiClient != null && !String.IsNullOrEmpty(ApiClient.Session))
 						ApiClient.LogOut();
 				}
 				catch (Exception exc)
