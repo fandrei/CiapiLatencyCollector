@@ -75,6 +75,7 @@
     <Compile Include="Monitors\AuthenticatedMonitor.cs" />
     <Compile Include="Monitors\DefaultPageMonitor.cs" />
     <Compile Include="Exceptions.cs" />
+    <Compile Include="Monitors\GTS_AllServiceMonitor.cs" />
     <Compile Include="Monitors\LatencyMonitor.cs" />
     <Compile Include="Monitors\MonitorSettings.cs" />
     <Compile Include="Monitors\SettingsUpdateChecker.cs" />
