@@ -17,14 +17,6 @@ namespace LatencyCollectorCore.Monitors
 		protected LatencyMonitor()
 		{
 			PeriodSeconds = 10;
-
-			lock (Sync)
-			{
-				if (!string.IsNullOrEmpty(LogEventUrl))
-				{
-					_tracker = Tracker.Create(LogEventUrl, ApplicationKey);
-				}
-			}
 		}
 
 		public abstract void Execute();
@@ -60,8 +52,18 @@ namespace LatencyCollectorCore.Monitors
 					LastExecution = DateTime.UtcNow;
 					try
 					{
+						lock (_sync)
+						{
+							if (!string.IsNullOrEmpty(LogEventUrl))
+							{
+								_tracker = Tracker.Create(LogEventUrl, ApplicationKey);
+							}
+						}
+
 						Execute();
 					}
+					catch (ThreadInterruptedException)
+					{ }
 					catch (Exception exc)
 					{
 						Tracker.Log(exc);
@@ -130,15 +132,13 @@ namespace LatencyCollectorCore.Monitors
 		[XmlIgnore]
 		public DateTime LastExecution { get; set; }
 
-		static readonly object Sync = new object();
-
-		private readonly Tracker _tracker;
+		private Tracker _tracker;
 
 		public Tracker Tracker
 		{
 			get
 			{
-				lock (Sync)
+				lock (_sync)
 				{
 					if (_tracker != null)
 						return _tracker;
