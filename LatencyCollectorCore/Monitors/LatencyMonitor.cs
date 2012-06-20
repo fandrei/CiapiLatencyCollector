@@ -63,7 +63,9 @@ namespace LatencyCollectorCore.Monitors
 						Execute();
 					}
 					catch (ThreadInterruptedException)
-					{ }
+					{
+						break;
+					}
 					catch (Exception exc)
 					{
 						Tracker.Log(exc);
@@ -74,6 +76,8 @@ namespace LatencyCollectorCore.Monitors
 					if (period.TotalSeconds > 0)
 						Thread.Sleep(period);
 				}
+
+				Thread.Sleep(0); // avoid interrupting thread later
 			}
 			catch (ThreadInterruptedException)
 			{
