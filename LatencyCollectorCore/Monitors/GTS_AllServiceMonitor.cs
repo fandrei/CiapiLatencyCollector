@@ -13,7 +13,7 @@ namespace LatencyCollectorCore.Monitors
                 var resp = client.DownloadString(new Uri("http://www.google.com"));
                 if (string.IsNullOrEmpty(resp))
                     throw new ApplicationException("No response from default page");
-                Tracker.EndMeasure(watch, "GTS_DefaultPage");
+                Tracker.EndMeasure(watch, "GTS.DefaultPage");
             }
         }
     }
