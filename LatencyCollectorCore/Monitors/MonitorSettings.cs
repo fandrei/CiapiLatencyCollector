@@ -13,6 +13,8 @@ namespace LatencyCollectorCore.Monitors
 		}
 
 		public string LogEventUrl { get; set; }
+		public string ApplicationKey { get; set; }
+
 		public LatencyMonitor[] Monitors { get; set; }
 
 		public void Dispose()

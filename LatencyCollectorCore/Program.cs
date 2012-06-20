@@ -32,7 +32,7 @@ namespace LatencyCollectorCore
 
 				try
 				{
-					InitTracker("http://metrics.labs.cityindex.com/LogEvent.ashx");
+					InitTracker("http://metrics.labs.cityindex.com/LogEvent.ashx", "CiapiLatencyCollector");
 
 					Tracker.Log("Info_UserId", AppSettings.Instance.UserId);
 					Tracker.Log("Info_NodeName", AppSettings.Instance.NodeName);
@@ -123,7 +123,8 @@ namespace LatencyCollectorCore
 				{
 					if (AppSettings.Instance.CheckRemoteSettings())
 					{
-						InitTracker(AppSettings.Instance.MonitorSettings.LogEventUrl);
+						InitTracker(AppSettings.Instance.MonitorSettings.LogEventUrl,
+							AppSettings.Instance.MonitorSettings.ApplicationKey);
 						StopPolling();
 						StartPolling();
 					}
@@ -180,7 +181,7 @@ namespace LatencyCollectorCore
 			}
 		}
 
-		private static void InitTracker(string url)
+		private static void InitTracker(string url, string appKey)
 		{
 			lock (Sync)
 			{
@@ -189,7 +190,7 @@ namespace LatencyCollectorCore
 					_tracker.Dispose();
 					_tracker = null;
 				}
-				_tracker = new Tracker(url, "CiapiLatencyCollector");
+				_tracker = Tracker.Create(url, appKey);
 			}
 		}
 

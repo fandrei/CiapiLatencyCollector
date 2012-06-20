@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Xml.Serialization;
 
+using AppMetrics.Client;
+
 namespace LatencyCollectorCore.Monitors
 {
 	[XmlInclude(typeof(DefaultPageMonitor))]
@@ -15,12 +17,29 @@ namespace LatencyCollectorCore.Monitors
 		protected LatencyMonitor()
 		{
 			PeriodSeconds = 10;
+
+			lock (Sync)
+			{
+				if (!string.IsNullOrEmpty(LogEventUrl))
+				{
+					_tracker = Tracker.Create(LogEventUrl, ApplicationKey);
+				}
+			}
+		}
+
+		public abstract void Execute();
+
+		protected virtual void Cleanup()
+		{
 		}
 
 		public int PeriodSeconds { get; set; }
 
 		[XmlIgnore]
 		public TimeSpan Period { get { return TimeSpan.FromSeconds(PeriodSeconds); } }
+
+		public string LogEventUrl { get; set; }
+		public string ApplicationKey { get; set; }
 
 		public void Start()
 		{
@@ -45,7 +64,7 @@ namespace LatencyCollectorCore.Monitors
 					}
 					catch (Exception exc)
 					{
-						Program.Report(exc);
+						Tracker.Log(exc);
 					}
 
 					var executionTime = DateTime.UtcNow - LastExecution;
@@ -59,7 +78,7 @@ namespace LatencyCollectorCore.Monitors
 			}
 			catch (Exception exc)
 			{
-				Program.Report(exc);
+				Tracker.Log(exc);
 			}
 
 			try
@@ -68,7 +87,7 @@ namespace LatencyCollectorCore.Monitors
 			}
 			catch (Exception exc)
 			{
-				Program.Report(exc);
+				Tracker.Log(exc);
 			}
 
 			lock (_sync)
@@ -103,12 +122,6 @@ namespace LatencyCollectorCore.Monitors
 			Interrupt();
 		}
 
-		protected virtual void Cleanup()
-		{
-		}
-
-		public abstract void Execute();
-
 		private Thread _thread;
 		private readonly object _sync = new object();
 
@@ -116,5 +129,23 @@ namespace LatencyCollectorCore.Monitors
 
 		[XmlIgnore]
 		public DateTime LastExecution { get; set; }
+
+		static readonly object Sync = new object();
+
+		private readonly Tracker _tracker;
+
+		public Tracker Tracker
+		{
+			get
+			{
+				lock (Sync)
+				{
+					if (_tracker != null)
+						return _tracker;
+					else
+						return Program.Tracker;
+				}
+			}
+		}
 	}
 }
