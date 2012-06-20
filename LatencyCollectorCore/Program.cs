@@ -183,7 +183,7 @@ namespace LatencyCollectorCore
 
 		private static void InitTracker(string url, string appKey)
 		{
-			lock (Sync)
+			lock (TrackerSync)
 			{
 				if (_tracker != null)
 				{
@@ -200,7 +200,7 @@ namespace LatencyCollectorCore
 		{
 			get
 			{
-				lock (Sync)
+				lock (TrackerSync)
 				{
 					return _tracker;
 				}
@@ -208,6 +208,7 @@ namespace LatencyCollectorCore
 		}
 
 		private static readonly object Sync = new object();
+		private static readonly object TrackerSync = new object();
 		private static readonly SettingsUpdateChecker SettingsUpdater = new SettingsUpdateChecker();
 	}
 }
