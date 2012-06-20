@@ -111,12 +111,14 @@ namespace LatencyCollectorCore.Monitors
 
 		public void WaitForFinish()
 		{
+			Thread tmp;
 			lock (_sync)
 			{
 				if (_thread == null)
 					return;
-				_thread.Join(TimeSpan.FromSeconds(10));
+				tmp = _thread;
 			}
+			tmp.Join(TimeSpan.FromSeconds(10));
 		}
 
 		public void Dispose()
