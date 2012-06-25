@@ -34,13 +34,30 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AppMetrics.Client, Version=1.0.4548.13680, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="CIAPI, Version=7.0.0.408, Culture=neutral, PublicKeyToken=5dfdbaca97c75bb7, processorArchitecture=MSIL" />
-    <Reference Include="CIAPI.Serializer, Version=7.0.0.408, Culture=neutral, PublicKeyToken=5dfdbaca97c75bb7, processorArchitecture=MSIL" />
+    <Reference Include="CIAPI, Version=7.0.0.413, Culture=neutral, PublicKeyToken=5dfdbaca97c75bb7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CIAPI.7.0.0-bleeding-413\lib\net35\Debug\CIAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="CIAPI.Serializer, Version=7.0.0.413, Culture=neutral, PublicKeyToken=5dfdbaca97c75bb7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CIAPI.7.0.0-bleeding-413\lib\net35\Debug\CIAPI.Serializer.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetClient_N2, Version=2.0.4168.21412, Culture=neutral, PublicKeyToken=8d72f58860ac9835, processorArchitecture=MSIL">
+      <HintPath>..\packages\CIAPI.7.0.0-bleeding-413\lib\net35\Debug\DotNetClient_N2.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.7\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=2.6.0.12051, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.2.6.0.12054\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="Salient.ReflectiveLoggingAdapter.35, Version=3.2.0.22, Culture=neutral, PublicKeyToken=b9b5972b9f69332b, processorArchitecture=MSIL" />
-    <Reference Include="Salient.ReliableHttpClient, Version=7.0.0.408, Culture=neutral, PublicKeyToken=de2ccdae144c2020, processorArchitecture=MSIL" />
+    <Reference Include="Salient.ReflectiveLoggingAdapter.35, Version=3.2.0.22, Culture=neutral, PublicKeyToken=b9b5972b9f69332b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Salient.ReflectiveLoggingAdapter.3.2.0\lib\net35\Release\Salient.ReflectiveLoggingAdapter.35.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.ReliableHttpClient, Version=7.0.0.413, Culture=neutral, PublicKeyToken=de2ccdae144c2020, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CIAPI.7.0.0-bleeding-413\lib\net35\Debug\Salient.ReliableHttpClient.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

@@ -45,13 +45,13 @@ namespace LatencyCollectorCore.Monitors
         public override void Execute()
         {
             
-            var recorder = new Salient.ReliableHttpClient.Recorder(ApiClient);
+            //var recorder = new Salient.ReliableHttpClient.Recorder(ApiClient);
 
             try
             {
 
 
-                recorder.Start();
+                //recorder.Start();
                 {
                     var measure = Tracker.StartMeasure();
                     ApiClient.LogIn(UserName, Password);
@@ -131,11 +131,11 @@ namespace LatencyCollectorCore.Monitors
                     Report(exc);
                 }
 
-                recorder.Stop();
-                var messages = recorder.GetRequests();
-                recorder.Dispose();
-
-                string serialized = ApiClient.Serializer.SerializeObject(messages);
+//                recorder.Stop();
+//                var messages = recorder.GetRequests();
+//                recorder.Dispose();
+//
+//                string serialized = ApiClient.Serializer.SerializeObject(messages);
             }
         }
 
