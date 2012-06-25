@@ -121,10 +121,6 @@ namespace LatencyCollectorCore.Monitors
             { }
             finally
             {
-
-                
-                
-                
                 try
                 {
                     if (ApiClient != null && !String.IsNullOrEmpty(ApiClient.Session))

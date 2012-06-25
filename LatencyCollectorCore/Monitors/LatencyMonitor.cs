@@ -136,6 +136,6 @@ namespace LatencyCollectorCore.Monitors
 
 		public string LogEventUrl { get; set; }
 
-		protected Tracker Tracker;
+		public Tracker Tracker;
 	}
 }
