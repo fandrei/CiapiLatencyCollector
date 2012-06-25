@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 
@@ -45,6 +46,11 @@ namespace LatencyCollectorCore.Monitors
 		{
 			try
 			{
+				using (var client = new WebClient())
+				{
+					var resp = client.DownloadString("https://ciapi.cityindex.com/");
+				}
+
 				{
 					var measure = Tracker.StartMeasure();
 					ApiClient.LogIn(UserName, Password);
@@ -110,8 +116,10 @@ namespace LatencyCollectorCore.Monitors
 					Tracker.EndMeasure(measure, "CIAPI.ListTradeHistory");
 				}
 			}
-			catch (NotConnectedException)
-			{ }
+			catch (Exception exc)
+			{
+				Report(exc);
+			}
 			finally
 			{
 				try
@@ -125,9 +133,18 @@ namespace LatencyCollectorCore.Monitors
 				}
 				catch (Exception exc)
 				{
-					Program.Report(exc);
+					Report(exc);
 				}
 			}
+		}
+
+		static void Report(Exception exc)
+		{
+			var webExc = exc as WebException;
+			if (webExc != null && Util.IsConnectionFailure(webExc))
+				return;
+
+			Program.Report(exc);
 		}
 
 		private int Trade(Client client, AccountInformationResponseDTO accountInfo, PriceDTO price,

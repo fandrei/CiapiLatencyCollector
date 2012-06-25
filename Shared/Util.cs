@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text;
 
@@ -20,6 +21,19 @@ namespace LatencyCollectorCore
 			location = (new Uri(location)).LocalPath;
 			var res = Path.GetDirectoryName(location) + "\\";
 			return res;
+		}
+
+		public static bool IsConnectionFailure(WebException exc)
+		{
+			if (exc.Status == WebExceptionStatus.NameResolutionFailure ||
+				exc.Status == WebExceptionStatus.Timeout ||
+				exc.Status == WebExceptionStatus.ConnectFailure ||
+				exc.Status == WebExceptionStatus.ConnectionClosed)
+			{
+				return true;
+			}
+
+			return false;
 		}
 	}
 }

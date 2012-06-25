@@ -5,14 +5,6 @@ using System.Text;
 
 namespace LatencyCollectorCore
 {
-	class NotConnectedException : ApplicationException
-	{
-		public NotConnectedException()
-			: base("Not connected")
-		{
-		}
-	}
-
 	class MessageException : ApplicationException
 	{
 		public MessageException(string message)

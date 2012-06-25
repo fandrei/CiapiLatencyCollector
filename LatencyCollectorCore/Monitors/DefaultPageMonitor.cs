@@ -9,15 +9,23 @@ namespace LatencyCollectorCore.Monitors
 {
 	public class DefaultPageMonitor : LatencyMonitor
 	{
-	    public override void Execute()
+		public override void Execute()
 		{
-			using (var client = new WebClient())
+			try
 			{
-				var watch = Tracker.StartMeasure();
-				var resp = client.DownloadString("https://ciapi.cityindex.com/");
-				if (string.IsNullOrEmpty(resp))
-					throw new ApplicationException("No response from default page");
-				Tracker.EndMeasure(watch, "General.DefaultPage");
+				using (var client = new WebClient())
+				{
+					var watch = Tracker.StartMeasure();
+					var resp = client.DownloadString("https://ciapi.cityindex.com/");
+					if (string.IsNullOrEmpty(resp))
+						throw new ApplicationException("No response from default page");
+					Tracker.EndMeasure(watch, "General.DefaultPage");
+				}
+			}
+			catch (WebException exc)
+			{
+				if (!Util.IsConnectionFailure(exc))
+					throw;
 			}
 		}
 	}
