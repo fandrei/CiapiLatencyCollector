@@ -2,7 +2,7 @@
     "UriTemplate": "",
     "Target": "https://ciapi.cityindex.com/tradingapi/session",
     "AllowedRetries": 2,
-    "RequestBody": "{\r\n  \"UserName\": \"DM603751\",\r\n  \"Password\": \"password\",\r\n  \"AppKey\": \"CiapiLatencyCollector.AllServiceMonitor\",\r\n  \"AppVersion\": \"CIAPI.CS.7.0.0.408\",\r\n  \"AppComments\": null\r\n}",
+    "RequestBody": "{\r\n  \"UserName\": \"DM603751\",\r\n  \"Password\": \"password\",\r\n  \"AppKey\": \"CiapiLatencyCollector.AllServiceMonitor\",\r\n  \"AppVersion\": \"CIAPI.CS.7.0.0.413\",\r\n  \"AppComments\": null\r\n}",
     "Method": 4,
     "Timeout": 30000,
     "CacheDuration": "00:00:00",

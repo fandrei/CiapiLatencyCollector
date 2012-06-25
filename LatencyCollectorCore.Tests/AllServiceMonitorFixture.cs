@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using AppMetrics.Client;
 using CIAPI.Rpc;
 using CIAPI.Serialization;
@@ -46,10 +47,16 @@ namespace LatencyCollectorCore.Tests
             var finder = new TestWebRequestFinder { Reference = requests };
 
             requestFactory.PrepareResponse = testRequest =>
-            {
+                                                 {
 
-                var match = finder.FindMatchExact(testRequest);
 
+                                                     var match =
+                                                         requests.Where(
+                                                             r =>
+                                                             string.Compare(r.Uri.AbsoluteUri,
+                                                                            testRequest.RequestUri.AbsoluteUri,
+                                                                            StringComparison.InvariantCultureIgnoreCase) ==
+                                                             0).FirstOrDefault();
                 if (match == null)
                 {
                     throw new Exception("no matching request found");
@@ -60,6 +67,8 @@ namespace LatencyCollectorCore.Tests
             };
 
             monitor.Execute();
+            monitor.WaitForFinish();
+            monitor.Dispose();
         }
 
       
