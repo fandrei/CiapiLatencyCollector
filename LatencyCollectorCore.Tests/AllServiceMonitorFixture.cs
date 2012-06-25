@@ -34,7 +34,7 @@ namespace LatencyCollectorCore.Tests
                                   Password = "password",
                                   AllowTrading = false
                               };
-            monitor.Tracker = new Tracker("http://ignore.com", "testTracker");
+            monitor.Tracker = new Tracker(monitor.LogEventUrl, "testTracker");
             
             var streamingFactory = new TestStreamingClientFactory();
             var requestFactory = new TestRequestFactory();
