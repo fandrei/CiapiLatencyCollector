@@ -48,7 +48,8 @@ namespace LatencyCollectorCore.Monitors
 			{
 				using (var client = new WebClient())
 				{
-					var resp = client.DownloadString("https://ciapi.cityindex.com/");
+					// check if internet connection is available
+					var resp = client.DownloadString("http://www.msftncsi.com/ncsi.txt");
 				}
 
 				{
