@@ -9,6 +9,13 @@ namespace LatencyCollectorCore.Monitors
 {
 	public class DefaultPageMonitor : LatencyMonitor
 	{
+		public DefaultPageMonitor()
+		{
+			PageUrl = "https://ciapi.cityindex.com/";
+		}
+
+		public string PageUrl { get; set; }
+
 		public override void Execute()
 		{
 			try
@@ -16,7 +23,7 @@ namespace LatencyCollectorCore.Monitors
 				using (var client = new WebClient())
 				{
 					var watch = Tracker.StartMeasure();
-					var resp = client.DownloadString("https://ciapi.cityindex.com/");
+					var resp = client.DownloadString(PageUrl);
 					if (string.IsNullOrEmpty(resp))
 						throw new ApplicationException("No response from default page");
 					Tracker.EndMeasure(watch, "General.DefaultPage");
