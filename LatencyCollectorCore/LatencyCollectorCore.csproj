@@ -35,9 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AppMetrics.Client, Version=1.0.4554.14012, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="AppMetrics.Client, Version=1.0.4560.10685, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AppMetrics.Client.1.0.208\lib\net40\AppMetrics.Client.dll</HintPath>
+      <HintPath>..\packages\AppMetrics.Client.1.0.214\lib\net40\AppMetrics.Client.dll</HintPath>
     </Reference>
     <Reference Include="CIAPI, Version=7.0.0.408, Culture=neutral, PublicKeyToken=5dfdbaca97c75bb7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
