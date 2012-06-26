@@ -30,19 +30,7 @@ namespace LatencyCollectorCore
 			{
 				AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
 
-				try
-				{
-					InitTracker("http://metrics.labs.cityindex.com/LogEvent.ashx", "CiapiLatencyCollector");
-
-					Tracker.Log("Info_UserId", AppSettings.Instance.UserId);
-					Tracker.Log("Info_NodeName", AppSettings.Instance.NodeName);
-					var curAssembly = typeof(AppSettings).Assembly;
-					Tracker.Log("Info_LatencyCollectorVersion", curAssembly.FullName);
-				}
-				catch (Exception exc)
-				{
-					Report(exc);
-				}
+				InitTracker("http://metrics.labs.cityindex.com/LogEvent.ashx", "CiapiLatencyCollector");
 
 				//SntpClient.Init();
 
@@ -183,14 +171,30 @@ namespace LatencyCollectorCore
 
 		private static void InitTracker(string url, string appKey)
 		{
-			lock (TrackerSync)
+			try
 			{
-				if (_tracker != null)
+				lock (TrackerSync)
 				{
-					_tracker.Dispose();
-					_tracker = null;
+					if (_tracker != null && (_tracker.Url != url || _tracker.ApplicationKey != appKey))
+					{
+						_tracker.Dispose();
+						_tracker = null;
+					}
+
+					if (_tracker == null)
+					{
+						_tracker = Tracker.Create(url, appKey);
+
+						Tracker.Log("Info_UserId", AppSettings.Instance.UserId);
+						Tracker.Log("Info_NodeName", AppSettings.Instance.NodeName);
+						var curAssembly = typeof(AppSettings).Assembly;
+						Tracker.Log("Info_LatencyCollectorVersion", curAssembly.FullName);
+					}
 				}
-				_tracker = Tracker.Create(url, appKey);
+			}
+			catch (Exception exc)
+			{
+				Report(exc);
 			}
 		}
 
