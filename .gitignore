@@ -1,13 +1,12 @@
 *.suo
 *.user
 [Bb]in/
-[Dd]ebug/
-[Rr]elease/
 [Oo]bj/
 _bin/
 _setup/
 _ReSharper*/
 temp/
 _WebPackage/
+
 #Don't ignore the above when below the packages/ folder
 !packages/
