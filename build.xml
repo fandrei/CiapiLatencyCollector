@@ -68,6 +68,9 @@
          WorkingDirectory="$(TargetDir)"
          ZipFileName="$(TargetDir)\LatencyCollectorCore.zip"
          ZipLevel="9" />
+
+    <Copy SourceFiles="$(TargetDir)\LatencyCollectorCore.zip" DestinationFolder="$(MSBuildProjectDirectory)\_UpdatePackage\" />
+    <Copy SourceFiles="$(TargetDir)\version.txt" DestinationFolder="$(MSBuildProjectDirectory)\_UpdatePackage\" />
   </Target>
   
 </Project>
