@@ -92,6 +92,9 @@ namespace CiapiLatencyCollector
 			if (!Directory.Exists(Const.WorkingAreaTempPath))
 				Directory.CreateDirectory(Const.WorkingAreaTempPath);
 
+			var settings = AppSettingsBase.Load<AppSettingsBase>();
+			var updateUrl = settings.AutoUpdateUrl;
+
 			using (var client = new WebClient())
 			{
 				// compare versions
@@ -99,7 +102,7 @@ namespace CiapiLatencyCollector
 				if (File.Exists(localVersionFile))
 				{
 					var localVersion = File.ReadAllText(localVersionFile);
-					var newVersion = client.DownloadString(Const.AutoUpdateBaseUrl + "version.txt");
+					var newVersion = client.DownloadString(updateUrl + "version.txt");
 					if (newVersion == localVersion)
 						return;
 					ReportEvent(string.Format("Trying to update to version {0}", newVersion));
@@ -109,7 +112,7 @@ namespace CiapiLatencyCollector
 				var zipFilePath = Const.WorkingAreaTempPath + zipFileName;
 				if (File.Exists(zipFilePath))
 					File.Delete(zipFilePath);
-				client.DownloadFile(Const.AutoUpdateBaseUrl + zipFileName, zipFilePath);
+				client.DownloadFile(updateUrl + zipFileName, zipFilePath);
 
 				using (var zipFile = new ZipFile(zipFilePath))
 				{

@@ -6,7 +6,6 @@ using System.Net;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
-using System.Xml;
 using System.Xml.Serialization;
 
 using CiapiLatencyCollector;
@@ -14,7 +13,7 @@ using LatencyCollectorCore.Monitors;
 
 namespace LatencyCollectorCore
 {
-	public class AppSettings
+	public class AppSettings : AppSettingsBase
 	{
 		public AppSettings()
 		{
@@ -22,8 +21,6 @@ namespace LatencyCollectorCore
 		}
 
 		#region Updating settings from the central repository
-
-		public string ConfigBaseUrl { get; set; }
 
 		public string UserName { get; set; }
 
@@ -135,7 +132,7 @@ namespace LatencyCollectorCore
 
 		public static AppSettings Instance
 		{
-			get { return _instance ?? (_instance = Load()); }
+			get { return _instance ?? (_instance = Load<AppSettings>()); }
 		}
 
 		public static string Version
@@ -147,32 +144,14 @@ namespace LatencyCollectorCore
 			}
 		}
 
-		private static readonly string FileName = Const.WorkingAreaPath + "AppSettings.xml";
-
-		public static void Reload()
+		protected override void OnAfterLoad()
 		{
-			_instance = Load();
-		}
-
-		public static AppSettings Load()
-		{
-			AppSettings settings;
-
-			if (File.Exists(FileName))
+			if (UserId.IsNullOrEmpty())
 			{
-				var s = new XmlSerializer(typeof(AppSettings));
-				using (var rd = new StreamReader(FileName))
-				{
-					settings = (AppSettings)s.Deserialize(rd);
-				}
+				UserId = Guid.NewGuid().ToString();
 			}
-			else
-				settings = new AppSettings();
 
-			settings.SetDefaultsIfEmpty();
-			settings.UpdateConfigVersion();
-
-			return settings;
+			UpdateConfigVersion();
 		}
 
 		public void Save()
@@ -186,17 +165,6 @@ namespace LatencyCollectorCore
 			{
 				s.Serialize(writer, this);
 			}
-		}
-
-		private void SetDefaultsIfEmpty()
-		{
-			if (UserId.IsNullOrEmpty())
-			{
-				UserId = Guid.NewGuid().ToString();
-			}
-
-			if (string.IsNullOrEmpty(ConfigBaseUrl))
-				ConfigBaseUrl = "http://config.metrics.labs.cityindex.com";
 		}
 
 		private void SetDefaults()

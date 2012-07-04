@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Shared\AppSettingsBase.cs" />
     <Compile Include="..\Shared\Const.cs" />
     <Compile Include="LatencyCollectorService.cs">
       <SubType>Component</SubType>

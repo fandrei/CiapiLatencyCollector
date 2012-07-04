@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="Monitors\AllServiceMonitor.cs" />
     <Compile Include="AppSettings.cs" />
+    <Compile Include="..\Shared\AppSettingsBase.cs" />
     <Compile Include="..\Shared\Const.cs" />
     <Compile Include="Monitors\AuthenticatedMonitor.cs" />
     <Compile Include="Monitors\DefaultPageMonitor.cs" />
