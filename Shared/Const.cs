@@ -9,8 +9,6 @@ namespace CiapiLatencyCollector
 	{
 		public const string AppName = "CIAPI Latency Collector";
 
-		public const string AutoUpdateBaseUrl = "http://ci.labs.cityindex.com:8080/job/CiapiLatencyCollector/ws/_bin/Release/";
-
 		public static string WorkingAreaPath
 		{
 			get
