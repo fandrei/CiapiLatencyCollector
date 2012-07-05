@@ -109,6 +109,7 @@ namespace LatencyCollectorCore.Monitors
 				}
 				else
 				{
+					Tracker.Log("Event", "Trade is not placed: AllowTrading==false");
 					ReportOpenPositions(accountInfo);
 				}
 
