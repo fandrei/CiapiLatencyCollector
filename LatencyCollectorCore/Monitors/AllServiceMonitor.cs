@@ -33,26 +33,27 @@ namespace LatencyCollectorCore.Monitors
 				{
 					_client = new Client(new Uri(ServerUrl), new Uri(StreamingServerUrl), "{API_KEY}");
 					_client.AppKey = "CiapiLatencyCollector." + GetType().Name + ".BuiltIn";
+
+					if (Tracker != null)
+					{
+						_metricsRecorder = new MetricsRecorder(_client, new Uri(Tracker.Url));
+						_metricsRecorder.Start();
+					}
 				}
 				return _client;
 			}
 			set { _client = value; }
 		}
 
+		private MetricsRecorder _metricsRecorder;
+
 		// GBP/USD markets
 		private const int MarketId = 400616150;
 
 		public override void Execute()
 		{
-			MetricsRecorder metricsRecorder = null;
 			try
 			{
-				if (Tracker != null)
-				{
-					metricsRecorder = new MetricsRecorder(_client, new Uri(Tracker.Url));
-					metricsRecorder.Start();
-				}
-
 				using (var client = new WebClient())
 				{
 					// check if internet connection is available
@@ -106,7 +107,7 @@ namespace LatencyCollectorCore.Monitors
 					{
 						var orderId = Trade(ApiClient, accountInfo, price, 1M, "buy", new int[0]);
 						ReportOpenPositions(accountInfo);
-						Trade(ApiClient, accountInfo, price, 1M, "sell", new[] {orderId});
+						Trade(ApiClient, accountInfo, price, 1M, "sell", new[] { orderId });
 					}
 					else
 					{
@@ -140,11 +141,6 @@ namespace LatencyCollectorCore.Monitors
 						ApiClient.LogOut();
 						Tracker.EndMeasure(measure, "CIAPI.LogOut");
 					}
-
-					if (metricsRecorder != null)
-					{
-						metricsRecorder.Stop();
-					}
 				}
 				catch (Exception exc)
 				{
@@ -174,16 +170,16 @@ namespace LatencyCollectorCore.Monitors
 		{
 			var measure = Tracker.StartMeasure();
 			var tradeRequest = new NewTradeOrderRequestDTO
-				{
-					MarketId = MarketId,
-					Quantity = quantity,
-					Direction = direction,
-					TradingAccountId = accountInfo.SpreadBettingAccount.TradingAccountId,
-					AuditId = price.AuditId,
-					BidPrice = price.Bid,
-					OfferPrice = price.Offer,
-					Close = closeOrderIds.ToArray(),
-				};
+			{
+				MarketId = MarketId,
+				Quantity = quantity,
+				Direction = direction,
+				TradingAccountId = accountInfo.SpreadBettingAccount.TradingAccountId,
+				AuditId = price.AuditId,
+				BidPrice = price.Bid,
+				OfferPrice = price.Offer,
+				Close = closeOrderIds.ToArray(),
+			};
 			var resp = client.TradesAndOrders.Trade(tradeRequest);
 			Tracker.EndMeasure(measure, "CIAPI.Trade");
 
@@ -246,6 +242,12 @@ namespace LatencyCollectorCore.Monitors
 			{
 				ApiClient.Dispose();
 				ApiClient = null;
+			}
+
+			if (_metricsRecorder != null)
+			{
+				_metricsRecorder.Stop();
+				_metricsRecorder = null;
 			}
 		}
 	}
