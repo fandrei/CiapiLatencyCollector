@@ -93,12 +93,19 @@ namespace LatencyCollectorCore.Monitors
 				if (AllowTrading)
 				{
 					var price = GetPrice(ApiClient);
+					var canTrade = (price.StatusSummary == 0); // normal status
 
-					var orderId = Trade(ApiClient, accountInfo, price, 1M, "buy", new int[0]);
-
-					ReportOpenPositions(accountInfo);
-
-					Trade(ApiClient, accountInfo, price, 1M, "sell", new[] { orderId });
+					if (canTrade)
+					{
+						var orderId = Trade(ApiClient, accountInfo, price, 1M, "buy", new int[0]);
+						ReportOpenPositions(accountInfo);
+						Trade(ApiClient, accountInfo, price, 1M, "sell", new[] {orderId});
+					}
+					else
+					{
+						Tracker.LogFormat("Event", "Trade is not placed: market status is {0}", price.StatusSummary);
+						ReportOpenPositions(accountInfo);
+					}
 				}
 				else
 				{
