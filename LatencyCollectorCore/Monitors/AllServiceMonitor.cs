@@ -141,12 +141,6 @@ namespace LatencyCollectorCore.Monitors
 						ApiClient.LogOut();
 						Tracker.EndMeasure(measure, "CIAPI.LogOut");
 					}
-
-					if (_metricsRecorder != null)
-					{
-						_metricsRecorder.Stop();
-						_metricsRecorder = null;
-					}
 				}
 				catch (Exception exc)
 				{
@@ -248,6 +242,12 @@ namespace LatencyCollectorCore.Monitors
 			{
 				ApiClient.Dispose();
 				ApiClient = null;
+			}
+
+			if (_metricsRecorder != null)
+			{
+				_metricsRecorder.Stop();
+				_metricsRecorder = null;
 			}
 		}
 	}
