@@ -32,12 +32,20 @@ namespace LatencyCollectorCore.Monitors
 				if (_client == null)
 				{
 					_client = new Client(new Uri(ServerUrl), new Uri(StreamingServerUrl), "{API_KEY}");
-					_client.AppKey = "CiapiLatencyCollector." + GetType().Name;
+					_client.AppKey = "CiapiLatencyCollector." + GetType().Name + ".BuiltIn";
+
+					if (Tracker != null)
+					{
+						_metricsRecorder = new MetricsRecorder(_client, new Uri(Tracker.Url));
+						_metricsRecorder.Start();
+					}
 				}
 				return _client;
 			}
 			set { _client = value; }
 		}
+
+		private MetricsRecorder _metricsRecorder;
 
 		// GBP/USD markets
 		private const int MarketId = 400616150;
@@ -132,6 +140,12 @@ namespace LatencyCollectorCore.Monitors
 						var measure = Tracker.StartMeasure();
 						ApiClient.LogOut();
 						Tracker.EndMeasure(measure, "CIAPI.LogOut");
+					}
+
+					if (_metricsRecorder != null)
+					{
+						_metricsRecorder.Stop();
+						_metricsRecorder = null;
 					}
 				}
 				catch (Exception exc)
