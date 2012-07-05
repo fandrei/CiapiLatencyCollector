@@ -96,19 +96,13 @@ namespace LatencyCollectorCore.Monitors
 
 					var orderId = Trade(ApiClient, accountInfo, price, 1M, "buy", new int[0]);
 
-					{
-						var measure = Tracker.StartMeasure();
-						ApiClient.TradesAndOrders.ListOpenPositions(accountInfo.SpreadBettingAccount.TradingAccountId);
-						Tracker.EndMeasure(measure, "CIAPI.ListOpenPositions");
-					}
+					ReportOpenPositions(accountInfo);
 
 					Trade(ApiClient, accountInfo, price, 1M, "sell", new[] { orderId });
 				}
 				else
 				{
-					var measure = Tracker.StartMeasure();
-					ApiClient.TradesAndOrders.ListOpenPositions(accountInfo.SpreadBettingAccount.TradingAccountId);
-					Tracker.EndMeasure(measure, "CIAPI.ListOpenPositions");
+					ReportOpenPositions(accountInfo);
 				}
 
 				{
@@ -137,6 +131,13 @@ namespace LatencyCollectorCore.Monitors
 					Report(exc);
 				}
 			}
+		}
+
+		private void ReportOpenPositions(AccountInformationResponseDTO accountInfo)
+		{
+			var measure = Tracker.StartMeasure();
+			ApiClient.TradesAndOrders.ListOpenPositions(accountInfo.SpreadBettingAccount.TradingAccountId);
+			Tracker.EndMeasure(measure, "CIAPI.ListOpenPositions");
 		}
 
 		static void Report(Exception exc)
