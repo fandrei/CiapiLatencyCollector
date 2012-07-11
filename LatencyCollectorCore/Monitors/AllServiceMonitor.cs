@@ -60,43 +60,14 @@ namespace LatencyCollectorCore.Monitors
 					var resp = client.DownloadString("http://www.msftncsi.com/ncsi.txt");
 				}
 
-				{
-					var measure = Tracker.StartMeasure();
-					ApiClient.LogIn(UserName, Password);
-					Tracker.EndMeasure(measure, "CIAPI.LogIn");
-				}
+				Login();
 
-				AccountInformationResponseDTO accountInfo;
-				{
-					var measure = Tracker.StartMeasure();
-					accountInfo = ApiClient.AccountInformation.GetClientAndTradingAccount();
-					Tracker.EndMeasure(measure, "CIAPI.GetClientAndTradingAccount");
-				}
+				var accountInfo = GetAccountInfo();
 
-				{
-					var measure = Tracker.StartMeasure();
-					var resp = ApiClient.SpreadMarkets.ListSpreadMarkets("", "",
-						accountInfo.ClientAccountId, 100, false);
-					Tracker.EndMeasure(measure, "CIAPI.ListSpreadMarkets");
-				}
-
-				{
-					var measure = Tracker.StartMeasure();
-					var resp = ApiClient.News.ListNewsHeadlinesWithSource("dj", "UK", 10);
-					Tracker.EndMeasure(measure, "CIAPI.ListNewsHeadlinesWithSource");
-				}
-
-				{
-					var measure = Tracker.StartMeasure();
-					var resp = ApiClient.Market.GetMarketInformation(MarketId.ToString());
-					Tracker.EndMeasure(measure, "CIAPI.GetMarketInformation");
-				}
-
-				{
-					var measure = Tracker.StartMeasure();
-					var resp = ApiClient.PriceHistory.GetPriceBars(MarketId.ToString(), "MINUTE", 1, "20");
-					Tracker.EndMeasure(measure, "CIAPI.GetPriceBars");
-				}
+				ListSpreadMarkets(accountInfo);
+				ListNews();
+				GetMarketInformation();
+				GetPriceBars();
 
 				if (AllowTrading)
 				{
@@ -106,26 +77,22 @@ namespace LatencyCollectorCore.Monitors
 					if (canTrade)
 					{
 						var orderId = Trade(ApiClient, accountInfo, price, 1M, "buy", new int[0]);
-						ReportOpenPositions(accountInfo);
+						OpenPositions(accountInfo);
 						Trade(ApiClient, accountInfo, price, 1M, "sell", new[] { orderId });
 					}
 					else
 					{
 						Tracker.LogFormat("Event", "Trade is not placed: market status is {0}", price.StatusSummary);
-						ReportOpenPositions(accountInfo);
+						OpenPositions(accountInfo);
 					}
 				}
 				else
 				{
 					Tracker.Log("Event", "Trade is not placed: AllowTrading==false");
-					ReportOpenPositions(accountInfo);
+					OpenPositions(accountInfo);
 				}
 
-				{
-					var measure = Tracker.StartMeasure();
-					var tradeHistory = ApiClient.TradesAndOrders.ListTradeHistory(accountInfo.SpreadBettingAccount.TradingAccountId, 20);
-					Tracker.EndMeasure(measure, "CIAPI.ListTradeHistory");
-				}
+				ListTradeHistory(accountInfo);
 			}
 			catch (Exception exc)
 			{
@@ -137,9 +104,7 @@ namespace LatencyCollectorCore.Monitors
 				{
 					if (ApiClient != null && !String.IsNullOrEmpty(ApiClient.Session))
 					{
-						var measure = Tracker.StartMeasure();
-						ApiClient.LogOut();
-						Tracker.EndMeasure(measure, "CIAPI.LogOut");
+						Logout();
 					}
 				}
 				catch (Exception exc)
@@ -149,11 +114,111 @@ namespace LatencyCollectorCore.Monitors
 			}
 		}
 
-		private void ReportOpenPositions(AccountInformationResponseDTO accountInfo)
+		private void Login()
 		{
 			var measure = Tracker.StartMeasure();
-			ApiClient.TradesAndOrders.ListOpenPositions(accountInfo.SpreadBettingAccount.TradingAccountId);
-			Tracker.EndMeasure(measure, "CIAPI.ListOpenPositions");
+			ApiClient.LogIn(UserName, Password);
+			Tracker.EndMeasure(measure, "CIAPI.LogIn");
+		}
+
+		private void Logout()
+		{
+			var measure = Tracker.StartMeasure();
+			ApiClient.LogOut();
+			Tracker.EndMeasure(measure, "CIAPI.LogOut");
+		}
+
+		private AccountInformationResponseDTO GetAccountInfo()
+		{
+			var measure = Tracker.StartMeasure();
+			var accountInfo = ApiClient.AccountInformation.GetClientAndTradingAccount();
+			Tracker.EndMeasure(measure, "CIAPI.GetClientAndTradingAccount");
+			return accountInfo;
+		}
+
+		private void ListSpreadMarkets(AccountInformationResponseDTO accountInfo)
+		{
+			try
+			{
+				var measure = Tracker.StartMeasure();
+				var resp = ApiClient.SpreadMarkets.ListSpreadMarkets("", "",
+					accountInfo.ClientAccountId, 100, false);
+				Tracker.EndMeasure(measure, "CIAPI.ListSpreadMarkets");
+			}
+			catch (Exception exc)
+			{
+				Report(exc);
+			}
+		}
+
+		private void ListNews()
+		{
+			try
+			{
+				var measure = Tracker.StartMeasure();
+				var resp = ApiClient.News.ListNewsHeadlinesWithSource("dj", "UK", 10);
+				Tracker.EndMeasure(measure, "CIAPI.ListNewsHeadlinesWithSource");
+			}
+			catch (Exception exc)
+			{
+				Report(exc);
+			}
+		}
+
+		private void GetMarketInformation()
+		{
+			try
+			{
+				var measure = Tracker.StartMeasure();
+				var resp = ApiClient.Market.GetMarketInformation(MarketId.ToString());
+				Tracker.EndMeasure(measure, "CIAPI.GetMarketInformation");
+			}
+			catch (Exception exc)
+			{
+				Report(exc);
+			}
+		}
+
+		private void GetPriceBars()
+		{
+			try
+			{
+				var measure = Tracker.StartMeasure();
+				var resp = ApiClient.PriceHistory.GetPriceBars(MarketId.ToString(), "MINUTE", 1, "20");
+				Tracker.EndMeasure(measure, "CIAPI.GetPriceBars");
+			}
+			catch (Exception exc)
+			{
+				Report(exc);
+			}
+		}
+
+		private void OpenPositions(AccountInformationResponseDTO accountInfo)
+		{
+			try
+			{
+				var measure = Tracker.StartMeasure();
+				ApiClient.TradesAndOrders.ListOpenPositions(accountInfo.SpreadBettingAccount.TradingAccountId);
+				Tracker.EndMeasure(measure, "CIAPI.ListOpenPositions");
+			}
+			catch (Exception exc)
+			{
+				Report(exc);
+			}
+		}
+
+		private void ListTradeHistory(AccountInformationResponseDTO accountInfo)
+		{
+			try
+			{
+				var measure = Tracker.StartMeasure();
+				var tradeHistory = ApiClient.TradesAndOrders.ListTradeHistory(accountInfo.SpreadBettingAccount.TradingAccountId, 20);
+				Tracker.EndMeasure(measure, "CIAPI.ListTradeHistory");
+			}
+			catch (Exception exc)
+			{
+				Report(exc);
+			}
 		}
 
 		static void Report(Exception exc)
