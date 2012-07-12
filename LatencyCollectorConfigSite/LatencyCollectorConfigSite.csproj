@@ -125,6 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CIAPILatencyCollectorConfig\AppSettings.xml" />
+    <Content Include="CIAPILatencyCollectorConfig\sample_node_config\AppSettings.xml" />
     <Content Include="CIAPILatencyCollector\updates\version.txt" />
     <Content Include="CreateUser.aspx" />
     <Content Include="Web.config">
