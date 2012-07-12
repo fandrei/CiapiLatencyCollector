@@ -125,8 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CIAPILatencyCollectorConfig\AppSettings.xml" />
-    <Content Include="CIAPILatencyCollector\setup\placeholder.txt" />
-    <Content Include="CIAPILatencyCollector\updates\placeholder.txt" />
+    <Content Include="CIAPILatencyCollector\updates\version.txt" />
     <Content Include="CreateUser.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -157,7 +156,10 @@
   <ItemGroup>
     <Content Include="App_Data\web.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="CIAPILatencyCollector\updates\LatencyCollectorCore.zip" />
+    <Content Include="CIAPILatencyCollector\setup\CiapiLatencyCollector.msi.zip" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>
