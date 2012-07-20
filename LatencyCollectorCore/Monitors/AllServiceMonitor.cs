@@ -233,7 +233,6 @@ namespace LatencyCollectorCore.Monitors
 		private int Trade(Client client, AccountInformationResponseDTO accountInfo, PriceDTO price,
 			decimal quantity, string direction, IEnumerable<int> closeOrderIds)
 		{
-			var measure = Tracker.StartMeasure();
 			var tradeRequest = new NewTradeOrderRequestDTO
 			{
 				MarketId = MarketId,
@@ -245,6 +244,8 @@ namespace LatencyCollectorCore.Monitors
 				OfferPrice = price.Offer,
 				Close = closeOrderIds.ToArray(),
 			};
+
+			var measure = Tracker.StartMeasure();
 			var resp = client.TradesAndOrders.Trade(tradeRequest);
 			Tracker.EndMeasure(measure, "CIAPI.Trade");
 
