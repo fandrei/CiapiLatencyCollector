@@ -11,17 +11,17 @@
         </member>
         <member name="P:CIAPI.DTO.ApiChangePasswordRequestDTO.UserName">
             <summary>
-            The username of the user whose password is to be changed (case sensitive).
+            The username of the user whose password is to be changed *(case sensitive)*.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiChangePasswordRequestDTO.Password">
             <summary>
-            The user's existing password (case sensitive).
+            The user's existing password *(case sensitive)*.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiChangePasswordRequestDTO.NewPassword">
             <summary>
-            The user's new password (case sensitive).
+            The user's new password *(case sensitive)*.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ApiSaveAccountInformationRequestDTO">
@@ -166,7 +166,7 @@
         </member>
         <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.LastChangedDateTimeUTC">
             <summary>
-            The last time that the order changed. Note - does not include things such as the current market price.
+            The last time that the order changed. **Note:** does not include things such as the current market price.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.Applicability_Resolved">
@@ -251,7 +251,7 @@
         </member>
         <member name="T:CIAPI.DTO.ApiClientApplicationMessageTranslationDTO">
             <summary>
-            Message translation entity with client specific translated textual strings.
+            Message translation entity with client specific translated text strings.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiClientApplicationMessageTranslationDTO.Key">
@@ -296,7 +296,7 @@
         </member>
         <member name="P:CIAPI.DTO.ApiClientApplicationMessageTranslationResponseDTO.TranslationKeyValuePairs">
             <summary>
-            List of message translations (key/value pairs).
+            List of message translations *(key/value pairs)*.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ApiCultureLookupDTO">
@@ -306,7 +306,7 @@
         </member>
         <member name="T:CIAPI.DTO.ApiLookupDTO">
             <summary>
-            Generic look up data entities - such as localised textual names.
+            Generic look up data entities - such as localised text names.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiLookupDTO.Id">
@@ -351,12 +351,12 @@
         </member>
         <member name="T:CIAPI.DTO.ApiDateTimeOffsetDTO">
             <summary>
-            Contains DateTime represented as Utc time and timezone offset in minutes to convert back to local time
+            Contains DateTime represented as UTC time and timezone offset in minutes to convert back to local time.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiDateTimeOffsetDTO.UtcDateTime">
             <summary>
-            Gets the date and time in UTC
+            Gets the date and time in UTC.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiDateTimeOffsetDTO.OffsetMinutes">
@@ -391,7 +391,7 @@
         </member>
         <member name="P:CIAPI.DTO.ApiErrorResponseDTO.HttpStatus">
             <summary>
-            The intended HTTP status code. This will be the same value as the actual HTTP status code unless the QueryString contains only200=true. This is useful for JavaScript clients who can only read responses with status code 200.
+            The intended HTTP status code. This will be the same value as the actual HTTP status code unless the QueryString contains *only200=true*. This is useful for JavaScript clients who can only read responses with status code 200.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiErrorResponseDTO.ErrorMessage">
@@ -436,22 +436,22 @@
         </member>
         <member name="T:CIAPI.DTO.ApiLogOffRequestDTO">
             <summary>
-            Request to delete a session (log off).
+            Request to delete a session *(log off)*.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiLogOffRequestDTO.UserName">
             <summary>
-            User name of the session to delete (log off). This is case sensitive.
+            User name of the session to delete *(log off)*. This is case sensitive.
             </summary>
         </member>
-        <member name="P:CIAPI.DTO.ApiLogOffRequestDTO.Session">
+        <member name="P:CIAPI.DTO.ApiLogOffRequestDTO.session">
             <summary>
-            Session identifier (session token) to delete (log off).
+            Session identifier *(session token)* to delete *(log off)*.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ApiLogOffResponseDTO">
             <summary>
-            Response from a session delete (Log Out) request.
+            Response from a session delete *(Log Out)* request.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiLogOffResponseDTO.LoggedOut">
@@ -461,7 +461,7 @@
         </member>
         <member name="T:CIAPI.DTO.ApiLogOnRequestDTO">
             <summary>
-            Request to create a session (log on).
+            Request to create a session *(log on)*.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiLogOnRequestDTO.UserName">
@@ -486,17 +486,17 @@
         </member>
         <member name="P:CIAPI.DTO.ApiLogOnRequestDTO.AppComments">
             <summary>
-            Any client application comments on what to associate with this session. (Optional).
+            Any client application comments on what to associate with this session. *(Optional)*.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ApiLogOnResponseDTO">
             <summary>
-            Response to a LogOn call.
+            Response to a [LogOn](http://labs.cityindex.com/docs/#HTTP%20Services/LogOn.htm) call.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiLogOnResponseDTO.Session">
             <summary>
-            Your session token (treat as a random string). <BR /> Session tokens are valid for a set period from the time of their creation. <BR /> The period is subject to change, and may vary depending on who you logon as.
+            Your session token *(treat as a random string)*. <BR /> Session tokens are valid for a set period from the time of their creation. <BR /> The period is subject to change, and may vary depending on who you logon as.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiLogOnResponseDTO.PasswordChangeRequired">
@@ -731,7 +731,7 @@
         </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MarketBreakTimes">
             <summary>
-            Breaks throughout each trading day (Day is specified as 'DayOfWeek').
+            Breaks throughout each trading day *(Day is specified as 'DayOfWeek')*.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MarketSpreads">
@@ -746,7 +746,7 @@
         </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.GuaranteedOrderPremiumUnits">
             <summary>
-            The unit type being used for the guaranteed order premium. This can be (MultipleOfQuantity=1, PercentOfConsideration=2).
+            The unit type being used for the guaranteed order premium. This can be *(MultipleOfQuantity=1, PercentOfConsideration=2)*.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.GuaranteedOrderMinDistance">
@@ -756,12 +756,12 @@
         </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.GuaranteedOrderMinDistanceUnits">
             <summary>
-            Guaranteed order minimum distance unit type. This can be: (Percentage=26, Points=27).
+            Guaranteed order minimum distance unit type. This can be: *(Percentage=26, Points=27)*.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.PriceToleranceUnits">
             <summary>
-            Price tolerance units - used with Price Tolerance as a multiplier (i.e. BetPer or Override Bet Per).
+            Price tolerance units - used with Price Tolerance as a multiplier *(i.e. BetPer or Override Bet Per)*.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MarketTimeZoneOffsetMinutes">
@@ -921,7 +921,7 @@
         </member>
         <member name="P:CIAPI.DTO.ApiOpenPositionDTO.LastChangedDateTimeUTC">
             <summary>
-            The last time that the order changed. Note - does not include things such as the current market price.
+            The last time that the order changed. **Note:** does not include things such as the current market price.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiOpenPositionDTO.Status_Resolved">
@@ -1001,12 +1001,12 @@
         </member>
         <member name="P:CIAPI.DTO.ApiOrderDTO.CurrencyId">
             <summary>
-            Currency ID for order (as represented in the trading system).
+            Currency ID for order *(as represented in the trading system)*.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiOrderDTO.StatusId">
             <summary>
-            Status ID of order (as represented in the trading system).
+            Status ID of order *(as represented in the trading system)*.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiOrderDTO.TypeId">
@@ -1126,12 +1126,12 @@
         </member>
         <member name="T:CIAPI.DTO.ApiSaveAccountInformationResponseDTO">
             <summary>
-            An (empty) response to indicate that the save account information operation has completed.
+            An *(empty)* response to indicate that the save account information operation has completed.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ApiSaveMarketInformationResponseDTO">
             <summary>
-            An (empty) response to indicate that the save market information operation has completed.
+            An *(empty)* response to indicate that the save market information operation has completed.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ApiSaveWatchlistRequestDTO">
@@ -1146,7 +1146,7 @@
         </member>
         <member name="T:CIAPI.DTO.ApiSaveWatchlistResponseDTO">
             <summary>
-            An (empty) response to indicate the save watchlist operation has completed.
+            An *(empty)* response to indicate the save watchlist operation has completed.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ApiSimulateOrderResponseDTO">
@@ -1348,7 +1348,7 @@
         </member>
         <member name="P:CIAPI.DTO.ApiTradeOrderResponseDTO.Status">
             <summary>
-            The status of the order (Pending, Accepted, Open, etc.)
+            The status of the order *(Pending, Accepted, Open, etc.)*
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiTradeOrderResponseDTO.StatusReason">
@@ -1403,12 +1403,12 @@
         </member>
         <member name="P:CIAPI.DTO.ApiTradingAccountDTO.TradingAccountStatus">
             <summary>
-            Trading account status with possible values (Open, Closed).
+            Trading account status with possible values *(Open, Closed)*.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiTradingAccountDTO.TradingAccountType">
             <summary>
-            Trading account type with possible values (Spread, CFD).
+            Trading account type with possible values *(Spread, CFD)*.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ApiTradingDayTimesDTO">
@@ -1423,12 +1423,12 @@
         </member>
         <member name="P:CIAPI.DTO.ApiTradingDayTimesDTO.StartTimeUtc">
             <summary>
-            Start of the market time in both UTC and local time (using Offset property).
+            Start of the market time in both UTC and local time *(using Offset property)*.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiTradingDayTimesDTO.EndTimeUtc">
             <summary>
-            End of the market time in both UTC and local time (using Offset property).
+            End of the market time in both UTC and local time *(using Offset property)*.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.CancelOrderRequestDTO">
@@ -1448,7 +1448,7 @@
         </member>
         <member name="T:CIAPI.DTO.ClientAccountMarginDTO">
             <summary>
-            The current margin and other account balance data for a specific client account used in the ClientAccountMargin stream.
+            The current margin and other account balance data for a specific client account used in the [ClientAccountMargin](http://labs.cityindex.com/docs/#Streaming%20Data/ClientAccountMargin.htm) stream.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ClientAccountMarginDTO.Cash">
@@ -1473,7 +1473,7 @@
         </member>
         <member name="P:CIAPI.DTO.ClientAccountMarginDTO.OpenTradeEquity">
             <summary>
-            Open trade equity (open / unrealised PNL) expressed in the client's base currency.
+            Open trade equity *(open / unrealised PNL)* expressed in the client's base currency.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ClientAccountMarginDTO.TradeableFunds">
@@ -1631,16 +1631,6 @@
             The requested client preference key value pair.
             </summary>
         </member>
-        <member name="T:CIAPI.DTO.GetITFinanceSessionServiceResponseDTO">
-            <summary>
-            Result of IT Finance session key request.
-            </summary>
-        </member>
-        <member name="P:CIAPI.DTO.GetITFinanceSessionServiceResponseDTO.ITFinanceSessionKey">
-            <summary>
-            The requested IT Finance session key.
-            </summary>
-        </member>
         <member name="T:CIAPI.DTO.GetKeyListClientPreferenceResponseDTO">
             <summary>
             Results of client preference get.
@@ -1708,7 +1698,7 @@
         </member>
         <member name="T:CIAPI.DTO.GetOrderResponseDTO">
             <summary>
-            Response containing the order. Only one of the two fields will be populated depending upon the type of order (Trade or Stop / Limit).
+            Response containing the order. Only one of the two fields will be populated depending upon the type of order *(Trade or Stop / Limit)*.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.GetOrderResponseDTO.TradeOrder">
@@ -1723,17 +1713,17 @@
         </member>
         <member name="T:CIAPI.DTO.GetPriceBarResponseDTO">
             <summary>
-            The response from a price bar history GET request. Contains both an array of finalized price bars, and a partial (not finalized) bar for the current period.
+            The response from a price bar history GET request. Contains both an array of finalized price bars, and a partial *(not finalized)* bar for the current period.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.GetPriceBarResponseDTO.PriceBars">
             <summary>
-            An array of finalized price bars, sorted in ascending order based on PriceBar.BarDate
+            An array of finalized price bars, sorted in ascending order based on PriceBar.BarDate.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.GetPriceBarResponseDTO.PartialPriceBar">
             <summary>
-            The (non-finalized) price bar data for the current period (i.e, the period that hasn't yet completed).
+            The *(non-finalized)* price bar data for the current period *(i.e, the period that has not yet completed)*.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.GetPriceTickResponseDTO">
@@ -1763,7 +1753,7 @@
         </member>
         <member name="P:CIAPI.DTO.GetVersionInformationResponseDTO.UpgradeUrl">
             <summary>
-            The url of the upgrade.
+            The URL of the upgrade.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.InsertWatchlistItemRequestDTO">
@@ -1783,7 +1773,7 @@
         </member>
         <member name="T:CIAPI.DTO.ListActiveStopLimitOrderResponseDTO">
             <summary>
-            Contains the response of a ListActiveStopLimitOrder query.
+            Contains the response of a [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/#HTTP%20Services/ListActiveStopLimitOrders.htm) query.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ListActiveStopLimitOrderResponseDTO.ActiveStopLimitOrders">
@@ -1793,7 +1783,7 @@
         </member>
         <member name="T:CIAPI.DTO.ListCfdMarketsResponseDTO">
             <summary>
-            Contains the response of a ListCfdMarkets query.
+            Contains the response of a [ListCfdMarkets](http://labs.cityindex.com/docs/#HTTP%20Services/ListCfdMarkets.htm) query.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ListCfdMarketsResponseDTO.Markets">
@@ -1841,6 +1831,31 @@
             The requested list of markets.
             </summary>
         </member>
+        <member name="T:CIAPI.DTO.ListNewsHeadlinesRequestDTO">
+            <summary>
+            A request for news stories.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ListNewsHeadlinesRequestDTO.Source">
+            <summary>
+            The source for the news stories. Leave blank to use the default Dow Jones news provider as the source.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ListNewsHeadlinesRequestDTO.Category">
+            <summary>
+            A category that is used to filter the news.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ListNewsHeadlinesRequestDTO.MaxResults">
+            <summary>
+            The maximum number of responses to return. Leave blank to return the top 25 results.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ListNewsHeadlinesRequestDTO.CultureId">
+            <summary>
+            The Culture ID used to filter results. Leave blank to use the culture of the requesting user.
+            </summary>
+        </member>
         <member name="T:CIAPI.DTO.ListNewsHeadlinesResponseDTO">
             <summary>
             The response from a GET request for News headlines.
@@ -1853,7 +1868,7 @@
         </member>
         <member name="T:CIAPI.DTO.ListOpenPositionsResponseDTO">
             <summary>
-            Contains the result of a ListOpenPositions query.
+            Contains the result of a [ListOpenPositions](http://labs.cityindex.com/docs/#HTTP%20Services/ListOpenPositions.htm) query.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ListOpenPositionsResponseDTO.OpenPositions">
@@ -1863,7 +1878,7 @@
         </member>
         <member name="T:CIAPI.DTO.ListSpreadMarketsResponseDTO">
             <summary>
-            Contains the result of a ListSpreadMarkets query.
+            Contains the result of a [ListSpreadMarkets](http://labs.cityindex.com/docs/#HTTP%20Services/ListSpreadMarkets.htm) query.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ListSpreadMarketsResponseDTO.Markets">
@@ -1873,7 +1888,7 @@
         </member>
         <member name="T:CIAPI.DTO.ListStopLimitOrderHistoryResponseDTO">
             <summary>
-            Contains the result of a ListStopLimitOrderHistory query.
+            Contains the result of a [ListStopLimitOrderHistory](http://labs.cityindex.com/docs/#HTTP%20Services/ListStopLimitOrderHistory.htm) query.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ListStopLimitOrderHistoryResponseDTO.StopLimitOrderHistory">
@@ -1883,7 +1898,7 @@
         </member>
         <member name="T:CIAPI.DTO.ListTradeHistoryResponseDTO">
             <summary>
-            Contains the result of a ListTradeHistory query.
+            Contains the result of a [ListTradeHistory](http://labs.cityindex.com/docs/#HTTP%20Services/ListTradeHistory.htm) query.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ListTradeHistoryResponseDTO.TradeHistory">
@@ -2003,12 +2018,12 @@
         </member>
         <member name="P:CIAPI.DTO.NewStopLimitOrderRequestDTO.BidPrice">
             <summary>
-            Market prices are quoted as a pair (buy/sell or bid/offer), the BidPrice is the lower of the two.
+            Market prices are quoted as a pair *(buy/sell or bid/offer)*, the BidPrice is the lower of the two.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.NewStopLimitOrderRequestDTO.OfferPrice">
             <summary>
-            Market prices are quoted as a pair (buy/sell or bid/offer), the OfferPrice is the higher of the market price pair.
+            Market prices are quoted as a pair *(buy/sell or bid/offer)*, the OfferPrice is the higher of the market price pair.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.NewStopLimitOrderRequestDTO.AuditId">
@@ -2088,12 +2103,12 @@
         </member>
         <member name="P:CIAPI.DTO.NewTradeOrderRequestDTO.BidPrice">
             <summary>
-            Market prices are quoted as a pair (buy/sell or bid/offer), the BidPrice is the lower value of the pair.
+            Market prices are quoted as a pair *(buy/sell or bid/offer)*, the BidPrice is the lower value of the pair.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.NewTradeOrderRequestDTO.OfferPrice">
             <summary>
-            Market prices are quote as a pair (buy/sell or bid/offer), the OfferPrice is the higher value of the pair.
+            Market prices are quote as a pair *(buy/sell or bid/offer)*, the OfferPrice is the higher value of the pair.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.NewTradeOrderRequestDTO.AuditId">
@@ -2161,11 +2176,6 @@
             Flag indicating whether the order automatically rolls over.
             </summary>
         </member>
-        <member name="P:CIAPI.DTO.OrderDTO.ExecutionPrice">
-            <summary>
-            The price the order was executed at.
-            </summary>
-        </member>
         <member name="P:CIAPI.DTO.OrderDTO.LastChangedTime">
             <summary>
             The date and time that the order was last changed. Always expressed in UTC.
@@ -2198,7 +2208,7 @@
         </member>
         <member name="P:CIAPI.DTO.OrderDTO.Type">
             <summary>
-            The type of the order (1 = Trade / 2 = Stop / 3 = Limit).
+            The type of the order *(1 = Trade / 2 = Stop / 3 = Limit)*.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.OrderDTO.Status">
@@ -2223,7 +2233,7 @@
         </member>
         <member name="P:CIAPI.DTO.PriceBarDTO.Open">
             <summary>
-            The price at the start (open) of the price bar interval.
+            The price at the start *(open)* of the price bar interval.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.PriceBarDTO.High">
@@ -2238,7 +2248,7 @@
         </member>
         <member name="P:CIAPI.DTO.PriceBarDTO.Close">
             <summary>
-            The price at the end (close) of the price bar interval.
+            The price at the end *(close)* of the price bar interval.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.PriceDTO">
@@ -2258,12 +2268,12 @@
         </member>
         <member name="P:CIAPI.DTO.PriceDTO.Bid">
             <summary>
-            The current Bid price (price at which the customer can sell).
+            The current Bid price *(price at which the customer can sell)*.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.PriceDTO.Offer">
             <summary>
-            The current Offer price (price at which the customer can buy, sometimes referred to as Ask price).
+            The current Offer price *(price at which the customer can buy, sometimes referred to as Ask price)*.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.PriceDTO.Price">
@@ -2283,7 +2293,7 @@
         </member>
         <member name="P:CIAPI.DTO.PriceDTO.Change">
             <summary>
-            The change since the last price (always positive). See Direction for direction of the change.
+            The change since the last price *(always positive)*. See Direction for direction of the change.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.PriceDTO.Direction">
@@ -2343,7 +2353,7 @@
         </member>
         <member name="P:CIAPI.DTO.QuoteDTO.BidAdjust">
             <summary>
-            The amount the bid price will be adjusted to become an order when the customer is buying (BidPrice + BidAdjust = BuyPrice).
+            The amount the bid price will be adjusted to become an order when the customer is buying *(BidPrice + BidAdjust = BuyPrice)*.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.QuoteDTO.OfferPrice">
@@ -2353,7 +2363,7 @@
         </member>
         <member name="P:CIAPI.DTO.QuoteDTO.OfferAdjust">
             <summary>
-            The amount the offer price will be adjusted to become an order when the customer is selling (OfferPrice + OfferAdjust = OfferPrice).
+            The amount the offer price will be adjusted to become an order when the customer is selling *(OfferPrice + OfferAdjust = OfferPrice)*.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.QuoteDTO.Quantity">
@@ -2607,28 +2617,28 @@
             <summary>
             Create a new session. This is how you "log on" to the CIAPI.
             </summary>
-            <param name="apiLogOnRequest">The request to create a session (log on).</param>
+            <param name="apiLogOnRequest">The request to create a session *(log on)*.</param>
         </member>
         <member name="M:CIAPI.Rpc.Client._Authentication.BeginLogOn(CIAPI.DTO.ApiLogOnRequestDTO,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
             Create a new session. This is how you "log on" to the CIAPI.
             </summary>
-            <param name="apiLogOnRequest">The request to create a session (log on).</param>
+            <param name="apiLogOnRequest">The request to create a session *(log on)*.</param>
             <param name="callback"></param>
             <param name="state"></param>
         </member>
         <member name="M:CIAPI.Rpc.Client._Authentication.DeleteSession(System.String,System.String)">
             <summary>
-            <p>Delete a session. This is how you "log off" from the CIAPI.</p>
+            Delete a session. This is how you "log off" from the CIAPI.
             </summary>
-            <param name="userName">Username is case sensitive. May be set as a service parameter or as a request header.</param>
+            <param name="UserName">Username is case sensitive. May be set as a service parameter or as a request header.</param>
             <param name="session">The session token. May be set as a service parameter or as a request header.</param>
         </member>
         <member name="M:CIAPI.Rpc.Client._Authentication.BeginDeleteSession(System.String,System.String,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
-            <p>Delete a session. This is how you "log off" from the CIAPI.</p>
+            Delete a session. This is how you "log off" from the CIAPI.
             </summary>
-            <param name="userName">Username is case sensitive. May be set as a service parameter or as a request header.</param>
+            <param name="UserName">Username is case sensitive. May be set as a service parameter or as a request header.</param>
             <param name="session">The session token. May be set as a service parameter or as a request header.</param>
             <param name="callback"></param>
             <param name="state"></param>
@@ -2653,15 +2663,15 @@
             <summary>
             Get historic price ticks for the specified market. Returns price ticks in ascending order up to the current time. The length of time that elapses between each tick is usually different.
             </summary>
-            <param name="marketId">The market ID.</param>
-            <param name="priceTicks">The total number of price ticks to return.</param>
+            <param name="MarketId">The market ID.</param>
+            <param name="PriceTicks">The total number of price ticks to return.</param>
         </member>
         <member name="M:CIAPI.Rpc.Client._PriceHistory.BeginGetPriceTicks(System.String,System.String,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
             Get historic price ticks for the specified market. Returns price ticks in ascending order up to the current time. The length of time that elapses between each tick is usually different.
             </summary>
-            <param name="marketId">The market ID.</param>
-            <param name="priceTicks">The total number of price ticks to return.</param>
+            <param name="MarketId">The market ID.</param>
+            <param name="PriceTicks">The total number of price ticks to return.</param>
             <param name="callback"></param>
             <param name="state"></param>
         </member>
@@ -2669,17 +2679,31 @@
             <summary>
             Get a list of current news headlines.
             </summary>
-            <param name="source">The news feed source provider. Valid options are: dj|mni|ci.</param>
-            <param name="category">Filter headlines by category. Valid categories depend on the source used:  for dj: uk|aus, for ci: SEMINARSCHINA, for mni: ALL.</param>
+            <param name="source">The news feed source provider. Valid options are: **dj**|**mni**|**ci**.</param>
+            <param name="category">Filter headlines by category. Valid categories depend on the source used:  for **dj**: *uk*|*aus*, for **ci**: *SEMINARSCHINA*, for **mni**: *ALL*.</param>
             <param name="maxResults">Specify the maximum number of headlines returned.</param>
         </member>
         <member name="M:CIAPI.Rpc.Client._News.BeginListNewsHeadlinesWithSource(System.String,System.String,System.Int32,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
             Get a list of current news headlines.
             </summary>
-            <param name="source">The news feed source provider. Valid options are: dj|mni|ci.</param>
-            <param name="category">Filter headlines by category. Valid categories depend on the source used:  for dj: uk|aus, for ci: SEMINARSCHINA, for mni: ALL.</param>
+            <param name="source">The news feed source provider. Valid options are: **dj**|**mni**|**ci**.</param>
+            <param name="category">Filter headlines by category. Valid categories depend on the source used:  for **dj**: *uk*|*aus*, for **ci**: *SEMINARSCHINA*, for **mni**: *ALL*.</param>
             <param name="maxResults">Specify the maximum number of headlines returned.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._News.ListNewsHeadlines(CIAPI.DTO.ListNewsHeadlinesRequestDTO)">
+            <summary>
+            Get a list of current news headlines.
+            </summary>
+            <param name="request">Object specifing the various request parameters.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._News.BeginListNewsHeadlines(CIAPI.DTO.ListNewsHeadlinesRequestDTO,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
+            <summary>
+            Get a list of current news headlines.
+            </summary>
+            <param name="request">Object specifing the various request parameters.</param>
             <param name="callback"></param>
             <param name="state"></param>
         </member>
@@ -2687,14 +2711,14 @@
             <summary>
             Get the detail of the specific news story matching the story ID in the parameter.
             </summary>
-            <param name="source">The news feed source provider. Valid options are dj|mni|ci.</param>
+            <param name="source">The news feed source provider. Valid options are **dj**|**mni**|**ci**.</param>
             <param name="storyId">The news story ID.</param>
         </member>
         <member name="M:CIAPI.Rpc.Client._News.BeginGetNewsDetail(System.String,System.String,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
             Get the detail of the specific news story matching the story ID in the parameter.
             </summary>
-            <param name="source">The news feed source provider. Valid options are dj|mni|ci.</param>
+            <param name="source">The news feed source provider. Valid options are **dj**|**mni**|**ci**.</param>
             <param name="storyId">The news story ID.</param>
             <param name="callback"></param>
             <param name="state"></param>
@@ -2703,9 +2727,9 @@
             <summary>
             Returns a list of CFD markets filtered by market name and/or market code. Leave the market name and code parameters empty to return all markets available to the User.
             </summary>
-            <param name="searchByMarketName">The characters that the CFD market name starts with. (Optional).</param>
-            <param name="searchByMarketCode">The characters that the market code starts with, normally this is the RIC code for the market. (Optional).</param>
-            <param name="clientAccountId">The logged on user's ClientAccountId. This only shows you the markets that the user can trade. (Required).</param>
+            <param name="searchByMarketName">The characters that the CFD market name starts with. *(Optional)*.</param>
+            <param name="searchByMarketCode">The characters that the market code starts with, normally this is the RIC code for the market. *(Optional)*.</param>
+            <param name="ClientAccountId">The logged on user's ClientAccountId. This only shows you the markets that the user can trade. *(Required)*.</param>
             <param name="maxResults">The maximum number of markets to return.</param>
             <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
         </member>
@@ -2713,9 +2737,9 @@
             <summary>
             Returns a list of CFD markets filtered by market name and/or market code. Leave the market name and code parameters empty to return all markets available to the User.
             </summary>
-            <param name="searchByMarketName">The characters that the CFD market name starts with. (Optional).</param>
-            <param name="searchByMarketCode">The characters that the market code starts with, normally this is the RIC code for the market. (Optional).</param>
-            <param name="clientAccountId">The logged on user's ClientAccountId. This only shows you the markets that the user can trade. (Required).</param>
+            <param name="searchByMarketName">The characters that the CFD market name starts with. *(Optional)*.</param>
+            <param name="searchByMarketCode">The characters that the market code starts with, normally this is the RIC code for the market. *(Optional)*.</param>
+            <param name="ClientAccountId">The logged on user's ClientAccountId. This only shows you the markets that the user can trade. *(Required)*.</param>
             <param name="maxResults">The maximum number of markets to return.</param>
             <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
             <param name="callback"></param>
@@ -2725,9 +2749,9 @@
             <summary>
             Returns a list of Spread Betting markets filtered by market name and/or market code. Leave the market name and code parameters empty to return all markets available to the User.
             </summary>
-            <param name="searchByMarketName">The characters that the Spread market name starts with. (Optional).</param>
-            <param name="searchByMarketCode">The characters that the Spread market code starts with, normally this is the RIC code for the market. (Optional).</param>
-            <param name="clientAccountId">The logged on user's ClientAccountId. (This only shows you markets that you can trade on.)</param>
+            <param name="searchByMarketName">The characters that the Spread market name starts with. *(Optional)*.</param>
+            <param name="searchByMarketCode">The characters that the Spread market code starts with, normally this is the RIC code for the market. *(Optional)*.</param>
+            <param name="ClientAccountId">The logged on user's ClientAccountId. *(This only shows you markets that you can trade on.)*</param>
             <param name="maxResults">The maximum number of markets to return.</param>
             <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
         </member>
@@ -2735,9 +2759,9 @@
             <summary>
             Returns a list of Spread Betting markets filtered by market name and/or market code. Leave the market name and code parameters empty to return all markets available to the User.
             </summary>
-            <param name="searchByMarketName">The characters that the Spread market name starts with. (Optional).</param>
-            <param name="searchByMarketCode">The characters that the Spread market code starts with, normally this is the RIC code for the market. (Optional).</param>
-            <param name="clientAccountId">The logged on user's ClientAccountId. (This only shows you markets that you can trade on.)</param>
+            <param name="searchByMarketName">The characters that the Spread market name starts with. *(Optional)*.</param>
+            <param name="searchByMarketCode">The characters that the Spread market code starts with, normally this is the RIC code for the market. *(Optional)*.</param>
+            <param name="ClientAccountId">The logged on user's ClientAccountId. *(This only shows you markets that you can trade on.)*</param>
             <param name="maxResults">The maximum number of markets to return.</param>
             <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
             <param name="callback"></param>
@@ -2745,21 +2769,21 @@
         </member>
         <member name="M:CIAPI.Rpc.Client._Market.GetMarketInformation(System.String)">
             <summary>
-            <p>Get Market Information for the single specified market supplied in the parameter.</p>
+            Get Market Information for the single specified market supplied in the parameter.
             </summary>
-            <param name="marketId">The market ID.</param>
+            <param name="MarketId">The market ID.</param>
         </member>
         <member name="M:CIAPI.Rpc.Client._Market.BeginGetMarketInformation(System.String,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
-            <p>Get Market Information for the single specified market supplied in the parameter.</p>
+            Get Market Information for the single specified market supplied in the parameter.
             </summary>
-            <param name="marketId">The market ID.</param>
+            <param name="MarketId">The market ID.</param>
             <param name="callback"></param>
             <param name="state"></param>
         </member>
         <member name="M:CIAPI.Rpc.Client._Market.ListMarketInformationSearch(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.String,System.Int32,System.Boolean)">
             <summary>
-            <p>Returns market information for the markets that meet the search criteria.</p> The search can be performed by market code and/or market name, and can include CFDs and Spread Bet markets.
+            Returns market information for the markets that meet the search criteria. The search can be performed by market code and/or market name, and can include CFDs and Spread Bet markets.
             </summary>
             <param name="searchByMarketCode">Sets the search to use market code.</param>
             <param name="searchByMarketName">Sets the search to use market Name.</param>
@@ -2772,7 +2796,7 @@
         </member>
         <member name="M:CIAPI.Rpc.Client._Market.BeginListMarketInformationSearch(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.String,System.Int32,System.Boolean,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
-            <p>Returns market information for the markets that meet the search criteria.</p> The search can be performed by market code and/or market name, and can include CFDs and Spread Bet markets.
+            Returns market information for the markets that meet the search criteria. The search can be performed by market code and/or market name, and can include CFDs and Spread Bet markets.
             </summary>
             <param name="searchByMarketCode">Sets the search to use market code.</param>
             <param name="searchByMarketName">Sets the search to use market Name.</param>
@@ -2787,27 +2811,27 @@
         </member>
         <member name="M:CIAPI.Rpc.Client._Market.ListMarketSearch(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.String,System.Int32,System.Boolean)">
             <summary>
-            <p>Returns market information for the markets that meet the search criteria.</p> The search can be performed by market code and/or market name, and can include CFDs and Spread Bet markets.
+            Returns a list of markets that meet the search criteria. The search can be performed by market code and/or market name, and can include CFDs and Spread Bet markets. Leave the query string empty to return all markets available to the user.
             </summary>
             <param name="searchByMarketCode">Sets the search to use market code.</param>
             <param name="searchByMarketName">Sets the search to use market Name.</param>
             <param name="spreadProductType">Sets the search to include spread bet markets.</param>
             <param name="cfdProductType">Sets the search to include CFD markets.</param>
             <param name="binaryProductType">Sets the search to include binary markets.</param>
-            <param name="query">The text to search for. Matches part of market name / code from the start.</param>
+            <param name="query">The text to search for. Matches part of market name / code from the start. *(Optional)*.</param>
             <param name="maxResults">The maximum number of results to return.</param>
             <param name="useMobileShortName">True if the market name should be in short form.  Helpful when displaying data on a small screen.</param>
         </member>
         <member name="M:CIAPI.Rpc.Client._Market.BeginListMarketSearch(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.String,System.Int32,System.Boolean,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
-            <p>Returns market information for the markets that meet the search criteria.</p> The search can be performed by market code and/or market name, and can include CFDs and Spread Bet markets.
+            Returns a list of markets that meet the search criteria. The search can be performed by market code and/or market name, and can include CFDs and Spread Bet markets. Leave the query string empty to return all markets available to the user.
             </summary>
             <param name="searchByMarketCode">Sets the search to use market code.</param>
             <param name="searchByMarketName">Sets the search to use market Name.</param>
             <param name="spreadProductType">Sets the search to include spread bet markets.</param>
             <param name="cfdProductType">Sets the search to include CFD markets.</param>
             <param name="binaryProductType">Sets the search to include binary markets.</param>
-            <param name="query">The text to search for. Matches part of market name / code from the start.</param>
+            <param name="query">The text to search for. Matches part of market name / code from the start. *(Optional)*.</param>
             <param name="maxResults">The maximum number of results to return.</param>
             <param name="useMobileShortName">True if the market name should be in short form.  Helpful when displaying data on a small screen.</param>
             <param name="callback"></param>
@@ -2815,19 +2839,19 @@
         </member>
         <member name="M:CIAPI.Rpc.Client._Market.SearchWithTags(System.String,System.Int32,System.Int32,System.Boolean)">
             <summary>
-            Get market information and tags for the markets that meet the search criteria.
+            Get market information and tags for the markets that meet the search criteria. Leave the query string empty to return all markets and tags available to the user.
             </summary>
-            <param name="query">The text to search for. Matches part of market name / code from the start.</param>
-            <param name="tagId">The ID for the tag to be searched. (Optional).</param>
+            <param name="query">The text to search for. Matches part of market name / code from the start. *(Optional)*.</param>
+            <param name="tagId">The ID for the tag to be searched. *(Optional)*.</param>
             <param name="maxResults">The maximum number of results to return. Default is 20.</param>
             <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
         </member>
         <member name="M:CIAPI.Rpc.Client._Market.BeginSearchWithTags(System.String,System.Int32,System.Int32,System.Boolean,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
-            Get market information and tags for the markets that meet the search criteria.
+            Get market information and tags for the markets that meet the search criteria. Leave the query string empty to return all markets and tags available to the user.
             </summary>
-            <param name="query">The text to search for. Matches part of market name / code from the start.</param>
-            <param name="tagId">The ID for the tag to be searched. (Optional).</param>
+            <param name="query">The text to search for. Matches part of market name / code from the start. *(Optional)*.</param>
+            <param name="tagId">The ID for the tag to be searched. *(Optional)*.</param>
             <param name="maxResults">The maximum number of results to return. Default is 20.</param>
             <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
             <param name="callback"></param>
@@ -2835,12 +2859,12 @@
         </member>
         <member name="M:CIAPI.Rpc.Client._Market.TagLookup">
             <summary>
-            <p>Gets all of the tags that the requesting user is allowed to see. Tags are returned in a primary / secondary hierarchy.</p> There are no parameters in this call.
+            Gets all of the tags that the requesting user is allowed to see. Tags are returned in a primary / secondary hierarchy. There are no parameters in this call.
             </summary>
         </member>
         <member name="M:CIAPI.Rpc.Client._Market.BeginTagLookup(Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
-            <p>Gets all of the tags that the requesting user is allowed to see. Tags are returned in a primary / secondary hierarchy.</p> There are no parameters in this call.
+            Gets all of the tags that the requesting user is allowed to see. Tags are returned in a primary / secondary hierarchy. There are no parameters in this call.
             </summary>
             <param name="callback"></param>
             <param name="state"></param>
@@ -2877,135 +2901,209 @@
             <summary>
             Save client preferences.
             </summary>
-            <param name="saveClientPreferenceRequestDTO">Save client preferences.</param>
+            <param name="saveClientPreferenceRequestDTO">The client preferences key/value pairs to save.</param>
         </member>
         <member name="M:CIAPI.Rpc.Client._Preference.BeginSave(CIAPI.DTO.SaveClientPreferenceRequestDTO,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
             Save client preferences.
             </summary>
-            <param name="saveClientPreferenceRequestDTO">Save client preferences.</param>
+            <param name="saveClientPreferenceRequestDTO">The client preferences key/value pairs to save.</param>
             <param name="callback"></param>
             <param name="state"></param>
         </member>
         <member name="M:CIAPI.Rpc.Client._Preference.Get(CIAPI.DTO.ClientPreferenceRequestDTO)">
             <summary>
-            get client preferences.
+            Get client preferences.
             </summary>
-            <param name="clientPreferenceRequestDto">get client preferences.</param>
+            <param name="clientPreferenceRequestDto">The client preference key to get.</param>
         </member>
         <member name="M:CIAPI.Rpc.Client._Preference.BeginGet(CIAPI.DTO.ClientPreferenceRequestDTO,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
-            get client preferences.
+            Get client preferences.
             </summary>
-            <param name="clientPreferenceRequestDto">get client preferences.</param>
+            <param name="clientPreferenceRequestDto">The client preference key to get.</param>
             <param name="callback"></param>
             <param name="state"></param>
         </member>
         <member name="M:CIAPI.Rpc.Client._Preference.GetKeyList">
             <summary>
-            get list of client preferences keys.
+            Get list of client preferences keys. There are no parameters in this call.
             </summary>
         </member>
         <member name="M:CIAPI.Rpc.Client._Preference.BeginGetKeyList(Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
-            get list of client preferences keys.
+            Get list of client preferences keys. There are no parameters in this call.
             </summary>
             <param name="callback"></param>
             <param name="state"></param>
         </member>
         <member name="M:CIAPI.Rpc.Client._Preference.Delete(CIAPI.DTO.ClientPreferenceRequestDTO)">
             <summary>
-            delete client preference key.
+            Delete client preference key.
             </summary>
-            <param name="clientPreferenceKey">delete client preference key.</param>
+            <param name="clientPreferenceKey">The client preference key to delete.</param>
         </member>
         <member name="M:CIAPI.Rpc.Client._Preference.BeginDelete(CIAPI.DTO.ClientPreferenceRequestDTO,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
-            delete client preference key.
+            Delete client preference key.
             </summary>
-            <param name="clientPreferenceKey">delete client preference key.</param>
+            <param name="clientPreferenceKey">The client preference key to delete.</param>
             <param name="callback"></param>
             <param name="state"></param>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._TradesAndOrders.Order(CIAPI.DTO.NewStopLimitOrderRequestDTO)" -->
-        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._TradesAndOrders.BeginOrder(CIAPI.DTO.NewStopLimitOrderRequestDTO,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)" -->
-        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._TradesAndOrders.CancelOrder(CIAPI.DTO.CancelOrderRequestDTO)" -->
-        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._TradesAndOrders.BeginCancelOrder(CIAPI.DTO.CancelOrderRequestDTO,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)" -->
-        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._TradesAndOrders.UpdateOrder(CIAPI.DTO.UpdateStopLimitOrderRequestDTO)" -->
-        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._TradesAndOrders.BeginUpdateOrder(CIAPI.DTO.UpdateStopLimitOrderRequestDTO,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)" -->
+        <member name="M:CIAPI.Rpc.Client._TradesAndOrders.Order(CIAPI.DTO.NewStopLimitOrderRequestDTO)">
+            <summary>
+            Place an order on a particular market.  Do not set any order ID fields when requesting a new order, the platform will generate them.
+            </summary>
+            <param name="order">The order request.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._TradesAndOrders.BeginOrder(CIAPI.DTO.NewStopLimitOrderRequestDTO,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
+            <summary>
+            Place an order on a particular market.  Do not set any order ID fields when requesting a new order, the platform will generate them.
+            </summary>
+            <param name="order">The order request.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._TradesAndOrders.CancelOrder(CIAPI.DTO.CancelOrderRequestDTO)">
+            <summary>
+            Cancel an order.
+            </summary>
+            <param name="cancelOrder">The cancel order request.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._TradesAndOrders.BeginCancelOrder(CIAPI.DTO.CancelOrderRequestDTO,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
+            <summary>
+            Cancel an order.
+            </summary>
+            <param name="cancelOrder">The cancel order request.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._TradesAndOrders.UpdateOrder(CIAPI.DTO.UpdateStopLimitOrderRequestDTO)">
+            <summary>
+            Update an order *(for adding a stop/limit or attaching an OCO relationship)*.
+            </summary>
+            <param name="order">The update order request.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._TradesAndOrders.BeginUpdateOrder(CIAPI.DTO.UpdateStopLimitOrderRequestDTO,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
+            <summary>
+            Update an order *(for adding a stop/limit or attaching an OCO relationship)*.
+            </summary>
+            <param name="order">The update order request.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
         <member name="M:CIAPI.Rpc.Client._TradesAndOrders.ListOpenPositions(System.Int32)">
             <summary>
-            <p>Queries for a specified trading account's trades / open positions.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service GetOpenPosition when you get updates on the order stream to get the updated data in this format.</p>
+            Queries for a specified trading account's trades / open positions.   This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/#HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.
             </summary>
-            <param name="tradingAccountId">The ID of the trading account to get orders for.</param>
+            <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
         </member>
         <member name="M:CIAPI.Rpc.Client._TradesAndOrders.BeginListOpenPositions(System.Int32,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
-            <p>Queries for a specified trading account's trades / open positions.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service GetOpenPosition when you get updates on the order stream to get the updated data in this format.</p>
+            Queries for a specified trading account's trades / open positions.   This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/#HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.
             </summary>
-            <param name="tradingAccountId">The ID of the trading account to get orders for.</param>
+            <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
             <param name="callback"></param>
             <param name="state"></param>
         </member>
         <member name="M:CIAPI.Rpc.Client._TradesAndOrders.ListActiveStopLimitOrders(System.Int32)">
             <summary>
-            <p>Queries for a specified trading account's active stop / limit orders.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service GetActiveStopLimitOrder when you get updates on the order stream to get the updated data in this format.</p>
+            Queries for a specified trading account's active stop / limit orders.   This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetActiveStopLimitOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetActiveStopLimitOrder.htm) when you get updates on the order stream to get the updated data in this format.
             </summary>
-            <param name="tradingAccountId">The ID of the trading account to get orders for.</param>
+            <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
         </member>
         <member name="M:CIAPI.Rpc.Client._TradesAndOrders.BeginListActiveStopLimitOrders(System.Int32,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
-            <p>Queries for a specified trading account's active stop / limit orders.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service GetActiveStopLimitOrder when you get updates on the order stream to get the updated data in this format.</p>
+            Queries for a specified trading account's active stop / limit orders.   This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetActiveStopLimitOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetActiveStopLimitOrder.htm) when you get updates on the order stream to get the updated data in this format.
             </summary>
-            <param name="tradingAccountId">The ID of the trading account to get orders for.</param>
+            <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
             <param name="callback"></param>
             <param name="state"></param>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._TradesAndOrders.GetActiveStopLimitOrder(System.String)" -->
-        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._TradesAndOrders.BeginGetActiveStopLimitOrder(System.String,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)" -->
-        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._TradesAndOrders.GetOpenPosition(System.String)" -->
-        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._TradesAndOrders.BeginGetOpenPosition(System.String,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)" -->
-        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._TradesAndOrders.ListTradeHistory(System.Int32,System.Int32)" -->
-        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._TradesAndOrders.BeginListTradeHistory(System.Int32,System.Int32,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)" -->
+        <member name="M:CIAPI.Rpc.Client._TradesAndOrders.GetActiveStopLimitOrder(System.String)">
+            <summary>
+            Queries for an active stop limit order with a specified order ID. It returns a null value if the order doesn't exist, or is not an active stop limit order.   This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/#HTTP%20Services/ListActiveStopLimitOrders.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format. For a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetOrder.htm).
+            </summary>
+            <param name="OrderId">The requested order ID.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._TradesAndOrders.BeginGetActiveStopLimitOrder(System.String,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
+            <summary>
+            Queries for an active stop limit order with a specified order ID. It returns a null value if the order doesn't exist, or is not an active stop limit order.   This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/#HTTP%20Services/ListActiveStopLimitOrders.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format. For a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetOrder.htm).
+            </summary>
+            <param name="OrderId">The requested order ID.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._TradesAndOrders.GetOpenPosition(System.String)">
+            <summary>
+            Queries for a trade / open position with a specified order ID. It returns a null value if the order doesn't exist, or is not a trade / open position.   This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListOpenPositions](http://labs.cityindex.com/docs/#HTTP%20Services/ListOpenPositions.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format.  For a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetOrder.htm).
+            </summary>
+            <param name="OrderId">The requested order ID.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._TradesAndOrders.BeginGetOpenPosition(System.String,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
+            <summary>
+            Queries for a trade / open position with a specified order ID. It returns a null value if the order doesn't exist, or is not a trade / open position.   This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListOpenPositions](http://labs.cityindex.com/docs/#HTTP%20Services/ListOpenPositions.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format.  For a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetOrder.htm).
+            </summary>
+            <param name="OrderId">The requested order ID.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._TradesAndOrders.ListTradeHistory(System.Int32,System.Int32)">
+            <summary>
+            Queries for a specified trading account's trade history. The result set will contain orders with a status of __(3 - Open, 9 - Closed)__, and includes __orders that were a trade / stop / limit order__. There's currently no corresponding GetTradeHistory *(as with [ListOpenPositions](http://labs.cityindex.com/docs/#HTTP%20Services/ListOpenPositions.htm))*.
+            </summary>
+            <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
+            <param name="maxResults">The maximum number of results to return.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._TradesAndOrders.BeginListTradeHistory(System.Int32,System.Int32,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
+            <summary>
+            Queries for a specified trading account's trade history. The result set will contain orders with a status of __(3 - Open, 9 - Closed)__, and includes __orders that were a trade / stop / limit order__. There's currently no corresponding GetTradeHistory *(as with [ListOpenPositions](http://labs.cityindex.com/docs/#HTTP%20Services/ListOpenPositions.htm))*.
+            </summary>
+            <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
+            <param name="maxResults">The maximum number of results to return.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
         <member name="M:CIAPI.Rpc.Client._TradesAndOrders.ListStopLimitOrderHistory(System.Int32,System.Int32)">
             <summary>
-            <p>Queries for a specified trading account's stop / limit order history. The result set includes <b>only orders that were originally stop / limit orders</b> that currently have one of the following statuses <b>(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)</b>. </p> <p>There's currently no corresponding GetStopLimitOrderHistory (as with ListActiveStopLimitOrders).</p>
+            Queries for a specified trading account's stop / limit order history. The result set includes __only orders that were originally stop / limit orders__ that currently have one of the following statuses __(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)__.  There is currently no corresponding GetStopLimitOrderHistory *(as with [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/#HTTP%20Services/ListActiveStopLimitOrders.htm))*.
             </summary>
-            <param name="tradingAccountId">The ID of the trading account to get orders for.</param>
+            <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
             <param name="maxResults">The maximum number of results to return.</param>
         </member>
         <member name="M:CIAPI.Rpc.Client._TradesAndOrders.BeginListStopLimitOrderHistory(System.Int32,System.Int32,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
-            <p>Queries for a specified trading account's stop / limit order history. The result set includes <b>only orders that were originally stop / limit orders</b> that currently have one of the following statuses <b>(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)</b>. </p> <p>There's currently no corresponding GetStopLimitOrderHistory (as with ListActiveStopLimitOrders).</p>
+            Queries for a specified trading account's stop / limit order history. The result set includes __only orders that were originally stop / limit orders__ that currently have one of the following statuses __(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)__.  There is currently no corresponding GetStopLimitOrderHistory *(as with [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/#HTTP%20Services/ListActiveStopLimitOrders.htm))*.
             </summary>
-            <param name="tradingAccountId">The ID of the trading account to get orders for.</param>
+            <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
             <param name="maxResults">The maximum number of results to return.</param>
             <param name="callback"></param>
             <param name="state"></param>
         </member>
         <member name="M:CIAPI.Rpc.Client._TradesAndOrders.GetOrder(System.String)">
             <summary>
-            <p>Queries for an order by a specific order ID.</p> <p>The current implementation only returns active orders (i.e. those with a status of <b>1 - Pending, 2 - Accepted, 3 - Open, 6 - Suspended, 8 - Yellow Card, 11 - Triggered</b>).</p>
+            Queries for an order by a specific order ID. The current implementation only returns active orders *(i.e. those with a status of __1 - Pending, 2 - Accepted, 3 - Open, 6 - Suspended, 8 - Yellow Card, 11 - Triggered__)*.
             </summary>
-            <param name="orderId">The requested order ID.</param>
+            <param name="OrderId">The requested order ID.</param>
         </member>
         <member name="M:CIAPI.Rpc.Client._TradesAndOrders.BeginGetOrder(System.String,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
-            <p>Queries for an order by a specific order ID.</p> <p>The current implementation only returns active orders (i.e. those with a status of <b>1 - Pending, 2 - Accepted, 3 - Open, 6 - Suspended, 8 - Yellow Card, 11 - Triggered</b>).</p>
+            Queries for an order by a specific order ID. The current implementation only returns active orders *(i.e. those with a status of __1 - Pending, 2 - Accepted, 3 - Open, 6 - Suspended, 8 - Yellow Card, 11 - Triggered__)*.
             </summary>
-            <param name="orderId">The requested order ID.</param>
+            <param name="OrderId">The requested order ID.</param>
             <param name="callback"></param>
             <param name="state"></param>
         </member>
         <member name="M:CIAPI.Rpc.Client._TradesAndOrders.Trade(CIAPI.DTO.NewTradeOrderRequestDTO)">
             <summary>
-            <p>Place a trade on a particular market.</p> <p>Do not set any order ID fields when requesting a new trade, the platform will generate them.</p>
+            Place a trade on a particular market.  Do not set any order ID fields when requesting a new trade, the platform will generate them.
             </summary>
             <param name="trade">The trade request.</param>
         </member>
         <member name="M:CIAPI.Rpc.Client._TradesAndOrders.BeginTrade(CIAPI.DTO.NewTradeOrderRequestDTO,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
-            <p>Place a trade on a particular market.</p> <p>Do not set any order ID fields when requesting a new trade, the platform will generate them.</p>
+            Place a trade on a particular market.  Do not set any order ID fields when requesting a new trade, the platform will generate them.
             </summary>
             <param name="trade">The trade request.</param>
             <param name="callback"></param>
@@ -3013,13 +3111,13 @@
         </member>
         <member name="M:CIAPI.Rpc.Client._TradesAndOrders.UpdateTrade(CIAPI.DTO.UpdateTradeOrderRequestDTO)">
             <summary>
-            Update a trade (for adding a stop/limit etc).
+            Update a trade *(for adding a stop/limit etc)*.
             </summary>
             <param name="update">The update trade request.</param>
         </member>
         <member name="M:CIAPI.Rpc.Client._TradesAndOrders.BeginUpdateTrade(CIAPI.DTO.UpdateTradeOrderRequestDTO,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
-            Update a trade (for adding a stop/limit etc).
+            Update a trade *(for adding a stop/limit etc)*.
             </summary>
             <param name="update">The update trade request.</param>
             <param name="callback"></param>
@@ -3055,19 +3153,19 @@
         <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._Messaging.BeginGetSystemLookup(System.String,System.Int32,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)" -->
         <member name="M:CIAPI.Rpc.Client._Messaging.GetClientApplicationMessageTranslation(System.Int32,System.Int32,System.Int32)">
             <summary>
-            Use the message translation service to get client specific translated textual strings.
+            Use the message translation service to get client specific translated text strings.
             </summary>
-            <param name="clientApplicationId">Client application identifier. (Optional)</param>
-            <param name="cultureId">CultureId which corresponds to a culture code. (Optional)</param>
-            <param name="accountOperatorId">Account operator identifier. (Optional)</param>
+            <param name="ClientApplicationId">Client application identifier. *(Optional)*</param>
+            <param name="CultureId">Culture ID which corresponds to a culture code. *(Optional)*</param>
+            <param name="AccountOperatorId">Account operator identifier. *(Optional)*</param>
         </member>
         <member name="M:CIAPI.Rpc.Client._Messaging.BeginGetClientApplicationMessageTranslation(System.Int32,System.Int32,System.Int32,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
-            Use the message translation service to get client specific translated textual strings.
+            Use the message translation service to get client specific translated text strings.
             </summary>
-            <param name="clientApplicationId">Client application identifier. (Optional)</param>
-            <param name="cultureId">CultureId which corresponds to a culture code. (Optional)</param>
-            <param name="accountOperatorId">Account operator identifier. (Optional)</param>
+            <param name="ClientApplicationId">Client application identifier. *(Optional)*</param>
+            <param name="CultureId">Culture ID which corresponds to a culture code. *(Optional)*</param>
+            <param name="AccountOperatorId">Account operator identifier. *(Optional)*</param>
             <param name="callback"></param>
             <param name="state"></param>
         </member>
@@ -3075,13 +3173,13 @@
             <summary>
             Use the message translation service to get client specific translated textual strings for specific keys.
             </summary>
-            <param name="apiClientApplicationMessageTranslationRequestDto">Dto of the required data for translation lookup for user.</param>
+            <param name="apiClientApplicationMessageTranslationRequestDto">DTO of the required data for translation lookup.</param>
         </member>
         <member name="M:CIAPI.Rpc.Client._Messaging.BeginGetClientApplicationMessageTranslationWithInterestingItems(CIAPI.DTO.ApiClientApplicationMessageTranslationRequestDTO,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
             Use the message translation service to get client specific translated textual strings for specific keys.
             </summary>
-            <param name="apiClientApplicationMessageTranslationRequestDto">Dto of the required data for translation lookup for user.</param>
+            <param name="apiClientApplicationMessageTranslationRequestDto">DTO of the required data for translation lookup.</param>
             <param name="callback"></param>
             <param name="state"></param>
         </member>
@@ -3127,31 +3225,17 @@
         </member>
         <member name="M:CIAPI.Rpc.Client._ClientApplication.GetVersionInformation(System.String,System.Int32)">
             <summary>
-            Gets version information for a specific client application and (optionally) account operator.
+            Gets version information for a specific client application and *(optionally)* account operator.
             </summary>
-            <param name="appKey">a string to uniquely identify the application.</param>
-            <param name="accountOperatorId">an optional parameter to identify the account operator string to uniquely identify the application.</param>
+            <param name="AppKey">A string to uniquely identify the application.</param>
+            <param name="AccountOperatorId">An optional parameter to identify the account operator string to uniquely identify the application.</param>
         </member>
         <member name="M:CIAPI.Rpc.Client._ClientApplication.BeginGetVersionInformation(System.String,System.Int32,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
-            Gets version information for a specific client application and (optionally) account operator.
+            Gets version information for a specific client application and *(optionally)* account operator.
             </summary>
-            <param name="appKey">a string to uniquely identify the application.</param>
-            <param name="accountOperatorId">an optional parameter to identify the account operator string to uniquely identify the application.</param>
-            <param name="callback"></param>
-            <param name="state"></param>
-        </member>
-        <member name="M:CIAPI.Rpc.Client._ExceptionHandling.GenerateException(System.Int32)">
-            <summary>
-            Raises an error condition when an unexpected or uncontrolled event occurs.
-            </summary>
-            <param name="errorCode">The error code for the condition encountered.</param>
-        </member>
-        <member name="M:CIAPI.Rpc.Client._ExceptionHandling.BeginGenerateException(System.Int32,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
-            <summary>
-            Raises an error condition when an unexpected or uncontrolled event occurs.
-            </summary>
-            <param name="errorCode">The error code for the condition encountered.</param>
+            <param name="AppKey">A string to uniquely identify the application.</param>
+            <param name="AccountOperatorId">An optional parameter to identify the account operator string to uniquely identify the application.</param>
             <param name="callback"></param>
             <param name="state"></param>
         </member>
