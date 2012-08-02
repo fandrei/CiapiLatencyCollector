@@ -17,6 +17,7 @@
     <TargetDir>$(MSBuildProjectDirectory)\_bin\$(Configuration)\</TargetDir>
     <!-- This should get set by the build server -->
     <API_KEY>should_be_set_by_buildserver</API_KEY>
+    <APPMETRICS_ACCESS_KEY>should_be_set_by_buildserver</APPMETRICS_ACCESS_KEY>
   </PropertyGroup>
 
   <Target Name="UpdateVersion" >
@@ -43,6 +44,15 @@
         Files="@(MonitorFiles)"
         Regex="{API_KEY}"
         ReplacementText="$(API_KEY)" />
+
+    <ItemGroup>
+      <AllFiles Include="$(MSBuildProjectDirectory)\LatencyCollectorCore\**\*.cs" />
+    </ItemGroup>
+    <FileUpdate
+        Files="@(AllFiles)"
+        Regex="{APPMETRICS_ACCESS_KEY}"
+        ReplacementText="$(APPMETRICS_ACCESS_KEY)" />
+    
   </Target>
 
   <Target Name="Build" DependsOnTargets="UpdateVersion" >

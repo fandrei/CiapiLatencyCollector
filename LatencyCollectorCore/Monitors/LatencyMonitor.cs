@@ -56,7 +56,7 @@ namespace LatencyCollectorCore.Monitors
 						{
 							if (!string.IsNullOrEmpty(LogEventUrl))
 							{
-								_tracker = Tracker.Create(LogEventUrl, ApplicationKey);
+								_tracker = Tracker.Create(LogEventUrl, ApplicationKey, "{APPMETRICS_ACCESS_KEY}");
 							}
 						}
 

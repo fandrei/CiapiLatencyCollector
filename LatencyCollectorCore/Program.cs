@@ -183,7 +183,7 @@ namespace LatencyCollectorCore
 
 					if (_tracker == null)
 					{
-						_tracker = Tracker.Create(url, appKey);
+						_tracker = Tracker.Create(url, appKey, "{APPMETRICS_ACCESS_KEY}");
 
 						Tracker.Log("Info_UserId", AppSettings.Instance.UserId);
 						Tracker.Log("Info_NodeName", AppSettings.Instance.NodeName);
