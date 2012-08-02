@@ -69,6 +69,8 @@ namespace LatencyCollectorCore.Monitors
 				GetMarketInformation();
 				GetPriceBars();
 
+				CloseAllOpenPositions(accountInfo);
+
 				if (AllowTrading)
 				{
 					var price = GetPrice(ApiClient);
@@ -200,6 +202,31 @@ namespace LatencyCollectorCore.Monitors
 				var measure = Tracker.StartMeasure();
 				ApiClient.TradesAndOrders.ListOpenPositions(accountInfo.SpreadBettingAccount.TradingAccountId);
 				Tracker.EndMeasure(measure, "CIAPI.ListOpenPositions");
+			}
+			catch (Exception exc)
+			{
+				Report(exc);
+			}
+		}
+
+		private void CloseAllOpenPositions(AccountInformationResponseDTO accountInfo)
+		{
+			try
+			{
+				var positions = ApiClient.TradesAndOrders.ListOpenPositions(accountInfo.SpreadBettingAccount.TradingAccountId);
+				foreach (var pos in positions.OpenPositions)
+				{
+					try
+					{
+						var price = GetPrice(ApiClient); // we have to obtain price before each trade, because trade will fail if price is obsolete
+						var direction = (pos.Direction.ToLower() == "buy") ? "sell" : "buy";
+						Trade(ApiClient, accountInfo, price, pos.Quantity, direction, new[] { pos.OrderId });
+					}
+					catch (Exception exc)
+					{
+						Report(exc);
+					}
+				}
 			}
 			catch (Exception exc)
 			{
