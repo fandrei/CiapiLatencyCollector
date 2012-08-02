@@ -15,13 +15,13 @@
     <BuildVersion>0</BuildVersion>
     <FullVersion>$(MajorVersion).$(MinorVersion).$(BuildVersion)</FullVersion>
     <TargetDir>$(MSBuildProjectDirectory)\_bin\$(Configuration)\</TargetDir>
-	<!-- This should get set by the build server -->
-	<API_KEY>should_be_set_by_buildserver</API_KEY>
+    <!-- This should get set by the build server -->
+    <API_KEY>should_be_set_by_buildserver</API_KEY>
   </PropertyGroup>
 
   <Target Name="UpdateVersion" >
     <Message Text="Updating version to $(FullVersion)" />
-    
+
     <!-- Update assembly version number using build number -->
     <FileUpdate
         Files="$(MSBuildProjectDirectory)\LatencyCollectorCore\Properties\AssemblyInfo.cs"
@@ -46,35 +46,37 @@
   </Target>
 
   <Target Name="Build" DependsOnTargets="UpdateVersion" >
-    
+
     <MSBuild Projects="$(MSBuildProjectDirectory)\CiapiLatencyCollector.sln" Targets="Rebuild"
       Properties="Configuration=$(Configuration)" />
 
     <!-- Store version number for auto update -->
     <WriteLinesToFile File="$(TargetDir)\version.txt" Lines="$(FullVersion)" Overwrite="true" />
 
-	<!-- Create deployable ZIPs for inclusion in the config site-->
-	<ItemGroup>
-		<!-- All files from build -->
-		<ZipFiles Include="$(TargetDir)\**\*.*"
-				Exclude="$(TargetDir)\**\*.zip;$(TargetDir)\**\*.pdb;$(TargetDir)\**\*.xml;
+    <!-- Create deployable ZIPs for inclusion in the config site-->
+    <ItemGroup>
+      <!-- All files from build -->
+      <ZipFiles Include="$(TargetDir)\**\*.*"
+          Exclude="$(TargetDir)\**\*.zip;$(TargetDir)\**\*.pdb;$(TargetDir)\**\*.xml;
             $(TargetDir)\**\*.vshost.exe;$(TargetDir)\**\*.vshost.exe.*;
             $(TargetDir)\**\CiapiLatencyCollector.*;$(TargetDir)\**\Ionic.Zip.dll" />
-	</ItemGroup>
-	<Zip Files="@(ZipFiles)"
-		WorkingDirectory="$(TargetDir)"
-		ZipFileName="$(TargetDir)\LatencyCollectorCore.zip"
-		ZipLevel="9" />
+    </ItemGroup>
+    <Zip Files="@(ZipFiles)"
+      WorkingDirectory="$(TargetDir)"
+      ZipFileName="$(TargetDir)\LatencyCollectorCore.zip"
+      ZipLevel="9" />
 
-	<Copy SourceFiles="$(TargetDir)\LatencyCollectorCore.zip" DestinationFolder="$(MSBuildProjectDirectory)\LatencyCollectorConfigSite\CIAPILatencyCollector\updates\" />
-	<Copy SourceFiles="$(TargetDir)\version.txt" DestinationFolder="$(MSBuildProjectDirectory)\LatencyCollectorConfigSite\CIAPILatencyCollector\updates" />
+    <Copy SourceFiles="$(TargetDir)\LatencyCollectorCore.zip" 
+          DestinationFolder="$(MSBuildProjectDirectory)\LatencyCollectorConfigSite\CIAPILatencyCollector\updates\" />
+    <Copy SourceFiles="$(TargetDir)\version.txt" 
+          DestinationFolder="$(MSBuildProjectDirectory)\LatencyCollectorConfigSite\CIAPILatencyCollector\updates" />
 
-	<Zip Files="$(MSBuildProjectDirectory)\_setup\CiapiLatencyCollector.msi" Flatten="true"
-		WorkingDirectory="$(TargetDir)"		
-		ZipFileName="$(MSBuildProjectDirectory)\LatencyCollectorConfigSite\CIAPILatencyCollector\setup\CiapiLatencyCollector.msi.zip"
-		ZipLevel="9" />
-	  
-	<!-- Build config site -->
+    <Zip Files="$(MSBuildProjectDirectory)\_setup\CiapiLatencyCollector.msi" Flatten="true"
+      WorkingDirectory="$(TargetDir)"
+      ZipFileName="$(MSBuildProjectDirectory)\LatencyCollectorConfigSite\CIAPILatencyCollector\setup\CiapiLatencyCollector.msi.zip"
+      ZipLevel="9" />
+
+    <!-- Build config site -->
     <MSBuild Projects="$(MSBuildProjectDirectory)\LatencyCollectorConfigSite\LatencyCollectorConfigSite.csproj" Targets="Package"
       Properties="Configuration=$(Configuration)" />
 
@@ -84,5 +86,5 @@
     <Copy SourceFiles="$(TargetDir)\LatencyCollectorCore.zip" DestinationFolder="$(MSBuildProjectDirectory)\_UpdatePackage\" />
     <Copy SourceFiles="$(TargetDir)\version.txt" DestinationFolder="$(MSBuildProjectDirectory)\_UpdatePackage\" />
   </Target>
-  
+
 </Project>
