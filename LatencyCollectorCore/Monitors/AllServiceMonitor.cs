@@ -69,8 +69,6 @@ namespace LatencyCollectorCore.Monitors
 				GetMarketInformation();
 				GetPriceBars();
 
-				CloseAllOpenPositions(accountInfo);
-
 				if (AllowTrading)
 				{
 					var price = GetPrice(ApiClient);
@@ -78,6 +76,8 @@ namespace LatencyCollectorCore.Monitors
 
 					if (canTrade)
 					{
+						CloseAllOpenPositions(accountInfo);
+
 						var orderId = Trade(ApiClient, accountInfo, price, 1M, "buy", new int[0]);
 						OpenPositions(accountInfo);
 						Trade(ApiClient, accountInfo, price, 1M, "sell", new[] { orderId });
