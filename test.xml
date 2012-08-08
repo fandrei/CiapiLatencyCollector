@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Test" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" >
+
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+    <CiapiTestUserName>should_be_set_by_buildserver</CiapiTestUserName>
+    <CiapiTestPassword>should_be_set_by_buildserver</CiapiTestPassword>
+    <CiapiTestUrl>should_be_set_by_buildserver</CiapiTestUrl>
+    <CiapiTestStreamingUrl>should_be_set_by_buildserver</CiapiTestStreamingUrl>
+
+    <SolutionRoot>$(MSBuildProjectDirectory)\</SolutionRoot>
+
+    <MSBuildCommunityTasksPath>$(SolutionRoot)\tools\msbuild\MSBuildCommunityTasks\</MSBuildCommunityTasksPath>
+    <NUnitPath>$(SolutionRoot)\packages\NUnit.Runners.2.6.1\tools\</NUnitPath>
+  </PropertyGroup>
+
+  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets"/>
+  <UsingTask TaskName="SetEnvVariable"
+           AssemblyFile="$(SolutionRoot)\tools\MSBuild.SetEnvVariable\MSBuild.SetEnvVariable.dll"/>
+
+  <Target Name="Test" >
+    <SetEnvVariable Name="CiapiTestUserName" Value="$(CiapiTestUserName)"/>
+    <SetEnvVariable Name="CiapiTestPassword" Value="$(CiapiTestPassword)"/>
+    <SetEnvVariable Name="CiapiTestUrl" Value="$(CiapiTestUrl)"/>
+    <SetEnvVariable Name="CiapiTestStreamingUrl" Value="$(CiapiTestStreamingUrl)"/>
+
+    <ItemGroup>
+      <TestAssemblies Include="$(SolutionRoot)\_bin\$(Configuration)\**\*.Tests.dll" />
+    </ItemGroup>
+    <NUnit ToolPath="$(NUnitPath)" DisableShadowCopy="true" Assemblies="@(TestAssemblies)" />
+  </Target>
+
+</Project>

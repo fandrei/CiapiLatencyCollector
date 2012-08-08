@@ -8,6 +8,7 @@ _ReSharper*/
 temp/
 _WebPackage/
 _UpdatePackage/
+TestResult.xml
 
 #Don't ignore the above when below the packages/ folder
 !packages/
