@@ -143,7 +143,12 @@ namespace LatencyCollectorCore
 		public static void ReportEvent(string type, string message)
 		{
 			Trace.WriteLine(message);
-			Tracker.Log(type, message);
+
+			lock (Sync)
+			{
+				if (Tracker != null)
+					Tracker.Log(type, message);
+			}
 		}
 
 		// load assembly from the working folder, if impossible to resolve automatically
