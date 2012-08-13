@@ -144,11 +144,8 @@ namespace LatencyCollectorCore
 		{
 			Trace.WriteLine(message);
 
-			lock (Sync)
-			{
-				if (Tracker != null)
-					Tracker.Log(type, message);
-			}
+			if (Tracker != null)
+				Tracker.Log(type, message);
 		}
 
 		// load assembly from the working folder, if impossible to resolve automatically

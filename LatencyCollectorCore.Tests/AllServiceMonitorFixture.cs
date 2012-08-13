@@ -1,4 +1,7 @@
-﻿using LatencyCollectorCore.Monitors;
+﻿using System;
+using System.Diagnostics;
+
+using LatencyCollectorCore.Monitors;
 using NUnit.Framework;
 using Salient.ReflectiveLoggingAdapter;
 
@@ -9,6 +12,9 @@ namespace LatencyCollectorCore.Tests
 	{
 		static AllServiceMonitorFixture()
 		{
+			var listeners = new[] { new TextWriterTraceListener(Console.Out) };
+			Debug.Listeners.AddRange(listeners);
+
 			LogManager.CreateInnerLogger =
 				(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat) =>
 				new SimpleTraceAppender(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat);
