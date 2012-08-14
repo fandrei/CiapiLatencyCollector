@@ -61,12 +61,16 @@ namespace LatencyCollectorCore
 				if (text == _lastConfigText)
 					return false;
 
-				if (_monitorSettings != null)
+				if (text == null)
+				{
+					_monitorSettings.PollingDisabled = true;
+				}
+				else
 				{
 					_monitorSettings.Dispose();
+					ApplyRemoteSettings(text);
 				}
 
-				ApplyRemoteSettings(text);
 				_lastConfigText = text;
 
 				return true;
@@ -80,12 +84,24 @@ namespace LatencyCollectorCore
 
 		private string DownloadConfigText()
 		{
+			var stopFileAddress = ConfigUrl + "/stop.txt";
 			var configAddress = string.Format(ConfigUrl + "/{0}/AppSettings.xml", NodeName);
 			var defaultConfigAddress = ConfigUrl + "/AppSettings.xml";
 
 			using (var client = new WebClient())
 			{
 				client.Credentials = new NetworkCredential(UserName, Password);
+
+				try
+				{
+					client.DownloadString(stopFileAddress);
+					return null;
+				}
+				catch (WebException exc)
+				{
+					if (!Util.IsNotFound(exc))
+						throw;
+				}
 
 				try
 				{
@@ -108,6 +124,8 @@ namespace LatencyCollectorCore
 			{
 				_monitorSettings = (MonitorSettings)serializer.Deserialize(rd);
 			}
+
+			_monitorSettings.PollingDisabled = false;
 		}
 
 		#endregion

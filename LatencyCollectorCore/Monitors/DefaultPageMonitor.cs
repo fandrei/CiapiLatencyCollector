@@ -20,6 +20,9 @@ namespace LatencyCollectorCore.Monitors
 		{
 			try
 			{
+				if (AppSettings.Instance.MonitorSettings.PollingDisabled)
+					return;
+
 				using (var client = new WebClient())
 				{
 					var watch = Tracker.StartMeasure();

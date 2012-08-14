@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace LatencyCollectorCore.Monitors
 {
@@ -16,6 +17,9 @@ namespace LatencyCollectorCore.Monitors
 		public string ApplicationKey { get; set; }
 
 		public LatencyMonitor[] Monitors { get; set; }
+
+		[XmlIgnore]
+		public bool PollingDisabled { get; set; }
 
 		public void Dispose()
 		{

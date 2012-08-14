@@ -54,6 +54,9 @@ namespace LatencyCollectorCore.Monitors
 		{
 			try
 			{
+				if (AppSettings.Instance.MonitorSettings.PollingDisabled)
+					return;
+
 				using (var client = new WebClient())
 				{
 					// check if internet connection is available
