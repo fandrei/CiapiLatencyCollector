@@ -127,6 +127,7 @@
     <Content Include="CIAPILatencyCollectorConfig\AppSettings.xml" />
     <Content Include="CIAPILatencyCollectorConfig\sample_node_config\AppSettings.xml" />
     <Content Include="CIAPILatencyCollector\updates\version.txt" />
+    <Content Include="Config.aspx" />
     <Content Include="CreateUser.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -139,6 +140,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config.aspx.cs">
+      <DependentUpon>Config.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Config.aspx.designer.cs">
+      <DependentUpon>Config.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CreateUser.aspx.cs">
       <DependentUpon>CreateUser.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
