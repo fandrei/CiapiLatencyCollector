@@ -80,8 +80,8 @@ namespace LatencyCollectorCore
 
 		private string DownloadConfigText()
 		{
-			var configAddress = string.Format(ConfigBaseUrl + "/CIAPILatencyCollectorConfig/{0}/AppSettings.xml", NodeName);
-			var defaultConfigAddress = ConfigBaseUrl + "/CIAPILatencyCollectorConfig/AppSettings.xml";
+			var configAddress = string.Format(ConfigUrl + "/{0}/AppSettings.xml", NodeName);
+			var defaultConfigAddress = ConfigUrl + "/AppSettings.xml";
 
 			using (var client = new WebClient())
 			{
