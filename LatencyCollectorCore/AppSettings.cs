@@ -93,13 +93,8 @@ namespace LatencyCollectorCore
 				}
 				catch (WebException exc)
 				{
-					if (exc.Status == WebExceptionStatus.ProtocolError)
-					{
-						if (((HttpWebResponse)exc.Response).StatusCode == HttpStatusCode.NotFound)
-						{
-							return client.DownloadString(defaultConfigAddress);
-						}
-					}
+					if (Util.IsNotFound(exc))
+						return client.DownloadString(defaultConfigAddress);
 					throw;
 				}
 			}
