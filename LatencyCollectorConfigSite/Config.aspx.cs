@@ -14,8 +14,6 @@ namespace LatencyCollectorConfigSite
 		{
 			try
 			{
-				WebUtil.CheckIpAddress();
-
 				RefreshButtonsState();
 			}
 			catch (UnauthorizedAccessException)
@@ -34,8 +32,6 @@ namespace LatencyCollectorConfigSite
 		{
 			try
 			{
-				WebUtil.CheckIpAddress();
-
 				File.Delete(StopFileName);
 				RefreshButtonsState();
 			}
@@ -48,8 +44,6 @@ namespace LatencyCollectorConfigSite
 		{
 			try
 			{
-				WebUtil.CheckIpAddress();
-
 				File.WriteAllText(StopFileName, "");
 				RefreshButtonsState();
 			}
