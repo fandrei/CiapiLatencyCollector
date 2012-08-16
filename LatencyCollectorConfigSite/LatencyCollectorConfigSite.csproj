@@ -147,6 +147,7 @@
     <Compile Include="Config.aspx.designer.cs">
       <DependentUpon>Config.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Const.cs" />
     <Compile Include="CreateUser.aspx.cs">
       <DependentUpon>CreateUser.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

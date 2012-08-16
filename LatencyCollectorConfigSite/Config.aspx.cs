@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Web.Hosting;
-using AppMetrics.WebUtils;
 
 namespace LatencyCollectorConfigSite
 {
@@ -12,53 +10,27 @@ namespace LatencyCollectorConfigSite
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			try
-			{
-				RefreshButtonsState();
-			}
-			catch (UnauthorizedAccessException)
-			{
-			}
+			RefreshButtonsState();
 		}
 
 		private void RefreshButtonsState()
 		{
-			var fileExists = File.Exists(StopFileName);
+			var fileExists = File.Exists(Const.StopFileName);
 			EnableButton.Enabled = fileExists;
 			DisableButton.Enabled = !fileExists;
 		}
 
 		protected void EnableButton_Click(object sender, EventArgs e)
 		{
-			try
-			{
-				File.Delete(StopFileName);
-				RefreshButtonsState();
-			}
-			catch (UnauthorizedAccessException)
-			{
-			}
+			File.Delete(Const.StopFileName);
+			RefreshButtonsState();
 		}
 
 		protected void DisableButton_Click(object sender, EventArgs e)
 		{
-			try
-			{
-				File.WriteAllText(StopFileName, "");
-				RefreshButtonsState();
-			}
-			catch (UnauthorizedAccessException)
-			{
-			}
-		}
+			File.WriteAllText(Const.StopFileName, "");
 
-		private string StopFileName
-		{
-			get
-			{
-				const string tmp = "~/CIAPILatencyCollectorConfig/stop.txt";
-				return HostingEnvironment.MapPath(tmp);
-			}
+			RefreshButtonsState();
 		}
 	}
 }
