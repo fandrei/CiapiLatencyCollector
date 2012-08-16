@@ -23,5 +23,7 @@ namespace LatencyCollectorConfigSite
 				return ConfigBasePath + "stop.txt";
 			}
 		}
+
+		public const string NodeSettingsFileName = "AppSettings.xml";
 	}
 }
