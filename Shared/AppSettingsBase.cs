@@ -48,10 +48,5 @@ namespace CiapiLatencyCollector
 		{
 			get { return ConfigBaseUrl + "/CIAPILatencyCollector/updates/"; }
 		}
-
-		public string ConfigUrl
-		{
-			get { return ConfigBaseUrl + "/CIAPILatencyCollectorConfig/"; }
-		}
 	}
 }

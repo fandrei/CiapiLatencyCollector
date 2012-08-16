@@ -84,35 +84,16 @@ namespace LatencyCollectorCore
 
 		private string DownloadConfigText()
 		{
-			var stopFileAddress = ConfigUrl + "/stop.txt";
-			var configAddress = string.Format(ConfigUrl + "/{0}/AppSettings.xml", NodeName);
-			var defaultConfigAddress = ConfigUrl + "/AppSettings.xml";
+			var configAddress = ConfigBaseUrl + string.Format("/GetConfig.ashx?NodeName={0}", NodeName);
 
 			using (var client = new WebClient())
 			{
 				client.Credentials = new NetworkCredential(UserName, Password);
 
-				try
-				{
-					client.DownloadString(stopFileAddress);
+				var res = client.DownloadString(configAddress);
+				if (res == "disabled")
 					return null;
-				}
-				catch (WebException exc)
-				{
-					if (!Util.IsNotFound(exc))
-						throw;
-				}
-
-				try
-				{
-					return client.DownloadString(configAddress);
-				}
-				catch (WebException exc)
-				{
-					if (Util.IsNotFound(exc))
-						return client.DownloadString(defaultConfigAddress);
-					throw;
-				}
+				return res;
 			}
 		}
 
