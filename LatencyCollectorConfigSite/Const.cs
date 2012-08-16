@@ -7,12 +7,20 @@ namespace LatencyCollectorConfigSite
 {
 	public class Const
 	{
+		public static string ConfigBasePath
+		{
+			get
+			{
+				const string tmp = "~/CIAPILatencyCollectorConfig/";
+				return HostingEnvironment.MapPath(tmp);
+			}
+		}
+
 		public static string StopFileName
 		{
 			get
 			{
-				const string tmp = "~/CIAPILatencyCollectorConfig/stop.txt";
-				return HostingEnvironment.MapPath(tmp);
+				return ConfigBasePath + "stop.txt";
 			}
 		}
 	}
