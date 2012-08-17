@@ -4,6 +4,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>CIAPI Latency Collector Configuration</title>
+    <style type="text/css" media="all">
+        #NodesList td
+        {
+            padding-right: 20px;
+        }
+    </style>
 </head>
 <body>
     <h1>
@@ -40,8 +46,7 @@
                     Nodes currently online:
                 </td>
                 <td>
-                    <asp:Panel ID="NodesList" runat="server">
-                    </asp:Panel>
+                    <asp:Table ID="NodesList" runat="server" />
                 </td>
             </tr>
         </table>

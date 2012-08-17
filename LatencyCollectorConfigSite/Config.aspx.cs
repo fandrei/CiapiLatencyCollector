@@ -19,10 +19,10 @@ namespace LatencyCollectorConfigSite
 
 				foreach (var cur in GetConfig.NodeNames)
 				{
-					var curText = string.Format("{0} {1}", cur.Key, cur.Value);
-					var curControl = new Label {Text = curText};
-					NodesList.Controls.Add(curControl);
-					NodesList.Controls.Add(new LiteralControl("<br />"));
+					var row = new TableRow();
+					row.Cells.Add(new TableCell { Text = cur.Key });
+					row.Cells.Add(new TableCell { Text = cur.Value });
+					NodesList.Rows.Add(row);
 				}
 			}
 		}
