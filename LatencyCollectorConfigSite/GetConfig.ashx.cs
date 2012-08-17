@@ -17,13 +17,16 @@ namespace LatencyCollectorConfigSite
 
 			var configText = "";
 
+			var nodeName = context.Request.Params.Get("NodeName");
+			var nodeStatus = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss");
+
 			if (File.Exists(Const.StopFileName))
 			{
 				configText = "disabled";
+				nodeStatus = nodeStatus + " (" + configText + ")";
 			}
 			else
 			{
-				var nodeName = context.Request.Params.Get("NodeName");
 				var configPath = Const.ConfigBasePath + nodeName + "/" + Const.NodeSettingsFileName;
 				if (File.Exists(configPath))
 				{
@@ -38,6 +41,8 @@ namespace LatencyCollectorConfigSite
 			}
 
 			context.Response.Write(configText);
+
+			NodeNames[nodeName] =  nodeStatus;
 		}
 
 		public bool IsReusable
@@ -47,5 +52,7 @@ namespace LatencyCollectorConfigSite
 				return false;
 			}
 		}
+
+		public static readonly SortedList<string, string> NodeNames = new SortedList<string, string>();
 	}
 }

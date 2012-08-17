@@ -19,10 +19,29 @@
                     <asp:Button ID="DisableButton" runat="server" Text="Disable polling" OnClick="DisableButton_Click" />
                 </td>
             </tr>
-            <tr><td>&nbsp;</td></tr>
             <tr>
                 <td>
-                    <a href="http://analytics.metrics.labs.cityindex.com/GetReport.ashx?Application=CiapiLatencyCollector&Type=LatencySummaries&SliceByLocation=CountriesAndCities&FunctionFilter=General" >Check data being received</a>
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="http://analytics.metrics.labs.cityindex.com/GetReport.ashx?Application=CiapiLatencyCollector&Type=LatencySummaries&SliceByLocation=CountriesAndCities&FunctionFilter=General">
+                        Check data being received</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Nodes currently online:
+                </td>
+                <td>
+                    <asp:Panel ID="NodesList" runat="server">
+                    </asp:Panel>
                 </td>
             </tr>
         </table>
