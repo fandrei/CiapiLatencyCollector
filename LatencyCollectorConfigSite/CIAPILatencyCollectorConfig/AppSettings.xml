@@ -4,6 +4,7 @@
   <Monitors>
     <LatencyMonitor xsi:type="DefaultPageMonitor">
       <PeriodSeconds>6</PeriodSeconds>
+      <PageUrl>https://ciapipreprod.cityindextest9.co.uk/TradingAPI/Scripts/tradingApi.js</PageUrl>
     </LatencyMonitor>
   </Monitors>
 </MonitorSettings>

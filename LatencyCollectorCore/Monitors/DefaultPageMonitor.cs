@@ -9,17 +9,14 @@ namespace LatencyCollectorCore.Monitors
 {
 	public class DefaultPageMonitor : LatencyMonitor
 	{
-		public DefaultPageMonitor()
-		{
-			PageUrl = "https://ciapi.cityindex.com/";
-		}
-
 		public string PageUrl { get; set; }
 
 		public override void Execute()
 		{
 			try
 			{
+				if (string.IsNullOrEmpty(PageUrl))
+					return;
 				if (AppSettings.Instance.MonitorSettings.PollingDisabled)
 					return;
 

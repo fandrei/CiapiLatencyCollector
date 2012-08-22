@@ -14,8 +14,6 @@ namespace LatencyCollectorCore.Monitors
 	{
 		public AllServiceMonitor()
 		{
-			ServerUrl = "https://ciapi.cityindex.com/TradingApi";
-			StreamingServerUrl = "https://push.cityindex.com";
 			PeriodSeconds = 5;
 		}
 
@@ -54,6 +52,8 @@ namespace LatencyCollectorCore.Monitors
 		{
 			try
 			{
+				if (string.IsNullOrEmpty(ServerUrl))
+					return;
 				if (AppSettings.Instance.MonitorSettings.PollingDisabled)
 					return;
 
