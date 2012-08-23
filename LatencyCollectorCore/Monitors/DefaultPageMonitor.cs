@@ -20,12 +20,12 @@ namespace LatencyCollectorCore.Monitors
 				if (AppSettings.Instance.MonitorSettings.PollingDisabled)
 					return;
 
-				using (var client = new WebClient())
+				var request = (HttpWebRequest)WebRequest.Create(PageUrl);
+				request.Method = "HEAD";
+
+				var watch = Tracker.StartMeasure();
+				using (var response = request.GetResponse())
 				{
-					var watch = Tracker.StartMeasure();
-					var resp = client.DownloadString(PageUrl);
-					if (string.IsNullOrEmpty(resp))
-						throw new ApplicationException("No response from default page");
 					Tracker.EndMeasure(watch, "General.DefaultPage");
 				}
 			}
