@@ -34,7 +34,7 @@ namespace LatencyCollectorCore.Monitors
 
 					if (Tracker != null)
 					{
-						_metricsRecorder = new MetricsRecorder(_client, new Uri(Tracker.Url));
+						_metricsRecorder = new MetricsRecorder(_client, new Uri(Tracker.Url), Guid.NewGuid().ToString(), "{APPMETRICS_ACCESS_KEY}");
 						_metricsRecorder.Start();
 					}
 				}
