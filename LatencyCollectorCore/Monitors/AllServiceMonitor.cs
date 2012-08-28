@@ -29,7 +29,7 @@ namespace LatencyCollectorCore.Monitors
 			{
 				if (_client == null)
 				{
-					_client = new Client(new Uri(ServerUrl), new Uri(StreamingServerUrl), "{API_KEY}");
+					_client = new Client(new Uri(ServerUrl), new Uri(StreamingServerUrl), "{API_KEY}", 1);
 					_client.AppKey = "CiapiLatencyCollector." + GetType().Name + ".BuiltIn";
 
 					if (Tracker != null)
