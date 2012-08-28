@@ -39,16 +39,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\AppMetrics.Client.1.0.252\lib\net40\AppMetrics.Client.dll</HintPath>
     </Reference>
-    <Reference Include="CIAPI, Version=7.4.0.466, Culture=neutral, PublicKeyToken=5dfdbaca97c75bb7, processorArchitecture=MSIL">
+    <Reference Include="CIAPI, Version=7.5.0.467, Culture=neutral, PublicKeyToken=5dfdbaca97c75bb7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CIAPI.7.4.0-bleeding-466\lib\net35\Debug\CIAPI.dll</HintPath>
+      <HintPath>..\packages\CIAPI.7.5.0-bleeding-467\lib\net35\Debug\CIAPI.dll</HintPath>
     </Reference>
-    <Reference Include="CIAPI.Serializer, Version=7.4.0.466, Culture=neutral, PublicKeyToken=5dfdbaca97c75bb7, processorArchitecture=MSIL">
+    <Reference Include="CIAPI.Serializer, Version=7.5.0.467, Culture=neutral, PublicKeyToken=5dfdbaca97c75bb7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CIAPI.7.4.0-bleeding-466\lib\net35\Debug\CIAPI.Serializer.dll</HintPath>
+      <HintPath>..\packages\CIAPI.7.5.0-bleeding-467\lib\net35\Debug\CIAPI.Serializer.dll</HintPath>
     </Reference>
     <Reference Include="DotNetClient_N2, Version=2.0.4168.21412, Culture=neutral, PublicKeyToken=8d72f58860ac9835, processorArchitecture=MSIL">
-      <HintPath>..\packages\CIAPI.7.4.0-bleeding-466\lib\net35\Debug\DotNetClient_N2.dll</HintPath>
+      <HintPath>..\packages\CIAPI.7.5.0-bleeding-467\lib\net35\Debug\DotNetClient_N2.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.4.5.8\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -57,13 +57,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Salient.ReflectiveLoggingAdapter.3.2.0\lib\net35\Release\Salient.ReflectiveLoggingAdapter.35.dll</HintPath>
     </Reference>
-    <Reference Include="Salient.ReliableHttpClient, Version=1.0.5.14, Culture=neutral, PublicKeyToken=de2ccdae144c2020, processorArchitecture=MSIL">
+    <Reference Include="Salient.ReliableHttpClient, Version=1.0.6.16, Culture=neutral, PublicKeyToken=de2ccdae144c2020, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CIAPI.7.4.0-bleeding-466\lib\net35\Debug\Salient.ReliableHttpClient.dll</HintPath>
+      <HintPath>..\packages\CIAPI.7.5.0-bleeding-467\lib\net35\Debug\Salient.ReliableHttpClient.dll</HintPath>
     </Reference>
-    <Reference Include="Salient.ReliableHttpClient.Serializer.Newtonsoft, Version=1.0.5.14, Culture=neutral, PublicKeyToken=af1483d0b03a76fa, processorArchitecture=MSIL">
+    <Reference Include="Salient.ReliableHttpClient.Serializer.Newtonsoft, Version=1.0.6.16, Culture=neutral, PublicKeyToken=af1483d0b03a76fa, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Salient.ReliableHttpClient.1.0.5-bleeding-14\lib\net35\Debug\Salient.ReliableHttpClient.Serializer.Newtonsoft.dll</HintPath>
+      <HintPath>..\packages\Salient.ReliableHttpClient.1.0.6-bleeding-16\lib\net35\Debug\Salient.ReliableHttpClient.Serializer.Newtonsoft.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
