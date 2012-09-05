@@ -15,19 +15,23 @@ namespace CiapiLatencyCollector
 		}
 
 		protected static readonly string FileName = Const.WorkingAreaPath + "AppSettings.xml";
+		private static XmlSerializer _serializer;
 
 		public static T Load<T>()
-			where T: AppSettingsBase, new()
+			where T : AppSettingsBase, new()
 		{
 			T settings;
 
 			if (File.Exists(FileName))
 			{
 				var rootAttr = new XmlRootAttribute("AppSettings");
-				var s = new XmlSerializer(typeof(T), null, null, rootAttr, "");
+				if (_serializer == null)
+				{
+					_serializer = new XmlSerializer(typeof(T), null, null, rootAttr, "");
+				}
 				using (var rd = new StreamReader(FileName))
 				{
-					settings = (T)s.Deserialize(rd);
+					settings = (T)_serializer.Deserialize(rd);
 				}
 			}
 			else

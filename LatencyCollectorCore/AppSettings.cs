@@ -97,13 +97,18 @@ namespace LatencyCollectorCore
 			}
 		}
 
+		private static XmlSerializer _serializer;
+
 		void ApplyRemoteSettings(string text)
 		{
-			var serializer = new XmlSerializer(typeof(MonitorSettings));
+			if (_serializer == null)
+			{
+				_serializer = new XmlSerializer(typeof(MonitorSettings));
+			}
 
 			using (var rd = new StringReader(text))
 			{
-				_monitorSettings = (MonitorSettings)serializer.Deserialize(rd);
+				_monitorSettings = (MonitorSettings)_serializer.Deserialize(rd);
 			}
 
 			_monitorSettings.PollingDisabled = false;
