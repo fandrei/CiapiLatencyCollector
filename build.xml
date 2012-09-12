@@ -2,6 +2,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Package" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" >
 
   <PropertyGroup>
+    <SolutionRoot>$(MSBuildProjectDirectory)\</SolutionRoot>
     <MSBuildCommunityTasksPath>$(MSBuildProjectDirectory)\tools\msbuild\MSBuildCommunityTasks\</MSBuildCommunityTasksPath>
   </PropertyGroup>
   <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets"/>
@@ -22,6 +23,12 @@
 
   <Target Name="UpdateVersion" >
     <Message Text="Updating version to $(FullVersion)" />
+
+    <!-- Remove read-only attribute -->
+    <ItemGroup>
+      <AllCodeFiles Include="$(SolutionRoot)\**\*.*" />
+    </ItemGroup>
+    <Attrib ReadOnly="false" Files="@(AllCodeFiles)" />
 
     <!-- Update assembly version number using build number -->
     <FileUpdate
