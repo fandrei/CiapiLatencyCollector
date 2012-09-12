@@ -57,8 +57,6 @@
 
     <Feature Id="ProductFeature" Title="$(var.ProductShortName)" Level="1">
       <ComponentRef Id="ProductComponent" />
-      <!-- Note: The following ComponentGroupRef is required to pull in generated authoring from project references. -->
-      <ComponentGroupRef Id="Product.Generated" />
       <ComponentRef Id="ConfigComponent" />
     </Feature>
 
