@@ -15,7 +15,10 @@
     <!-- This gets set by the build server -->
     <BuildVersion>0</BuildVersion>
     <FullVersion>$(MajorVersion).$(MinorVersion).$(BuildVersion)</FullVersion>
+
     <TargetDir>$(MSBuildProjectDirectory)\_bin\$(Configuration)\</TargetDir>
+    <TargetDir Condition=" '$(OutDir)' != '' ">$(OutDir)\</TargetDir>
+
     <!-- This should get set by the build server -->
     <API_KEY>should_be_set_by_buildserver</API_KEY>
     <APPMETRICS_ACCESS_KEY>should_be_set_by_buildserver</APPMETRICS_ACCESS_KEY>
