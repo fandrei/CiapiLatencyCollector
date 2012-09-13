@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Package" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" >
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" >
 
   <PropertyGroup>
     <SolutionRoot>$(MSBuildProjectDirectory)\</SolutionRoot>
@@ -16,13 +16,29 @@
     <BuildVersion>0</BuildVersion>
     <FullVersion>$(MajorVersion).$(MinorVersion).$(BuildVersion)</FullVersion>
 
-    <TargetDir>$(MSBuildProjectDirectory)\_bin\$(Configuration)\</TargetDir>
-    <TargetDir Condition=" '$(OutDir)' != '' ">$(OutDir)\</TargetDir>
-
     <!-- This should get set by the build server -->
     <API_KEY>should_be_set_by_buildserver</API_KEY>
     <APPMETRICS_ACCESS_KEY>should_be_set_by_buildserver</APPMETRICS_ACCESS_KEY>
   </PropertyGroup>
+
+  <Choose>
+    <When Condition=" '$(OutDir)'=='' ">
+      <PropertyGroup>
+        <TargetDir>$(MSBuildProjectDirectory)\_bin\$(Configuration)\</TargetDir>
+        <UpdatePackageDir>$(MSBuildProjectDirectory)\_UpdatePackage\</UpdatePackageDir>
+        <SetupDir>$(MSBuildProjectDirectory)\_setup\</SetupDir>
+        <WebPackageDir>$(MSBuildProjectDirectory)\_WebPackage\</WebPackageDir>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <TargetDir>$(OutDir)\</TargetDir>
+        <UpdatePackageDir>$(OutDir)\_UpdatePackage\</UpdatePackageDir>
+        <SetupDir>$(OutDir)\</SetupDir>
+        <WebPackageDir>$(OutDir)\_WebPackage\</WebPackageDir>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
 
   <Target Name="UpdateVersion" >
     <Message Text="Updating version to $(FullVersion)" />
@@ -62,55 +78,59 @@
         Files="@(AllFiles)"
         Regex="{APPMETRICS_ACCESS_KEY}"
         ReplacementText="$(APPMETRICS_ACCESS_KEY)" />
-    
+
   </Target>
 
   <Target Name="Build" DependsOnTargets="UpdateVersion" >
 
     <!-- Set path of input binary files for the setup project -->
-    <FileUpdate Condition=" '$(OutDir)' != '' "
+    <FileUpdate
         Files="$(MSBuildProjectDirectory)\Setup\Variables.wxi"
         Regex="BinPath *= *&quot;.*?&quot;"
-        ReplacementText="BinPath = &quot;$(OutDir)&quot;" />
+        ReplacementText="BinPath = &quot;$(TargetDir)&quot;" />
 
     <MSBuild Projects="$(MSBuildProjectDirectory)\CiapiLatencyCollector.sln" Targets="Rebuild"
       Properties="Configuration=$(Configuration)" />
 
-    <!-- Store version number for auto update -->
-    <WriteLinesToFile File="$(TargetDir)\version.txt" Lines="$(FullVersion)" Overwrite="true" />
+    <CallTarget Targets="ZipUpdatePackage;" />
 
-    <!-- Create deployable ZIPs for inclusion in the config site-->
-    <ItemGroup>
-      <!-- All files from build -->
-      <ZipFiles Include="$(TargetDir)\**\*.*"
-          Exclude="$(TargetDir)\**\*.zip;$(TargetDir)\**\*.pdb;$(TargetDir)\**\*.xml;
-            $(TargetDir)\**\*.vshost.exe;$(TargetDir)\**\*.vshost.exe.*;
-            $(TargetDir)\**\CiapiLatencyCollector.*;$(TargetDir)\**\Ionic.Zip.dll" />
-    </ItemGroup>
-    <Zip Files="@(ZipFiles)"
-      WorkingDirectory="$(TargetDir)"
-      ZipFileName="$(TargetDir)\LatencyCollectorCore.zip"
-      ZipLevel="9" />
-
-    <Copy SourceFiles="$(TargetDir)\LatencyCollectorCore.zip" 
+    <Copy SourceFiles="$(TargetDir)\LatencyCollectorCore.zip"
           DestinationFolder="$(MSBuildProjectDirectory)\LatencyCollectorConfigSite\CIAPILatencyCollector\updates\" />
-    <Copy SourceFiles="$(TargetDir)\version.txt" 
+    <Copy SourceFiles="$(TargetDir)\version.txt"
           DestinationFolder="$(MSBuildProjectDirectory)\LatencyCollectorConfigSite\CIAPILatencyCollector\updates" />
 
-    <Zip Files="$(MSBuildProjectDirectory)\_setup\CiapiLatencyCollector.msi" Flatten="true"
+    <Zip Files="$(SetupDir)\CiapiLatencyCollector.msi" Flatten="true"
       WorkingDirectory="$(TargetDir)"
       ZipFileName="$(MSBuildProjectDirectory)\LatencyCollectorConfigSite\CIAPILatencyCollector\setup\CiapiLatencyCollector.msi.zip"
       ZipLevel="9" />
 
     <!-- Build config site -->
     <MSBuild Projects="$(MSBuildProjectDirectory)\LatencyCollectorConfigSite\LatencyCollectorConfigSite.csproj" Targets="Package"
-      Properties="Configuration=$(Configuration)" />
+      Properties="Configuration=$(Configuration);PackageLocation=$(WebPackageDir)\LatencyCollectorConfigSite.zip" />
 
   </Target>
 
-  <Target Name="Package" DependsOnTargets="Build" >
-    <Copy SourceFiles="$(TargetDir)\LatencyCollectorCore.zip" DestinationFolder="$(MSBuildProjectDirectory)\_UpdatePackage\" />
-    <Copy SourceFiles="$(TargetDir)\version.txt" DestinationFolder="$(MSBuildProjectDirectory)\_UpdatePackage\" />
+  <Target Name="ZipUpdatePackage">
+    
+    <!-- Store version number for auto update -->
+    <WriteLinesToFile File="$(TargetDir)\version.txt" Lines="$(FullVersion)" Overwrite="true" />
+
+    <!-- All files from build -->
+    <ItemGroup>
+      <ZipFiles Include="$(TargetDir)\**\*.*"
+          Exclude="$(TargetDir)\**\*.zip;$(TargetDir)\**\*.pdb;$(TargetDir)\**\*.xml;
+            $(TargetDir)\**\*.vshost.exe;$(TargetDir)\**\*.vshost.exe.*;
+            $(TargetDir)\**\CiapiLatencyCollector.*;$(TargetDir)\**\Ionic.Zip.dll" />
+    </ItemGroup>
+
+    <Zip Files="@(ZipFiles)"
+      WorkingDirectory="$(TargetDir)"
+      ZipFileName="$(TargetDir)\LatencyCollectorCore.zip"
+      ZipLevel="9" />
+    
+    <Copy SourceFiles="$(TargetDir)\LatencyCollectorCore.zip" DestinationFolder="$(UpdatePackageDir)\" />
+    <Copy SourceFiles="$(TargetDir)\version.txt" DestinationFolder="$(UpdatePackageDir)\" />
+  
   </Target>
 
 </Project>
