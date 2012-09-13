@@ -67,6 +67,12 @@
 
   <Target Name="Build" DependsOnTargets="UpdateVersion" >
 
+    <!-- Set path of input binary files for the setup project -->
+    <FileUpdate Condition=" '$(OutDir)' != '' "
+        Files="$(MSBuildProjectDirectory)\Setup\Variables.wxi"
+        Regex="BinPath *= *&quot;.*?&quot;"
+        ReplacementText="BinPath = &quot;$(OutDir)&quot;" />
+
     <MSBuild Projects="$(MSBuildProjectDirectory)\CiapiLatencyCollector.sln" Targets="Rebuild"
       Properties="Configuration=$(Configuration)" />
 
