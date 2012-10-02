@@ -14,8 +14,6 @@ namespace LatencyCollectorCore.Monitors
 	{
 		public AllServiceMonitor()
 		{
-			ServerUrl = "https://ciapi.cityindex.com/TradingApi";
-			StreamingServerUrl = "https://push.cityindex.com";
 			PeriodSeconds = 5;
 		}
 
@@ -31,12 +29,12 @@ namespace LatencyCollectorCore.Monitors
 			{
 				if (_client == null)
 				{
-					_client = new Client(new Uri(ServerUrl), new Uri(StreamingServerUrl), "{API_KEY}");
+					_client = new Client(new Uri(ServerUrl), new Uri(StreamingServerUrl), "{API_KEY}", 1);
 					_client.AppKey = "CiapiLatencyCollector." + GetType().Name + ".BuiltIn";
 
 					if (Tracker != null)
 					{
-						_metricsRecorder = new MetricsRecorder(_client, new Uri(Tracker.Url));
+						_metricsRecorder = new MetricsRecorder(_client, new Uri(Tracker.Url), Guid.NewGuid().ToString(), "{APPMETRICS_ACCESS_KEY}");
 						_metricsRecorder.Start();
 					}
 				}
@@ -54,6 +52,11 @@ namespace LatencyCollectorCore.Monitors
 		{
 			try
 			{
+				if (string.IsNullOrEmpty(ServerUrl))
+					return;
+				if (AppSettings.Instance.MonitorSettings.PollingDisabled)
+					return;
+
 				using (var client = new WebClient())
 				{
 					// check if internet connection is available

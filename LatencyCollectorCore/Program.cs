@@ -111,6 +111,9 @@ namespace LatencyCollectorCore
 				{
 					if (AppSettings.Instance.CheckRemoteSettings())
 					{
+						Tracker.Log("Event",
+							AppSettings.Instance.MonitorSettings.PollingDisabled ? "Polling disabled" : "Central settings updated");
+
 						InitTracker(AppSettings.Instance.MonitorSettings.LogEventUrl,
 							AppSettings.Instance.MonitorSettings.ApplicationKey);
 						StopPolling();
@@ -213,6 +216,6 @@ namespace LatencyCollectorCore
 
 		private static readonly object Sync = new object();
 		private static readonly object TrackerSync = new object();
-		private static readonly SettingsUpdateChecker SettingsUpdater = new SettingsUpdateChecker();
+		private static readonly SettingsUpdateChecker SettingsUpdater = new SettingsUpdateChecker { PeriodSeconds = 15 };
 	}
 }

@@ -61,12 +61,16 @@ namespace LatencyCollectorCore
 				if (text == _lastConfigText)
 					return false;
 
-				if (_monitorSettings != null)
+				if (text == null)
+				{
+					_monitorSettings.PollingDisabled = true;
+				}
+				else
 				{
 					_monitorSettings.Dispose();
+					ApplyRemoteSettings(text);
 				}
 
-				ApplyRemoteSettings(text);
 				_lastConfigText = text;
 
 				return true;
@@ -80,39 +84,34 @@ namespace LatencyCollectorCore
 
 		private string DownloadConfigText()
 		{
-			var configAddress = string.Format(ConfigBaseUrl + "/CIAPILatencyCollectorConfig/{0}/AppSettings.xml", NodeName);
-			var defaultConfigAddress = ConfigBaseUrl + "/CIAPILatencyCollectorConfig/AppSettings.xml";
+			var configAddress = ConfigBaseUrl + string.Format("/GetConfig.ashx?NodeName={0}", NodeName);
 
 			using (var client = new WebClient())
 			{
 				client.Credentials = new NetworkCredential(UserName, Password);
 
-				try
-				{
-					return client.DownloadString(configAddress);
-				}
-				catch (WebException exc)
-				{
-					if (exc.Status == WebExceptionStatus.ProtocolError)
-					{
-						if (((HttpWebResponse)exc.Response).StatusCode == HttpStatusCode.NotFound)
-						{
-							return client.DownloadString(defaultConfigAddress);
-						}
-					}
-					throw;
-				}
+				var res = client.DownloadString(configAddress);
+				if (res == "disabled")
+					return null;
+				return res;
 			}
 		}
 
+		private static XmlSerializer _serializer;
+
 		void ApplyRemoteSettings(string text)
 		{
-			var serializer = new XmlSerializer(typeof(MonitorSettings));
+			if (_serializer == null)
+			{
+				_serializer = new XmlSerializer(typeof(MonitorSettings));
+			}
 
 			using (var rd = new StringReader(text))
 			{
-				_monitorSettings = (MonitorSettings)serializer.Deserialize(rd);
+				_monitorSettings = (MonitorSettings)_serializer.Deserialize(rd);
 			}
+
+			_monitorSettings.PollingDisabled = false;
 		}
 
 		#endregion

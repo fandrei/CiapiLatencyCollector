@@ -35,5 +35,17 @@ namespace LatencyCollectorCore
 
 			return false;
 		}
+
+		public static bool IsNotFound(WebException exc)
+		{
+			if (exc.Status == WebExceptionStatus.ProtocolError)
+			{
+				if (((HttpWebResponse)exc.Response).StatusCode == HttpStatusCode.NotFound)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
 	}
 }

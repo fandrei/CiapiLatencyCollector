@@ -9,23 +9,23 @@ namespace LatencyCollectorCore.Monitors
 {
 	public class DefaultPageMonitor : LatencyMonitor
 	{
-		public DefaultPageMonitor()
-		{
-			PageUrl = "https://ciapi.cityindex.com/";
-		}
-
 		public string PageUrl { get; set; }
 
 		public override void Execute()
 		{
 			try
 			{
-				using (var client = new WebClient())
+				if (string.IsNullOrEmpty(PageUrl))
+					return;
+				if (AppSettings.Instance.MonitorSettings.PollingDisabled)
+					return;
+
+				var request = (HttpWebRequest)WebRequest.Create(PageUrl);
+				request.Method = "HEAD";
+
+				var watch = Tracker.StartMeasure();
+				using (var response = request.GetResponse())
 				{
-					var watch = Tracker.StartMeasure();
-					var resp = client.DownloadString(PageUrl);
-					if (string.IsNullOrEmpty(resp))
-						throw new ApplicationException("No response from default page");
 					Tracker.EndMeasure(watch, "General.DefaultPage");
 				}
 			}

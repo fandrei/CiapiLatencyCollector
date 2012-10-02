@@ -1,0 +1,28 @@
+<<<<<<< HEAD
+*.suo
+*.user
+[Bb]in/
+[Oo]bj/
+_bin/
+_setup/
+_ReSharper*/
+temp/
+_WebPackage/
+_UpdatePackage/
+
+#Don't ignore the above when below the packages/ folder
+=======
+*.suo
+*.user
+[Bb]in/
+[Oo]bj/
+_bin/
+_setup/
+_ReSharper*/
+temp/
+_WebPackage/
+_UpdatePackage/
+
+#Don't ignore the above when below the packages/ folder
+>>>>>>> 32cf747a2655ff1476092d7b82df5f283ebcffdc
+!packages/

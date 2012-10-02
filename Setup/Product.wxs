@@ -41,24 +41,22 @@
     <DirectoryRef Id="APPLICATIONROOTDIRECTORY">
       <Component Id="ProductComponent" Guid="{30F914B5-7F73-4A9A-97B1-1C5B3BB17B7F}">
         <File Id='CiapiLatencyCollector.exe' Name='CiapiLatencyCollector.exe'
-              Source='..\_bin\Release\CiapiLatencyCollector.exe' Vital='yes' />
+              Source='$(var.BinPath)\CiapiLatencyCollector.exe' Vital='yes' />
         <File Id='Ionic.Zip.dll' Name='Ionic.Zip.dll'
-              Source='..\_bin\Release\Ionic.Zip.dll' Vital='yes' />
+              Source='$(var.BinPath)\Ionic.Zip.dll' Vital='yes' />
       </Component>
     </DirectoryRef>
     <DirectoryRef Id="AppWorkingDataBin">
       <Component Id="ConfigComponent" Guid="{218DA4C3-EE06-43D4-8130-C7D7A492448A}" Permanent="yes">
         <File Id='CiapiLatencyCollectorConfig.exe' Name='CiapiLatencyCollectorConfig.exe'
-              Source='..\_bin\Release\CiapiLatencyCollectorConfig.exe' Vital='yes' />
+              Source='$(var.BinPath)\CiapiLatencyCollectorConfig.exe' Vital='yes' />
         <File Id='CiapiLatencyCollectorCore.exe' Name='CiapiLatencyCollectorCore.exe'
-              Source='..\_bin\Release\CiapiLatencyCollectorCore.exe' Vital='yes' />
+              Source='$(var.BinPath)\CiapiLatencyCollectorCore.exe' Vital='yes' />
       </Component>
     </DirectoryRef>
 
     <Feature Id="ProductFeature" Title="$(var.ProductShortName)" Level="1">
       <ComponentRef Id="ProductComponent" />
-      <!-- Note: The following ComponentGroupRef is required to pull in generated authoring from project references. -->
-      <ComponentGroupRef Id="Product.Generated" />
       <ComponentRef Id="ConfigComponent" />
     </Feature>
 
