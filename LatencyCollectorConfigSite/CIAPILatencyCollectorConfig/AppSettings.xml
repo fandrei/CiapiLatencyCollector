@@ -1,0 +1,9 @@
+﻿<MonitorSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LogEventUrl>http://metrics.labs.cityindex.com/LogEvent.ashx</LogEventUrl>
+  <ApplicationKey>CiapiLatencyCollector</ApplicationKey>
+  <Monitors>
+    <LatencyMonitor xsi:type="DefaultPageMonitor">
+      <PeriodSeconds>6</PeriodSeconds>
+    </LatencyMonitor>
+  </Monitors>
+</MonitorSettings>

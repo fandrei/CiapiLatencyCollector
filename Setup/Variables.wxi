@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Include>
+  
+  <?define Manufacturer = "City Index" ?>
+  <?define ProductShortName = "CIAPI Latency Collector" ?>
+  <?define ProductVersion = "1.0.0" ?>
+  <?define ProductVersionSuffix = "" ?>
+  <?define ProductMidName = "$(var.ProductShortName) v$(var.ProductVersion) $(var.ProductVersionSuffix)" ?>
+  <?define ProductLongName = "$(var.Manufacturer) $(var.ProductMidName)" ?>
+
+  <?define HomepageUrl = "https://github.com/fandrei/CiapiLatencyCollector" ?>
+  <?define SupportUrl = "https://github.com/fandrei/CiapiLatencyCollector" ?>
+  <?define UpgradeCode = "{DBF2081B-5966-4BB3-B1CD-104280F983A4}" ?>
+  
+</Include>

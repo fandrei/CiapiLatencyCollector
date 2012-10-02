@@ -1,0 +1,14 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:Boolean x:Key="/Default/Environment/SearchAndNavigation/MergeOccurences/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestSessionPersistentData/=076F542256F84395B0441FF1778FC7D1/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestSessionPersistentData/=076F542256F84395B0441FF1778FC7D1/Name/@EntryValue">ShouldExecuteWithoutExceptions #2</s:String>
+	<s:String x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestSessionPersistentData/=076F542256F84395B0441FF1778FC7D1/XmlSerializedElements/@EntryValue">&lt;Session&gt;&lt;Elements&gt;&lt;UnitTestElement Provider="nUnit" Id="LatencyCollectorCore.Tests.AllServiceMonitorFixture" type="NUnitTestFixtureElement" Project="2FEA0200-06A1-4F7D-A370-BFE0EE68AF96" /&gt;&lt;UnitTestElement Provider="nUnit" Id="LatencyCollectorCore.Tests.AllServiceMonitorFixture.ShouldExecuteWithoutExceptions" ParentId="LatencyCollectorCore.Tests.AllServiceMonitorFixture" type="NUnitTestElement" TypeName="LatencyCollectorCore.Tests.AllServiceMonitorFixture" MethodName="ShouldExecuteWithoutExceptions" Project="2FEA0200-06A1-4F7D-A370-BFE0EE68AF96" /&gt;&lt;/Elements&gt;&lt;/Session&gt;</s:String>
+	<s:Boolean x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestSessionPersistentData/=6EF1EAA09B024F799C6BC35CF10286DE/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestSessionPersistentData/=6EF1EAA09B024F799C6BC35CF10286DE/Name/@EntryValue">ShouldExecuteWithoutExceptions #3</s:String>
+	<s:String x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestSessionPersistentData/=6EF1EAA09B024F799C6BC35CF10286DE/XmlSerializedElements/@EntryValue">&lt;Session&gt;&lt;Elements&gt;&lt;UnitTestElement Provider="nUnit" Id="LatencyCollectorCore.Tests.AllServiceMonitorFixture" type="NUnitTestFixtureElement" Project="2FEA0200-06A1-4F7D-A370-BFE0EE68AF96" /&gt;&lt;UnitTestElement Provider="nUnit" Id="LatencyCollectorCore.Tests.AllServiceMonitorFixture.ShouldExecuteWithoutExceptions" ParentId="LatencyCollectorCore.Tests.AllServiceMonitorFixture" type="NUnitTestElement" TypeName="LatencyCollectorCore.Tests.AllServiceMonitorFixture" MethodName="ShouldExecuteWithoutExceptions" Project="2FEA0200-06A1-4F7D-A370-BFE0EE68AF96" /&gt;&lt;/Elements&gt;&lt;/Session&gt;</s:String>
+	
+	
+	
+	
+	
+	</wpf:ResourceDictionary>
