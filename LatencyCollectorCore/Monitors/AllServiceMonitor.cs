@@ -217,6 +217,7 @@ namespace LatencyCollectorCore.Monitors
 			try
 			{
 				var positions = ApiClient.TradesAndOrders.ListOpenPositions(accountInfo.SpreadBettingAccount.TradingAccountId);
+				Tracker.Log("Info_CloseAllOpenPositions_Count", positions.OpenPositions.Length);
 				foreach (var pos in positions.OpenPositions)
 				{
 					try
