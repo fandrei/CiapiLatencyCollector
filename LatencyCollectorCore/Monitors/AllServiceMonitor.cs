@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -218,13 +219,17 @@ namespace LatencyCollectorCore.Monitors
 			{
 				var positions = ApiClient.TradesAndOrders.ListOpenPositions(accountInfo.SpreadBettingAccount.TradingAccountId);
 				Tracker.Log("Info_CloseAllOpenPositions_Count", positions.OpenPositions.Length);
-				foreach (var pos in positions.OpenPositions)
+
+				var positionsGrouped = GroupBy(positions.OpenPositions, x => x.Direction);
+				foreach (var posGroup in positionsGrouped)
 				{
 					try
 					{
-						var price = GetPrice(ApiClient); // we have to obtain price before each trade, because trade will fail if price is obsolete
-						var direction = (pos.Direction.ToLower() == "buy") ? "sell" : "buy";
-						Trade(ApiClient, accountInfo, price, pos.Quantity, direction, new[] { pos.OrderId });
+						var price = GetPrice(ApiClient);
+						var direction = (posGroup.Key.ToLower() == "buy") ? "sell" : "buy";
+						var quantity = posGroup.Value.Sum(x => x.Quantity);
+						var ids = posGroup.Value.Select(x => x.OrderId).ToArray();
+						Trade(ApiClient, accountInfo, price, quantity, direction, ids);
 					}
 					catch (Exception exc)
 					{
@@ -236,6 +241,13 @@ namespace LatencyCollectorCore.Monitors
 			{
 				Report(exc);
 			}
+		}
+
+		public static Dictionary<TKey, List<TSource>> GroupBy<TSource, TKey>(IEnumerable<TSource> source,
+			Func<TSource, TKey> keySelector)
+		{
+			var res = source.GroupBy(keySelector).ToDictionary(pair => pair.Key, pair => pair.ToList());
+			return new Dictionary<TKey, List<TSource>>(res);
 		}
 
 		private void ListTradeHistory(AccountInformationResponseDTO accountInfo)
