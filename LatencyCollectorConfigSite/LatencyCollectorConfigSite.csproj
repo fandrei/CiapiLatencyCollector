@@ -113,8 +113,9 @@
     </ItemGroup>
   </Target>
   <ItemGroup>
-    <Reference Include="AppMetrics.WebUtils">
-      <HintPath>..\packages\AppMetrics.WebUtils.1.0.205\lib\net40\AppMetrics.WebUtils.dll</HintPath>
+    <Reference Include="AppMetrics.WebUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AppMetrics.WebUtils.1.0.320\lib\net40\AppMetrics.WebUtils.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
@@ -171,9 +172,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="App_Data\users.config" />
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +185,7 @@
     <Content Include="GetConfig.ashx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\ConfigSitePackage.pubxml" />
   </ItemGroup>
   <PropertyGroup>
