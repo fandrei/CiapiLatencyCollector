@@ -32,8 +32,7 @@
             </tr>
             <tr>
                 <td>
-                    <a href="http://analytics.metrics.labs.cityindex.com/GetReport.ashx?Application=CiapiLatencyCollector&Type=LatencySummaries&SliceByLocation=CountriesAndCities&FunctionFilter=General">
-                        Check data being received</a>
+                    <asp:Hyperlink runat="server" ID="CheckDataUrl">Check data being received</asp:Hyperlink>
                 </td>
             </tr>
             <tr>

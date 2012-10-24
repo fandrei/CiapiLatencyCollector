@@ -6,6 +6,7 @@ using System.Text;
 
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using AppMetrics.WebUtils;
 
 namespace LatencyCollectorConfigSite
 {
@@ -23,6 +24,16 @@ namespace LatencyCollectorConfigSite
 					row.Cells.Add(new TableCell { Text = cur.Key });
 					row.Cells.Add(new TableCell { Text = cur.Value });
 					NodesList.Rows.Add(row);
+				}
+
+				var url = SiteConfig.Get("CheckDataUrl");
+				if (string.IsNullOrWhiteSpace(url))
+				{
+					CheckDataUrl.Text = "MUST_BE_SET_MANUALLY";
+				}
+				else
+				{
+					CheckDataUrl.NavigateUrl = url;
 				}
 			}
 		}

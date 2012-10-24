@@ -115,7 +115,7 @@
   <ItemGroup>
     <Reference Include="AppMetrics.WebUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AppMetrics.WebUtils.1.0.320\lib\net40\AppMetrics.WebUtils.dll</HintPath>
+      <HintPath>..\packages\AppMetrics.WebUtils.1.0.321\lib\net40\AppMetrics.WebUtils.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
