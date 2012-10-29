@@ -33,7 +33,9 @@ namespace LatencyCollectorConfigSite
 				}
 				else
 				{
-					CheckDataUrl.NavigateUrl = url;
+					var fullUrl = string.Format("{0}/GetReport.ashx?Application=CiapiLatencyCollector&amp;Type=LatencySummaries&amp;" +
+						"SliceByLocation=CountriesAndCities&amp;FunctionFilter=General", url);
+					CheckDataUrl.NavigateUrl = fullUrl;
 				}
 			}
 		}
