@@ -33,8 +33,8 @@ namespace LatencyCollectorConfigSite
 				}
 				else
 				{
-					var fullUrl = string.Format("{0}/GetReport.ashx?Application=CiapiLatencyCollector&amp;Type=LatencySummaries&amp;" +
-						"SliceByLocation=CountriesAndCities&amp;FunctionFilter=General", url);
+					var fullUrl = string.Format("{0}/GetReport.ashx?Application=CiapiLatencyCollector&Type=LatencySummaries&" +
+						"SliceByLocation=CountriesAndCities&FunctionFilter=General", url);
 					CheckDataUrl.NavigateUrl = fullUrl;
 				}
 			}
