@@ -16,12 +16,40 @@ namespace LatencyCollectorCore
 	{
 		static void Main()
 		{
-			var listeners = new[] { new TextWriterTraceListener(Console.Out) };
-			Debug.Listeners.AddRange(listeners);
+			try
+			{
+				var listeners = new TraceListener[] { new TextWriterTraceListener(Console.Out) };
+				Debug.Listeners.AddRange(listeners);
 
-			Start();
-			Console.ReadKey();
-			Stop();
+				Start();
+
+				var curProcess = Process.GetCurrentProcess();
+				_stopEvent = new EventWaitHandle(false, EventResetMode.ManualReset, curProcess.ProcessName + curProcess.Id);
+
+				var thread = new Thread(ConsoleCheckingThread);
+				thread.Start();
+
+				_stopEvent.WaitOne();
+
+				Stop();
+			}
+			catch (Exception exc)
+			{
+				Report(exc);
+			}
+		}
+
+		static void ConsoleCheckingThread()
+		{
+			try
+			{
+				Console.ReadKey();
+				_stopEvent.Set();
+			}
+			catch (Exception exc)
+			{
+				Console.WriteLine(exc);
+			}
 		}
 
 		public static void Start()
@@ -217,5 +245,7 @@ namespace LatencyCollectorCore
 		private static readonly object Sync = new object();
 		private static readonly object TrackerSync = new object();
 		private static readonly SettingsUpdateChecker SettingsUpdater = new SettingsUpdateChecker { PeriodSeconds = 15 };
+
+		private static EventWaitHandle _stopEvent;
 	}
 }
