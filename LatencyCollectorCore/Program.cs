@@ -30,6 +30,7 @@ namespace LatencyCollectorCore
 				thread.Start();
 
 				_stopEvent.WaitOne();
+				thread.Interrupt();
 
 				Stop();
 			}
@@ -45,6 +46,9 @@ namespace LatencyCollectorCore
 			{
 				Console.ReadKey();
 				_stopEvent.Set();
+			}
+			catch (ThreadInterruptedException)
+			{
 			}
 			catch (Exception exc)
 			{
