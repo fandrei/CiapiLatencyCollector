@@ -24,7 +24,7 @@ namespace LatencyCollectorCore
 				Start();
 
 				var curProcess = Process.GetCurrentProcess();
-				_stopEvent = new EventWaitHandle(false, EventResetMode.ManualReset, curProcess.ProcessName + curProcess.Id);
+				_stopEvent = new EventWaitHandle(false, EventResetMode.ManualReset, "AppMetrics_CIAPI");
 
 				var thread = new Thread(ConsoleCheckingThread);
 				thread.Start();
