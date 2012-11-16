@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>AppMetrics.AgentService.PluginBase</id>
+    <version>1.0.332</version>
+    <title>AppMetrics.AgentService.PluginBase</title>
+    <authors>CityIndex Ltd,  Andrei Faber</authors>
+    <owners>CityIndex Ltd,  Andrei Faber</owners>
+    <licenseUrl>https://github.com/fandrei/AppMetrics/raw/master/LICENSE.txt</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>AppMetrics - agent service plugin</description>
+    <language>en-GB</language>
+  </metadata>
+</package>

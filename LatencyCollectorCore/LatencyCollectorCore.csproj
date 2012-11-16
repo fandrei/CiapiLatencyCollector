@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AppMetrics.AgentService.PluginBase">
+      <HintPath>..\packages\AppMetrics.AgentService.PluginBase.1.0.332\lib\net40\AppMetrics.AgentService.PluginBase.dll</HintPath>
+    </Reference>
     <Reference Include="AppMetrics.Client, Version=1.0.4675.10981, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\AppMetrics.Client.1.0.320\lib\net40\AppMetrics.Client.dll</HintPath>
