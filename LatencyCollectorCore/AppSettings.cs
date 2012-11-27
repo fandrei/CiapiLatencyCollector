@@ -51,7 +51,7 @@ namespace LatencyCollectorCore
 
 		private string DownloadConfigText()
 		{
-			var configAddress = ConfigBaseUrl + string.Format("/GetConfig.ashx?NodeName={0}", NodeName);
+			var configAddress = ConfigBaseUrl + string.Format("/GetConfig.ashx?NodeName={0}&PluginName={1}", NodeName, "CIAPI");
 
 			using (var client = new WebClient())
 			{
