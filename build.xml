@@ -54,14 +54,6 @@
         Files="$(MSBuildProjectDirectory)\LatencyCollectorCore\Properties\AssemblyInfo.cs"
         Regex="AssemblyVersion\(&quot;.*&quot;\)"
         ReplacementText="AssemblyVersion(&quot;$(FullVersion)&quot;)" />
-    <FileUpdate
-        Files="$(MSBuildProjectDirectory)\LatencyCollectorService\Properties\AssemblyInfo.cs"
-        Regex="AssemblyVersion\(&quot;.*&quot;\)"
-        ReplacementText="AssemblyVersion(&quot;$(FullVersion)&quot;)" />
-    <FileUpdate
-        Files="$(MSBuildProjectDirectory)\Setup\Variables.wxi"
-        Regex="ProductVersion *= *&quot;.*?&quot;"
-        ReplacementText="ProductVersion = &quot;$(FullVersion)&quot;" />
 
     <ItemGroup>
       <MonitorFiles Include="$(MSBuildProjectDirectory)\LatencyCollectorCore\Monitors\*.cs" />
@@ -82,32 +74,10 @@
   </Target>
 
   <Target Name="Build" DependsOnTargets="UpdateVersion" >
-
-    <!-- Set path of input binary files for the setup project -->
-    <FileUpdate
-        Files="$(MSBuildProjectDirectory)\Setup\Variables.wxi"
-        Regex="BinPath *= *&quot;.*?&quot;"
-        ReplacementText="BinPath = &quot;$(TargetDir)&quot;" />
-
     <MSBuild Projects="$(MSBuildProjectDirectory)\CiapiLatencyCollector.sln" Targets="Rebuild"
       Properties="Configuration=$(Configuration)" />
 
     <CallTarget Targets="ZipUpdatePackage;" />
-
-    <Copy SourceFiles="$(TargetDir)\LatencyCollectorCore.zip"
-          DestinationFolder="$(MSBuildProjectDirectory)\LatencyCollectorConfigSite\CIAPILatencyCollector\updates\" />
-    <Copy SourceFiles="$(TargetDir)\version.txt"
-          DestinationFolder="$(MSBuildProjectDirectory)\LatencyCollectorConfigSite\CIAPILatencyCollector\updates" />
-
-    <Zip Files="$(SetupDir)\CiapiLatencyCollector.msi" Flatten="true"
-      WorkingDirectory="$(TargetDir)"
-      ZipFileName="$(MSBuildProjectDirectory)\LatencyCollectorConfigSite\CIAPILatencyCollector\setup\CiapiLatencyCollector.msi.zip"
-      ZipLevel="9" />
-
-    <!-- Build config site -->
-    <MSBuild Projects="$(MSBuildProjectDirectory)\LatencyCollectorConfigSite\LatencyCollectorConfigSite.csproj" Targets="Package"
-      Properties="Configuration=$(Configuration);PackageLocation=$(WebPackageDir)\LatencyCollectorConfigSite.zip" />
-
   </Target>
 
   <Target Name="ZipUpdatePackage">
