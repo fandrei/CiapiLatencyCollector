@@ -96,7 +96,6 @@
     <Compile Include="NtpdInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Proxy.cs" />
     <Compile Include="SntpClient.cs" />
     <Compile Include="WebUtil.cs" />
   </ItemGroup>
