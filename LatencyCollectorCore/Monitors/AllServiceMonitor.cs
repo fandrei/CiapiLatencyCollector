@@ -267,7 +267,7 @@ namespace LatencyCollectorCore.Monitors
 		static void Report(Exception exc)
 		{
 			var webExc = exc as WebException;
-			if (webExc != null && Util.IsConnectionFailure(webExc))
+			if (webExc != null && WebUtil.IsConnectionFailure(webExc))
 				return;
 
 			Program.Report(exc);

@@ -35,12 +35,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AppMetrics.AgentService.PluginBase">
-      <HintPath>..\packages\AppMetrics.AgentService.PluginBase.1.0.332\lib\net40\AppMetrics.AgentService.PluginBase.dll</HintPath>
-    </Reference>
-    <Reference Include="AppMetrics.Client, Version=1.0.4675.10981, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="AppMetrics.AgentService.PluginBase, Version=1.0.0.5322, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AppMetrics.Client.1.0.320\lib\net40\AppMetrics.Client.dll</HintPath>
+      <HintPath>..\packages\AppMetrics.AgentService.PluginBase.1.0.337\lib\net40\AppMetrics.AgentService.PluginBase.dll</HintPath>
+    </Reference>
+    <Reference Include="AppMetrics.Client, Version=1.0.4714.5318, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AppMetrics.Client.1.0.337\lib\net40\AppMetrics.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="AppMetrics.Shared, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AppMetrics.AgentService.PluginBase.1.0.337\lib\net40\AppMetrics.Shared.dll</HintPath>
     </Reference>
     <Reference Include="CIAPI, Version=8.3.0.487, Culture=neutral, PublicKeyToken=5dfdbaca97c75bb7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -78,10 +83,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppSettingsBase.cs" />
     <Compile Include="Monitors\AllServiceMonitor.cs" />
     <Compile Include="AppSettings.cs" />
-    <Compile Include="..\Shared\AppSettingsBase.cs" />
-    <Compile Include="..\Shared\Const.cs" />
     <Compile Include="Monitors\AuthenticatedMonitor.cs" />
     <Compile Include="Monitors\DefaultPageMonitor.cs" />
     <Compile Include="Exceptions.cs" />
@@ -93,8 +97,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxy.cs" />
-    <Compile Include="..\Shared\Util.cs" />
     <Compile Include="SntpClient.cs" />
+    <Compile Include="WebUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

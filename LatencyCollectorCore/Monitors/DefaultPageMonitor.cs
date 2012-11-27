@@ -31,7 +31,7 @@ namespace LatencyCollectorCore.Monitors
 			}
 			catch (WebException exc)
 			{
-				if (!Util.IsConnectionFailure(exc))
+				if (!WebUtil.IsConnectionFailure(exc))
 					throw;
 			}
 		}

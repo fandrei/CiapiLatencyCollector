@@ -8,7 +8,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Xml.Serialization;
 
-using CiapiLatencyCollector;
+using AppMetrics.Shared;
+
 using LatencyCollectorCore.Monitors;
 
 namespace LatencyCollectorCore

@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading;
 
 using AppMetrics.Client;
+using AppMetrics.Shared;
+
 using LatencyCollectorCore.Monitors;
 
 namespace LatencyCollectorCore
