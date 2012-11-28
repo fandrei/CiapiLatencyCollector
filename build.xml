@@ -95,10 +95,10 @@
 
     <Zip Files="@(ZipFiles)"
       WorkingDirectory="$(TargetDir)"
-      ZipFileName="$(TargetDir)\LatencyCollectorCore.zip"
+      ZipFileName="$(TargetDir)\CIAPI.zip"
       ZipLevel="9" />
     
-    <Copy SourceFiles="$(TargetDir)\LatencyCollectorCore.zip" DestinationFolder="$(UpdatePackageDir)\" />
+    <Copy SourceFiles="$(TargetDir)\CIAPI.zip" DestinationFolder="$(UpdatePackageDir)\" />
     <Copy SourceFiles="$(TargetDir)\version.txt" DestinationFolder="$(UpdatePackageDir)\" />
   
   </Target>
