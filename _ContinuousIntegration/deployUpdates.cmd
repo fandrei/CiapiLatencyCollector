@@ -10,4 +10,4 @@ if "%%~dpj" == "%%j" (
 set MSDeployPath=%%j
 ))))))
 
-"%MSDeployPath%\msdeploy.exe" -verb:sync -source:contentpath="%WORKSPACE%/_UpdatePackage" -dest:contentPath="%1"
+"%MSDeployPath%\msdeploy.exe" -verb:sync -source:contentpath="%WORKSPACE%/_UpdatePackage" -skip:skipaction='Delete',objectname='dirPath',absolutepath='/plugins/.*' -skip:skipaction='Delete',objectname='filePath',absolutepath='/plugins/.*' -dest:contentPath="%1"
