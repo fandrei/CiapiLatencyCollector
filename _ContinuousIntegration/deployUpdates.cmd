@@ -10,4 +10,4 @@ if "%%~dpj" == "%%j" (
 set MSDeployPath=%%j
 ))))))
 
-"%MSDeployPath%\msdeploy.exe" -verb:sync -source:contentpath="%WORKSPACE%/_UpdatePackage" -dest:contentPath="config.metrics.labs.cityindex.com/CIAPILatencyCollector/updates"
+"%MSDeployPath%\msdeploy.exe" -verb:sync -source:contentpath="%WORKSPACE%/_UpdatePackage" -dest:contentPath="%1"
