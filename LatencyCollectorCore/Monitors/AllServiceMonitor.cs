@@ -55,7 +55,7 @@ namespace LatencyCollectorCore.Monitors
 			{
 				if (string.IsNullOrEmpty(ServerUrl))
 					throw new ApplicationException("AllServiceMonitor: ServerUrl is not set");
-				if (AppSettings.Instance.MonitorSettings.PollingDisabled)
+				if (PluginSettings.Instance.MonitorSettings.PollingDisabled)
 					return;
 
 				using (var client = new WebClient())

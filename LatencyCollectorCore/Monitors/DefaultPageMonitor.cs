@@ -17,7 +17,7 @@ namespace LatencyCollectorCore.Monitors
 			{
 				if (string.IsNullOrEmpty(PageUrl))
 					throw new ApplicationException("DefaultPageMonitor: PageUrl is not set");
-				if (AppSettings.Instance.MonitorSettings.PollingDisabled)
+				if (PluginSettings.Instance.MonitorSettings.PollingDisabled)
 					return;
 
 				var request = (HttpWebRequest)WebRequest.Create(PageUrl);

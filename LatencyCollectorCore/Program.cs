@@ -143,13 +143,13 @@ namespace LatencyCollectorCore
 			{
 				lock (Sync)
 				{
-					if (AppSettings.Instance.CheckRemoteSettings())
+					if (PluginSettings.Instance.CheckRemoteSettings())
 					{
 						Tracker.Log("Event",
-							AppSettings.Instance.MonitorSettings.PollingDisabled ? "Polling disabled" : "Central settings updated");
+							PluginSettings.Instance.MonitorSettings.PollingDisabled ? "Polling disabled" : "Central settings updated");
 
-						InitTracker(AppSettings.Instance.MonitorSettings.LogEventUrl,
-							AppSettings.Instance.MonitorSettings.ApplicationKey);
+						InitTracker(PluginSettings.Instance.MonitorSettings.LogEventUrl,
+							PluginSettings.Instance.MonitorSettings.ApplicationKey);
 						StopPolling();
 						StartPolling();
 					}
@@ -201,7 +201,7 @@ namespace LatencyCollectorCore
 		{
 			lock (Sync)
 			{
-				var res = AppSettings.Instance.MonitorSettings.Monitors.ToList().AsReadOnly();
+				var res = PluginSettings.Instance.MonitorSettings.Monitors.ToList().AsReadOnly();
 				return res;
 			}
 		}
@@ -222,9 +222,9 @@ namespace LatencyCollectorCore
 					{
 						_tracker = Tracker.Create(url, appKey, "{APPMETRICS_ACCESS_KEY}");
 
-						Tracker.Log("Info_UserId", AppSettings.Instance.UserId);
-						Tracker.Log("Info_NodeName", AppSettings.Instance.NodeName);
-						var curAssembly = typeof(AppSettings).Assembly;
+						Tracker.Log("Info_UserId", PluginSettings.Instance.UserId);
+						Tracker.Log("Info_NodeName", PluginSettings.Instance.NodeName);
+						var curAssembly = typeof(PluginSettings).Assembly;
 						Tracker.Log("Info_LatencyCollectorVersion", curAssembly.FullName);
 					}
 				}
