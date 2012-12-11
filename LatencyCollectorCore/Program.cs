@@ -224,8 +224,8 @@ namespace LatencyCollectorCore
 
 						Tracker.Log("Info_UserId", PluginSettings.Instance.UserId);
 						Tracker.Log("Info_NodeName", PluginSettings.Instance.NodeName);
-						var curAssembly = typeof(PluginSettings).Assembly;
-						Tracker.Log("Info_LatencyCollectorVersion", curAssembly.FullName);
+						var curAssembly = typeof(Program).Assembly;
+						Tracker.Log("Info_ProcessVersion", curAssembly.FullName);
 					}
 				}
 			}
