@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
 
+using AppMetrics.AgentService.PluginBase;
 using AppMetrics.Client;
 using AppMetrics.Shared;
 
@@ -26,7 +26,7 @@ namespace LatencyCollectorCore
 				Start();
 
 				var curProcess = Process.GetCurrentProcess();
-				_stopEvent = new EventWaitHandle(false, EventResetMode.ManualReset, "AppMetrics_CIAPI");
+				_stopEvent = new EventWaitHandle(false, EventResetMode.ManualReset, Const.GetStopEventName(curProcess.Id));
 
 				var thread = new Thread(ConsoleCheckingThread);
 				thread.Start();
