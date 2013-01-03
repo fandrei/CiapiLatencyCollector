@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>AppMetrics.Client</id>
-    <version>1.0.337</version>
+    <version>1.0.352</version>
     <title>AppMetrics.Client</title>
     <authors>CityIndex Ltd,  Andrei Faber</authors>
     <owners>CityIndex Ltd,  Andrei Faber</owners>
@@ -10,5 +10,8 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>.NET client library for the AppMetrics application runtime intelligence system</description>
     <language>en-GB</language>
+    <references>
+      <reference file="AppMetrics.Client.dll" />
+    </references>
   </metadata>
 </package>
