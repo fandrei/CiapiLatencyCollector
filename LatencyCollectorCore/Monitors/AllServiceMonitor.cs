@@ -100,10 +100,6 @@ namespace LatencyCollectorCore.Monitors
 
 				ListTradeHistory(accountInfo);
 			}
-			catch (Exception exc)
-			{
-				Report(exc);
-			}
 			finally
 			{
 				try
@@ -115,7 +111,7 @@ namespace LatencyCollectorCore.Monitors
 				}
 				catch (Exception exc)
 				{
-					Report(exc);
+					Tracker.Log(exc);
 				}
 			}
 		}
@@ -153,7 +149,7 @@ namespace LatencyCollectorCore.Monitors
 			}
 			catch (Exception exc)
 			{
-				Report(exc);
+				Tracker.Log(exc);
 			}
 		}
 
@@ -167,7 +163,7 @@ namespace LatencyCollectorCore.Monitors
 			}
 			catch (Exception exc)
 			{
-				Report(exc);
+				Tracker.Log(exc);
 			}
 		}
 
@@ -181,7 +177,7 @@ namespace LatencyCollectorCore.Monitors
 			}
 			catch (Exception exc)
 			{
-				Report(exc);
+				Tracker.Log(exc);
 			}
 		}
 
@@ -195,7 +191,7 @@ namespace LatencyCollectorCore.Monitors
 			}
 			catch (Exception exc)
 			{
-				Report(exc);
+				Tracker.Log(exc);
 			}
 		}
 
@@ -209,7 +205,7 @@ namespace LatencyCollectorCore.Monitors
 			}
 			catch (Exception exc)
 			{
-				Report(exc);
+				Tracker.Log(exc);
 			}
 		}
 
@@ -233,13 +229,13 @@ namespace LatencyCollectorCore.Monitors
 					}
 					catch (Exception exc)
 					{
-						Report(exc);
+						Tracker.Log(exc);
 					}
 				}
 			}
 			catch (Exception exc)
 			{
-				Report(exc);
+				Tracker.Log(exc);
 			}
 		}
 
@@ -260,17 +256,8 @@ namespace LatencyCollectorCore.Monitors
 			}
 			catch (Exception exc)
 			{
-				Report(exc);
+				Tracker.Log(exc);
 			}
-		}
-
-		static void Report(Exception exc)
-		{
-			var webExc = exc as WebException;
-			if (webExc != null && WebUtil.IsConnectionFailure(webExc))
-				return;
-
-			Program.Report(exc);
 		}
 
 		private int Trade(Client client, AccountInformationResponseDTO accountInfo, PriceDTO price,
