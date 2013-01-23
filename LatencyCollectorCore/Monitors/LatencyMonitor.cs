@@ -39,6 +39,7 @@ namespace LatencyCollectorCore.Monitors
 			{
 				_terminated = false;
 				_thread = new Thread(ThreadEntry);
+				_thread.Name = GetType().Name;
 				_thread.Start();
 			}
 		}
