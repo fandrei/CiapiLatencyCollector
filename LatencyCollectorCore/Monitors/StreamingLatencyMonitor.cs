@@ -75,7 +75,8 @@ namespace LatencyCollectorCore.Monitors
 
 			if (_client != null)
 			{
-				_client.LogOut();
+				if (!string.IsNullOrEmpty(_client.Session))
+					_client.LogOut();
 
 				_client.Dispose();
 				_client = null;
