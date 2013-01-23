@@ -11,5 +11,20 @@ namespace LatencyCollectorCore
 		public static bool IsConnectionFailure(WebException exc)		{			if (exc.Status == WebExceptionStatus.NameResolutionFailure ||				exc.Status == WebExceptionStatus.Timeout ||				exc.Status == WebExceptionStatus.ConnectFailure ||				exc.Status == WebExceptionStatus.ConnectionClosed)			{				return true;			}
 			return false;		}
 		public static bool IsNotFound(WebException exc)		{			if (exc.Status == WebExceptionStatus.ProtocolError)			{				if (((HttpWebResponse)exc.Response).StatusCode == HttpStatusCode.NotFound)				{					return true;				}			}
-			return false;		}	}
+			return false;		}		public static bool IsConnectionAvailable()
+		{
+			try
+			{
+				using (var client = new WebClient())
+				{
+					var resp = client.DownloadString("http://www.msftncsi.com/ncsi.txt");
+				}
+
+				return true;
+			}
+			catch (WebException exc)
+			{
+				return IsConnectionFailure(exc);
+			}
+		}	}
 }

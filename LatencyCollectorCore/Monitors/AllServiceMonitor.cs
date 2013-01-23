@@ -58,11 +58,8 @@ namespace LatencyCollectorCore.Monitors
 				if (PluginSettings.Instance.MonitorSettings.PollingDisabled)
 					return;
 
-				using (var client = new WebClient())
-				{
-					// check if internet connection is available
-					var resp = client.DownloadString("http://www.msftncsi.com/ncsi.txt");
-				}
+				if (!WebUtil.IsConnectionAvailable())
+					return;
 
 				Login();
 
