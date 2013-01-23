@@ -56,7 +56,7 @@ namespace LatencyCollectorCore.Monitors
 				return;
 
 			var diff = now - tickTime;
-			Tracker.Log("Latency PriceStream", diff.TotalSeconds);
+			Tracker.Log("Latency CIAPI.PriceStream", diff.TotalSeconds);
 		}
 
 		protected override void Cleanup()
