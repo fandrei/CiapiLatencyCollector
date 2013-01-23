@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Monitors\AllServiceMonitor.cs" />
+    <Compile Include="Monitors\StreamingLatencyMonitor.cs" />
     <Compile Include="PluginSettings.cs" />
     <Compile Include="Monitors\AuthenticatedMonitor.cs" />
     <Compile Include="Monitors\DefaultPageMonitor.cs" />

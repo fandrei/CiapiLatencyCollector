@@ -12,6 +12,7 @@ namespace LatencyCollectorCore.Monitors
 	[XmlInclude(typeof(DefaultPageMonitor))]
 	[XmlInclude(typeof(AuthenticatedMonitor))]
 	[XmlInclude(typeof(AllServiceMonitor))]
+	[XmlInclude(typeof(StreamingLatencyMonitor))]
 	public abstract class LatencyMonitor : IDisposable
 	{
 		protected LatencyMonitor()
