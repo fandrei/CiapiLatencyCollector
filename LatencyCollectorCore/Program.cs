@@ -112,19 +112,20 @@ namespace LatencyCollectorCore
 
 		private static void StartPolling()
 		{
-			var monitors = GetMonitors();
-			foreach (var monitor in monitors)
-			{
-				monitor.Start();
-			}
-		}
-
-		static void StopPolling()
-		{
 			lock (Sync)
 			{
 				var monitors = GetMonitors();
+				foreach (var monitor in monitors)
+				{
+					monitor.Start();
+				}
+			}
+		}
 
+		static void StopPolling(IList<LatencyMonitor> monitors)
+		{
+			lock (Sync)
+			{
 				foreach (var monitor in monitors)
 				{
 					monitor.Interrupt();
@@ -137,12 +138,19 @@ namespace LatencyCollectorCore
 			}
 		}
 
+		static void StopPolling()
+		{
+			StopPolling(GetMonitors());
+		}
+
 		private static void UpdateSettings()
 		{
 			try
 			{
 				lock (Sync)
 				{
+					var monitors = GetMonitors();
+
 					if (PluginSettings.Instance.CheckRemoteSettings())
 					{
 						Tracker.Log("Event",
@@ -150,7 +158,7 @@ namespace LatencyCollectorCore
 
 						InitTracker(PluginSettings.Instance.MonitorSettings.LogEventUrl,
 							PluginSettings.Instance.MonitorSettings.ApplicationKey);
-						StopPolling();
+						StopPolling(monitors);
 						StartPolling();
 					}
 				}
