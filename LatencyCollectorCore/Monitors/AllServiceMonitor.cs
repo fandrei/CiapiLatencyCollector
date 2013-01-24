@@ -332,10 +332,10 @@ namespace LatencyCollectorCore.Monitors
 
 		protected override void Cleanup()
 		{
-			if (ApiClient != null)
+			if (_client != null)
 			{
-				ApiClient.Dispose();
-				ApiClient = null;
+				_client.Dispose();
+				_client = null;
 			}
 
 			if (_metricsRecorder != null)
