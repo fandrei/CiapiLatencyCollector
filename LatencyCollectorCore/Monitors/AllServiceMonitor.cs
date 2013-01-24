@@ -23,7 +23,8 @@ namespace LatencyCollectorCore.Monitors
 
 		public bool AllowTrading { get; set; }
 
-		private Client _client = null;
+		private Client _client;
+
 		internal Client ApiClient
 		{
 			get
