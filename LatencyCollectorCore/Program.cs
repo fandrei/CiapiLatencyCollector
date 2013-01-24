@@ -229,11 +229,7 @@ namespace LatencyCollectorCore
 					if (_tracker == null)
 					{
 						_tracker = Tracker.Create(url, appKey, "{APPMETRICS_ACCESS_KEY}");
-
-						Tracker.Log("Info_UserId", PluginSettings.Instance.UserId);
-						Tracker.Log("Info_NodeName", PluginSettings.Instance.NodeName);
-						var curAssembly = typeof(Program).Assembly;
-						Tracker.Log("Info_ProcessVersion", curAssembly.FullName);
+						MetricsUtil.ReportNodeInfo(_tracker);
 					}
 				}
 			}

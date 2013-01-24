@@ -8,6 +8,7 @@ using System.Threading;
 
 using CIAPI.DTO;
 using CIAPI.Rpc;
+using Salient.ReliableHttpClient;
 
 namespace LatencyCollectorCore.Monitors
 {
@@ -25,27 +26,7 @@ namespace LatencyCollectorCore.Monitors
 
 		private Client _client;
 
-		internal Client ApiClient
-		{
-			get
-			{
-				if (_client == null)
-				{
-					_client = new Client(new Uri(ServerUrl), new Uri(StreamingServerUrl), "{API_KEY}", 1);
-					_client.AppKey = "CiapiLatencyCollector." + GetType().Name + ".BuiltIn";
-
-					if (Tracker != null)
-					{
-						_metricsRecorder = new MetricsRecorder(_client, new Uri(Tracker.Url), Guid.NewGuid().ToString(), "{APPMETRICS_ACCESS_KEY}");
-						_metricsRecorder.Start();
-					}
-				}
-				return _client;
-			}
-			set { _client = value; }
-		}
-
-		private MetricsRecorder _metricsRecorder;
+		private RecorderBase _metricsRecorder;
 
 		// GBP/USD markets
 		private const int MarketId = 400616150;
@@ -62,6 +43,21 @@ namespace LatencyCollectorCore.Monitors
 				if (!WebUtil.IsConnectionAvailable())
 					return;
 
+				if (_client == null)
+				{
+					_client = new Client(new Uri(ServerUrl), new Uri(StreamingServerUrl), "{API_KEY}", 1);
+
+					if (Tracker != null)
+					{
+						var appKey = "CiapiLatencyCollector." + GetType().Name + ".BuiltIn";
+						var tracker = AppMetrics.Client.Tracker.Create(Tracker.Url, appKey, Tracker.AccessKey);
+						MetricsUtil.ReportNodeInfo(tracker);
+
+						_metricsRecorder = new CiapiLatencyRecorder(_client, tracker);
+						_metricsRecorder.Start();
+					}
+				}
+
 				Login();
 
 				var accountInfo = GetAccountInfo();
@@ -73,16 +69,16 @@ namespace LatencyCollectorCore.Monitors
 
 				if (AllowTrading)
 				{
-					var price = GetPrice(ApiClient);
+					var price = GetPrice(_client);
 					var canTrade = (price.StatusSummary == 0); // normal status
 
 					if (canTrade)
 					{
 						CloseAllOpenPositions(accountInfo);
 
-						var orderId = Trade(ApiClient, accountInfo, price, 1M, "buy", new int[0]);
+						var orderId = Trade(_client, accountInfo, price, 1M, "buy", new int[0]);
 						OpenPositions(accountInfo);
-						Trade(ApiClient, accountInfo, price, 1M, "sell", new[] { orderId });
+						Trade(_client, accountInfo, price, 1M, "sell", new[] { orderId });
 					}
 					else
 					{
@@ -102,7 +98,7 @@ namespace LatencyCollectorCore.Monitors
 			{
 				try
 				{
-					if (ApiClient != null && !String.IsNullOrEmpty(ApiClient.Session))
+					if (_client != null && !String.IsNullOrEmpty(_client.Session))
 					{
 						Logout();
 					}
@@ -117,21 +113,21 @@ namespace LatencyCollectorCore.Monitors
 		private void Login()
 		{
 			var measure = Tracker.StartMeasure();
-			ApiClient.LogIn(UserName, Password);
+			_client.LogIn(UserName, Password);
 			Tracker.EndMeasure(measure, "CIAPI.LogIn");
 		}
 
 		private void Logout()
 		{
 			var measure = Tracker.StartMeasure();
-			ApiClient.LogOut();
+			_client.LogOut();
 			Tracker.EndMeasure(measure, "CIAPI.LogOut");
 		}
 
 		private AccountInformationResponseDTO GetAccountInfo()
 		{
 			var measure = Tracker.StartMeasure();
-			var accountInfo = ApiClient.AccountInformation.GetClientAndTradingAccount();
+			var accountInfo = _client.AccountInformation.GetClientAndTradingAccount();
 			Tracker.EndMeasure(measure, "CIAPI.GetClientAndTradingAccount");
 			return accountInfo;
 		}
@@ -141,7 +137,7 @@ namespace LatencyCollectorCore.Monitors
 			try
 			{
 				var measure = Tracker.StartMeasure();
-				var resp = ApiClient.SpreadMarkets.ListSpreadMarkets("", "",
+				var resp = _client.SpreadMarkets.ListSpreadMarkets("", "",
 					accountInfo.ClientAccountId, 100, false);
 				Tracker.EndMeasure(measure, "CIAPI.ListSpreadMarkets");
 			}
@@ -156,7 +152,7 @@ namespace LatencyCollectorCore.Monitors
 			try
 			{
 				var measure = Tracker.StartMeasure();
-				var resp = ApiClient.News.ListNewsHeadlinesWithSource("dj", "UK", 10);
+				var resp = _client.News.ListNewsHeadlinesWithSource("dj", "UK", 10);
 				Tracker.EndMeasure(measure, "CIAPI.ListNewsHeadlinesWithSource");
 			}
 			catch (Exception exc)
@@ -170,7 +166,7 @@ namespace LatencyCollectorCore.Monitors
 			try
 			{
 				var measure = Tracker.StartMeasure();
-				var resp = ApiClient.Market.GetMarketInformation(MarketId.ToString());
+				var resp = _client.Market.GetMarketInformation(MarketId.ToString());
 				Tracker.EndMeasure(measure, "CIAPI.GetMarketInformation");
 			}
 			catch (Exception exc)
@@ -184,7 +180,7 @@ namespace LatencyCollectorCore.Monitors
 			try
 			{
 				var measure = Tracker.StartMeasure();
-				var resp = ApiClient.PriceHistory.GetPriceBars(MarketId.ToString(), "MINUTE", 1, "20");
+				var resp = _client.PriceHistory.GetPriceBars(MarketId.ToString(), "MINUTE", 1, "20");
 				Tracker.EndMeasure(measure, "CIAPI.GetPriceBars");
 			}
 			catch (Exception exc)
@@ -198,7 +194,7 @@ namespace LatencyCollectorCore.Monitors
 			try
 			{
 				var measure = Tracker.StartMeasure();
-				ApiClient.TradesAndOrders.ListOpenPositions(accountInfo.SpreadBettingAccount.TradingAccountId);
+				_client.TradesAndOrders.ListOpenPositions(accountInfo.SpreadBettingAccount.TradingAccountId);
 				Tracker.EndMeasure(measure, "CIAPI.ListOpenPositions");
 			}
 			catch (Exception exc)
@@ -211,7 +207,7 @@ namespace LatencyCollectorCore.Monitors
 		{
 			try
 			{
-				var positions = ApiClient.TradesAndOrders.ListOpenPositions(accountInfo.SpreadBettingAccount.TradingAccountId);
+				var positions = _client.TradesAndOrders.ListOpenPositions(accountInfo.SpreadBettingAccount.TradingAccountId);
 				Tracker.Log("Info_CloseAllOpenPositions_Count", positions.OpenPositions.Length);
 
 				var positionsGrouped = GroupBy(positions.OpenPositions, x => x.Direction);
@@ -219,11 +215,11 @@ namespace LatencyCollectorCore.Monitors
 				{
 					try
 					{
-						var price = GetPrice(ApiClient);
+						var price = GetPrice(_client);
 						var direction = (posGroup.Key.ToLower() == "buy") ? "sell" : "buy";
 						var quantity = posGroup.Value.Sum(x => x.Quantity);
 						var ids = posGroup.Value.Select(x => x.OrderId).ToArray();
-						Trade(ApiClient, accountInfo, price, quantity, direction, ids);
+						Trade(_client, accountInfo, price, quantity, direction, ids);
 					}
 					catch (Exception exc)
 					{
@@ -249,7 +245,7 @@ namespace LatencyCollectorCore.Monitors
 			try
 			{
 				var measure = Tracker.StartMeasure();
-				var tradeHistory = ApiClient.TradesAndOrders.ListTradeHistory(accountInfo.SpreadBettingAccount.TradingAccountId, 20);
+				var tradeHistory = _client.TradesAndOrders.ListTradeHistory(accountInfo.SpreadBettingAccount.TradingAccountId, 20);
 				Tracker.EndMeasure(measure, "CIAPI.ListTradeHistory");
 			}
 			catch (Exception exc)

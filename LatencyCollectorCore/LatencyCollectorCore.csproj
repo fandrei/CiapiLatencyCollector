@@ -83,6 +83,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Monitors\CiapiLatencyRecorder.cs" />
     <Compile Include="Monitors\AllServiceMonitor.cs" />
     <Compile Include="Monitors\StreamingLatencyMonitor.cs" />
     <Compile Include="PluginSettings.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SntpClient.cs" />
+    <Compile Include="MetricsUtil.cs" />
     <Compile Include="WebUtil.cs" />
   </ItemGroup>
   <ItemGroup>
