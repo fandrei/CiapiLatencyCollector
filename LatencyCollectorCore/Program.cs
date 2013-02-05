@@ -28,11 +28,23 @@ namespace LatencyCollectorCore
 				var curProcess = Process.GetCurrentProcess();
 				_stopEvent = new EventWaitHandle(false, EventResetMode.ManualReset, Const.GetStopEventName(curProcess.Id));
 
-				var thread = new Thread(ConsoleCheckingThread);
-				thread.Start();
+				var consoleThread = new Thread(ConsoleCheckingThread);
+				consoleThread.Start();
 
-				_stopEvent.WaitOne();
-				thread.Abort();
+				while (true)
+				{
+					var stop = _stopEvent.WaitOne(1);
+					if (stop)
+						break;
+
+					if (!Control.IsMasterRunning)
+					{
+						ReportEvent("Event", "No master process found - exiting");
+						break;
+					}
+				}
+
+				consoleThread.Abort();
 
 				Stop();
 			}
