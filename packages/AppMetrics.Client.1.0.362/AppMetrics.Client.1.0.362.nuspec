@@ -1,18 +1,17 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <id>AppMetrics.AgentService.PluginBase</id>
-    <version>1.0.350</version>
-    <title>AppMetrics.AgentService.PluginBase</title>
+    <id>AppMetrics.Client</id>
+    <version>1.0.362</version>
+    <title>AppMetrics.Client</title>
     <authors>CityIndex Ltd,  Andrei Faber</authors>
     <owners>CityIndex Ltd,  Andrei Faber</owners>
     <licenseUrl>https://github.com/fandrei/AppMetrics/raw/master/LICENSE.txt</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>AppMetrics - agent service plugin</description>
+    <description>.NET client library for the AppMetrics application runtime intelligence system</description>
     <language>en-GB</language>
     <references>
-      <reference file="AppMetrics.AgentService.PluginBase.dll" />
-      <reference file="AppMetrics.Shared.dll" />
+      <reference file="AppMetrics.Client.dll" />
     </references>
   </metadata>
 </package>
