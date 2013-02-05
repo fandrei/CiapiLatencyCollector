@@ -25,6 +25,7 @@ namespace LatencyCollectorCore.Monitors
 		public bool AllowTrading { get; set; }
 
 		private Client _client;
+		private object _sync = new object();
 
 		private RecorderBase _metricsRecorder;
 
@@ -43,19 +44,22 @@ namespace LatencyCollectorCore.Monitors
 				if (!WebUtil.IsConnectionAvailable())
 					return;
 
-				if (_client == null)
+				lock (_sync)
 				{
-					_client = new Client(new Uri(ServerUrl), new Uri(StreamingServerUrl), "{API_KEY}", 1);
-
-					if (Tracker != null)
+					if (_client == null)
 					{
-						var appKey = "CiapiLatencyCollector." + GetType().Name + ".BuiltIn";
-						var tracker = AppMetrics.Client.Tracker.Create(Tracker.Url, appKey, Tracker.AccessKey);
-						MetricsUtil.ReportNodeInfo(tracker);
-
-						_metricsRecorder = new CiapiLatencyRecorder(_client, tracker);
-						_metricsRecorder.Start();
+						_client = new Client(new Uri(ServerUrl), new Uri(StreamingServerUrl), "{API_KEY}", 1);
 					}
+				}
+
+				if (_metricsRecorder == null && Tracker != null)
+				{
+					var appKey = "CiapiLatencyCollector." + GetType().Name + ".BuiltIn";
+					var tracker = AppMetrics.Client.Tracker.Create(Tracker.Url, appKey, Tracker.AccessKey);
+					MetricsUtil.ReportNodeInfo(tracker);
+
+					_metricsRecorder = new CiapiLatencyRecorder(_client, tracker);
+					_metricsRecorder.Start();
 				}
 
 				Login();
@@ -324,6 +328,18 @@ namespace LatencyCollectorCore.Monitors
 				listener.Stop();
 				streamingClient.Dispose();
 			}
+		}
+
+		protected override bool InterruptInternal()
+		{
+			lock (_sync)
+			{
+				if (_client != null)
+				{
+					_client.LogOut();
+				}
+			}
+			return true;
 		}
 
 		protected override void Cleanup()

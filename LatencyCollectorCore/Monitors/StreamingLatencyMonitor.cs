@@ -18,6 +18,7 @@ namespace LatencyCollectorCore.Monitors
 		private const int MarketId = 400616150;
 
 		private Client _client = null;
+		private object _sync = new object();
 
 		private IStreamingClient _streamingClient;
 		private IStreamingListener<PriceDTO> _listener;
@@ -32,18 +33,21 @@ namespace LatencyCollectorCore.Monitors
 			if (!WebUtil.IsConnectionAvailable())
 				return;
 
-			if (_client == null)
+			lock (_sync)
 			{
-				_client = new Client(new Uri(ServerUrl), new Uri(StreamingServerUrl), "{API_KEY}", 1);
+				if (_client == null)
+				{
+					_client = new Client(new Uri(ServerUrl), new Uri(StreamingServerUrl), "{API_KEY}", 1);
 
-				_client.LogIn(UserName, Password);
+					_client.LogIn(UserName, Password);
 
-				_streamingClient = _client.CreateStreamingClient();
-				_streamingStartTime = DateTime.UtcNow;
+					_streamingClient = _client.CreateStreamingClient();
+					_streamingStartTime = DateTime.UtcNow;
 
-				_listener = _streamingClient.BuildPricesListener(MarketId);
+					_listener = _streamingClient.BuildPricesListener(MarketId);
 
-				_listener.MessageReceived += OnPriceUpdate;
+					_listener.MessageReceived += OnPriceUpdate;
+				}
 			}
 		}
 
@@ -57,6 +61,18 @@ namespace LatencyCollectorCore.Monitors
 
 			var diff = now - tickTime;
 			Tracker.Log("Latency CIAPI.PriceStream", diff.TotalSeconds);
+		}
+
+		protected override bool InterruptInternal()
+		{
+			lock (_sync)
+			{
+				if (_client != null)
+				{
+					_client.LogOut();
+				}
+			}
+			return true;
 		}
 
 		protected override void Cleanup()

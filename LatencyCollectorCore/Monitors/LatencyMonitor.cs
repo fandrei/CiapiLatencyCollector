@@ -26,6 +26,11 @@ namespace LatencyCollectorCore.Monitors
 		{
 		}
 
+		protected virtual bool InterruptInternal()
+		{
+			return false;
+		}
+
 		public int PeriodSeconds { get; set; }
 
 		[XmlIgnore]
@@ -111,7 +116,19 @@ namespace LatencyCollectorCore.Monitors
 				_terminated = true;
 				if (_thread == null)
 					return;
-				_thread.Interrupt();
+
+				var interrupted = false;
+				try
+				{
+					interrupted = InterruptInternal();
+				}
+				catch (Exception exc)
+				{
+					Tracker.Log(exc);
+				}
+
+				if (!interrupted)
+					_thread.Interrupt();
 			}
 		}
 
