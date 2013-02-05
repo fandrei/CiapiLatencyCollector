@@ -25,7 +25,7 @@ namespace LatencyCollectorCore.Monitors
 		public bool AllowTrading { get; set; }
 
 		private Client _client;
-		private object _sync = new object();
+		private readonly object _sync = new object();
 
 		private RecorderBase _metricsRecorder;
 

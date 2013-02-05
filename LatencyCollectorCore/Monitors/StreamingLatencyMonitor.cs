@@ -17,8 +17,8 @@ namespace LatencyCollectorCore.Monitors
 		// GBP/USD markets
 		private const int MarketId = 400616150;
 
-		private Client _client = null;
-		private object _sync = new object();
+		private Client _client;
+		private readonly object _sync = new object();
 
 		private IStreamingClient _streamingClient;
 		private IStreamingListener<PriceDTO> _listener;
