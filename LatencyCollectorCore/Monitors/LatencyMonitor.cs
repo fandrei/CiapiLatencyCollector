@@ -67,7 +67,14 @@ namespace LatencyCollectorCore.Monitors
 							}
 						}
 
-						Execute();
+						if (!WebUtil.IsConnectionAvailable())
+						{
+							Tracker.Log("Event", GetType().Name + ": no internet connection");
+						}
+						else
+						{
+							Execute();
+						}
 					}
 					catch (ThreadInterruptedException)
 					{

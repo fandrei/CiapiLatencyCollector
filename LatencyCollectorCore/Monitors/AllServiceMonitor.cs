@@ -41,9 +41,6 @@ namespace LatencyCollectorCore.Monitors
 				if (PluginSettings.Instance.MonitorSettings.PollingDisabled)
 					return;
 
-				if (!WebUtil.IsConnectionAvailable())
-					return;
-
 				lock (_sync)
 				{
 					if (_client == null)

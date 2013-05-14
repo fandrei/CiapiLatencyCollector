@@ -30,9 +30,6 @@ namespace LatencyCollectorCore.Monitors
 			if (string.IsNullOrEmpty(ServerUrl))
 				throw new ApplicationException("StreamingLatencyMonitor: ServerUrl is not set");
 
-			if (!WebUtil.IsConnectionAvailable())
-				return;
-
 			lock (_sync)
 			{
 				if (_client == null)
