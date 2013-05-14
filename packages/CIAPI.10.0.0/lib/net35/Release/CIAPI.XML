@@ -44,6 +44,16 @@
             Response from an account information query.
             </summary>
         </member>
+        <member name="P:CIAPI.DTO.AccountInformationResponseDTO.CFDAccount">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.AccountInformationResponseDTO.SpreadBettingAccount">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:CIAPI.DTO.AccountInformationResponseDTO.LogonUserName">
             <summary>
             Logon user name.
@@ -91,7 +101,7 @@
         </member>
         <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.ParentOrderId">
             <summary>
-            The order's parent OrderId.
+            This represents the OrderID of any orders that the current order is related to. If there is no parent order as the order in question *is* the parent order, then the value is null.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.MarketId">
@@ -166,7 +176,7 @@
         </member>
         <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.LastChangedDateTimeUTC">
             <summary>
-            The last time that the order changed. **Note:** does not include things such as the current market price.
+            Represents the date and time when the trade/order was last edited. **Note:** does not include things such as the current market price.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.Applicability_Resolved">
@@ -177,6 +187,11 @@
         <member name="T:CIAPI.DTO.ApiBasicStopLimitOrderDTO">
             <summary>
             A stop or limit order with a limited number of data fields.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiBasicStopLimitOrderDTO.Guaranteed">
+            <summary>
+            Flag indicating if the stop order is a guaranteed order.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiBasicStopLimitOrderDTO.OrderId">
@@ -579,6 +594,16 @@
             The market name.
             </summary>
         </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.ExchangeId">
+            <summary>
+            Unique identifier for the exchange where the underlying is traded.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.ExchangeName">
+            <summary>
+            The name of the exchange where the underlying is traded.
+            </summary>
+        </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MarginFactor">
             <summary>
             Margin factor, expressed as points or as a percentage.
@@ -591,12 +616,22 @@
         </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MarginFactorUnits">
             <summary>
-            Controls if the margin factor is displayed as a percentage or in points. 26 == Percentage, and 27 == Points.
+            Controls if the margin factor is displayed as a percentage or in points. *(Percentage=26, and Points=27)*.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MaxMarginFactor">
             <summary>
             The maximum margin factor.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MarketType">
+            <summary>
+            Description of the market type. This can be 'OptionMarket', 'Ordinary Market', or 'BinaryMarket'.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MarketTypeId">
+            <summary>
+            Identifier for each of the market types. *(Option=1, Ordinary=2 and Binary=4)*. 
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MinDistance">
@@ -607,6 +642,21 @@
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MinDistanceUnits">
             <summary>
             The minimum distance unit type. This can be: *(Percentage=26, Points=27)*.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.OptionType">
+            <summary>
+            Indicates if the option is a Call or a Put option.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.OptionTypeId">
+            <summary>
+            ID number indicating the option type: *Put=1* and *Call=2*. This value is null for non-option markets.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.StrikePrice">
+            <summary>
+            The strike price of the option. This value is null for non-option markets.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.WebMinSize">
@@ -676,7 +726,7 @@
         </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MarketSettingsTypeId">
             <summary>
-            The ID type of the market setting, i.e. Spread, CFD.
+            The ID type of the market setting. *(Spread=1, CFD=2, Binary=3, FX=4, Cash=5, All=6)*.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MarketSettingsType">
@@ -771,22 +821,32 @@
         </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MarketTimeZoneOffsetMinutes">
             <summary>
-            Offset minutes to convert UTC times to local times
+            Offset minutes to convert UTC times to local times.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.QuantityConversionFactor">
+            <summary>
+            The number of units for an instrument per actual traded units.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.PointFactorDivisor">
+            <summary>
+            The number of cents which make up a dollar trade on the exchange.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.BetPer">
             <summary>
-            Bet Per value for CFD and Spread Bet markets
+            Bet Per value for CFD and Spread Bet markets.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MarketUnderlyingTypeId">
             <summary>
-            Reflects the market underlying type ID of the associated market
+            Reflects the market underlying type ID of the associated market. <ul> <li>Equity=1</li> <li>Index=2</li> <li>Bond=3</li> <li>FX=4</li> <li>Commodity=5</li> <li>Interest Rate=6</li> <li>Metals=7</li> <li>Equity - Common Stock=8</li> <li>Equity - ADS=9</li> <li>Binary=10</li> <li>Sectors=11</li> <li>FX Hedge=12</li> </ul>
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MarketUnderlyingType">
             <summary>
-            Reflects the market underlying type description of the associated market
+            Reflects the market underlying type description of the associated market.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.AllowGuaranteedOrders">
@@ -816,12 +876,17 @@
         </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.CommissionRateUnits">
             <summary>
-            The unit type for the commission rate charged on a trade/order. This can be: *(Percentage=26, Points=27)*.
+            The unit type for the commission rate charged on a trade/order. This can be: <ul> <li>Minimum commission for equities - 11</li> <li>Equities commission rate in basis points - 12</li> <li>Commission for indices - 17</li> <li>Equities commission rate in Cents Per Share - 23</li> </ul>
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.ExpiryUtc">
             <summary>
             Expiry of the market in UTC.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.StepMargin">
+            <summary>
+            Step margin data for this market.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiMarketInformationDTO.FutureRolloverUTC">
@@ -981,7 +1046,7 @@
         </member>
         <member name="P:CIAPI.DTO.ApiOpenPositionDTO.LastChangedDateTimeUTC">
             <summary>
-            The last time that the order changed. **Note:** does not include things such as the current market price.
+            Represents the date and time when the trade/order was last edited. **Note:** does not include things such as the current market price.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiOpenPositionDTO.Status_Resolved">
@@ -1239,6 +1304,46 @@
             Plain text StatusReason
             </summary>
         </member>
+        <member name="T:CIAPI.DTO.ApiStepMarginDTO">
+            <summary>
+            A market's step margin information as expressed by the TradingApi.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiStepMarginDTO.EligibleForStepMargin">
+            <summary>
+            Flag indicating whether this market is eligible for step margin.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiStepMarginDTO.StepMarginConfigured">
+            <summary>
+            Flag indicating whether this market has step margin configured.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiStepMarginDTO.InheritedFromParentAccountOperator">
+            <summary>
+            Flag indicating whether this market's step margin configuration is inherited from a parent account operator.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiStepMarginDTO.Bands">
+            <summary>
+            The step margining bands used for this market / account operator.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiStepMarginBandDTO">
+            <summary>
+            Represents a single step margin band as expressed by the TradingApi.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiStepMarginBandDTO.LowerBound">
+            <summary>
+            Minimum threshold for this band, expressed in terms of the client's trade quantity.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiStepMarginBandDTO.MarginFactor">
+            <summary>
+            The margin factor that is used for this band. It can be expressed as a percentage or in points based on the market's margin factor type. 
+            </summary>
+        </member>
         <member name="T:CIAPI.DTO.ApiStopLimitOrderDTO">
             <summary>
             Represents a stop/limit order.
@@ -1262,6 +1367,16 @@
         <member name="P:CIAPI.DTO.ApiStopLimitOrderDTO.Applicability">
             <summary>
             Identifier which relates to the expiry of the order/trade, i.e. GoodTillDate (GTD), GoodTillCancelled (GTC) or GoodForDay (GFD).
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiStopLimitOrderDTO.ParentOrderId">
+            <summary>
+            This represents the OrderID of any orders that the current order is related to. If there is no parent order as the order in question *is* the parent order, then the value is null.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiStopLimitOrderDTO.LastChangedDateTimeUTC">
+            <summary>
+            Represents the date and time when the trade/order was last edited. **Note:** does not include things such as the current market price.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ApiStopLimitOrderHistoryDTO">
@@ -1331,7 +1446,7 @@
         </member>
         <member name="P:CIAPI.DTO.ApiStopLimitOrderHistoryDTO.LastChangedDateTimeUtc">
             <summary>
-            The last time that the order changed.
+            Represents the date and time when the trade/order was last edited. **Note:** does not include things such as the current market price.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiStopLimitOrderHistoryDTO.CreatedDateTimeUtc">
@@ -1403,7 +1518,7 @@
         <!-- Badly formed XML comment ignored for member "P:CIAPI.DTO.ApiTradeHistoryDTO.RealisedPnlCurrency" -->
         <member name="P:CIAPI.DTO.ApiTradeHistoryDTO.LastChangedDateTimeUtc">
             <summary>
-            The last time that the order changed. Note - does not include things such as the current market price.
+            Represents the date and time when the trade/order was last edited. **Note:** does not include things such as the current market price.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ApiTradeHistoryDTO.ExecutedDateTimeUtc">
@@ -1414,6 +1529,16 @@
         <member name="T:CIAPI.DTO.ApiTradeOrderDTO">
             <summary>
             Represents a trade order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradeOrderDTO.ParentOrderId">
+            <summary>
+            This represents the OrderID of any orders that the current order is related to. If there is no parent order as the order in question *is* the parent order, then the value is null.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradeOrderDTO.LastChangedDateTimeUTC">
+            <summary>
+            Represents the date and time when the trade/order was last edited. **Note:** does not include things such as the current market price.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ApiTradeOrderResponseDTO">
@@ -1908,7 +2033,7 @@
         </member>
         <member name="T:CIAPI.DTO.ListNewsHeadlinesRequestDTO">
             <summary>
-            A request for news stories.
+            A request for news stories. The stories can be filtered by one of the four available filters: *(Category, MarketId, MarketName, RicCode)*. Only use **1** of the filters at a time. If zero or more than one filter is used simultaneously, then an exception is thrown and a 400 status error code is returned.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ListNewsHeadlinesRequestDTO.Source">
@@ -1918,7 +2043,22 @@
         </member>
         <member name="P:CIAPI.DTO.ListNewsHeadlinesRequestDTO.Category">
             <summary>
-            A category that is used to filter the news.
+            A news category that can be used to filter the news.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ListNewsHeadlinesRequestDTO.MarketId">
+            <summary>
+            A market ID that can be used to filter the news.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ListNewsHeadlinesRequestDTO.MarketName">
+            <summary>
+            A market name that can be used to filter the news.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ListNewsHeadlinesRequestDTO.RicCode">
+            <summary>
+            A Reuters Instrument Code *(RIC)* that can be used to filter the news.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.ListNewsHeadlinesRequestDTO.MaxResults">
@@ -2086,6 +2226,11 @@
             Direction identifier for order/trade, values supported are buy or sell.
             </summary>
         </member>
+        <member name="P:CIAPI.DTO.NewStopLimitOrderRequestDTO.PositionMethodId">
+            <summary>
+            Indicates the position of the trade. 1 == LongOrShortOnly, 2 == LongAndShort.
+            </summary>
+        </member>
         <member name="P:CIAPI.DTO.NewStopLimitOrderRequestDTO.Quantity">
             <summary>
             Size of the order/trade.
@@ -2173,7 +2318,12 @@
         </member>
         <member name="P:CIAPI.DTO.NewTradeOrderRequestDTO.QuoteId">
             <summary>
-            The quote identifier.
+            The quote identifier
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewTradeOrderRequestDTO.PositionMethodId">
+            <summary>
+            Indicates the position of the trade. 1 == LongOrShortOnly, 2 == LongAndShort.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.NewTradeOrderRequestDTO.BidPrice">
@@ -2273,7 +2423,7 @@
         </member>
         <member name="P:CIAPI.DTO.OrderDTO.PositionMethodId">
             <summary>
-            The position method identifier of the order.
+            Indicates the position of the trade. 1 == LongOrShortOnly, 2 == LongAndShort.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.OrderDTO.Quantity">
@@ -2368,12 +2518,22 @@
         </member>
         <member name="P:CIAPI.DTO.PriceDTO.Change">
             <summary>
-            The change since the last price *(always positive)*. See Direction for direction of the change.
+            The change from the previous day's close to the current price - can be negative or positive.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.PriceDTO.Direction">
             <summary>
             The direction of movement since the last price. 1 == up, 0 == down.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.PriceDTO.Delta">
+            <summary>
+            The Delta of an option. Delta measures the rate of change of option value with respect to changes in the underlying asset's price. This is null for non-option markets.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.PriceDTO.ImpliedVolatility">
+            <summary>
+            A measure of an options's price variance over time. **Note:** this volatility is a calculated value from a proprietary model. For non-option markets this is null.
             </summary>
         </member>
         <member name="P:CIAPI.DTO.PriceDTO.AuditId">
@@ -2636,11 +2796,6 @@
             A request to update a trade order.
             </summary>
         </member>
-        <member name="P:CIAPI.DTO.UpdateTradeOrderRequestDTO.AutoRollover">
-            <summary>
-            Flag to indicate whether the trade will automatically roll into the next market interval when the current market interval expires.
-            </summary>
-        </member>
         <member name="P:CIAPI.DTO.UpdateTradeOrderRequestDTO.OrderId">
             <summary>
             The identifier of the order to update.
@@ -2756,24 +2911,270 @@
             Plain text StatusReason
             </summary>
         </member>
+        <member name="T:CIAPI.Streaming.LightstreamerClient">
+            <summary>
+            
+            </summary>
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:CIAPI.Streaming.IStreamingClient">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Streaming.IStreamingClient.BuildPricesListener(System.Int32[])">
+            <summary>
+            
+            </summary>
+            <param name="marketIds"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Streaming.IStreamingClient.BuildNewsHeadlinesListener(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="category"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Streaming.IStreamingClient.BuildQuotesListener">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Streaming.IStreamingClient.BuildClientAccountMarginListener">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Streaming.IStreamingClient.BuildOrdersListener">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Streaming.IStreamingClient.BuildDefaultPricesListener(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="accountOperatorId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Streaming.IStreamingClient.BuildTradeMarginListener">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Streaming.IStreamingClient.TearDownListener(CIAPI.StreamingClient.IStreamingListener)">
+            <summary>
+            
+            </summary>
+            <param name="listener"></param>
+        </member>
+        <member name="E:CIAPI.Streaming.IStreamingClient.StatusChanged">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Streaming.LightstreamerClient.BuildNewsHeadlinesListener(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="category"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Streaming.LightstreamerClient.BuildPricesListener(System.Int32[])">
+            <summary>
+            
+            </summary>
+            <param name="marketIds"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Streaming.LightstreamerClient.BuildQuotesListener">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Streaming.LightstreamerClient.BuildClientAccountMarginListener">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Streaming.LightstreamerClient.BuildOrdersListener">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Streaming.LightstreamerClient.BuildDefaultPricesListener(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="accountOperatorId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Streaming.LightstreamerClient.BuildTradeMarginListener">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Streaming.LightstreamerClient.OnStatusChanged(System.Object,CIAPI.StreamingClient.StatusEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CIAPI.Streaming.LightstreamerClient.#ctor(System.Uri,System.String,System.String,System.Boolean,Salient.ReliableHttpClient.Serialization.IJsonSerializer)">
+            <summary>
+            
+            </summary>
+            <param name="streamingUri"></param>
+            <param name="userName"></param>
+            <param name="sessionId"></param>
+            <param name="usePolling"></param>
+            <param name="serializer"></param>
+        </member>
         <member name="M:CIAPI.Streaming.LightstreamerClient.TearDownListener(CIAPI.StreamingClient.IStreamingListener)">
             <summary>
             Allows consumer to stop and remove a listener from this client.
             </summary>
         </member>
+        <member name="M:CIAPI.Streaming.LightstreamerClient.BuildListener``1(System.String,System.String,System.Boolean,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="dataAdapter"></param>
+            <param name="mode"></param>
+            <param name="snapshot"></param>
+            <param name="topic"></param>
+            <typeparam name="TDto"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ObjectDisposedException"></exception>
+        </member>
+        <member name="M:CIAPI.Streaming.LightstreamerClient.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+            <filterpriority>2</filterpriority>
+        </member>
+        <member name="M:CIAPI.Streaming.LightstreamerClient.Dispose(System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="E:CIAPI.Streaming.LightstreamerClient.StatusChanged">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="E:CIAPI.Streaming.LightstreamerClient.StatusUpdate">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="M:CIAPI.Rpc.Client.ListActiveOrders(CIAPI.DTO.ListActiveOrdersRequestDTO)">
             <summary>
-            Queries the specified trading account for all open positions and active orders. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.
+            Queries the specified trading account for all open positions and active orders. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format. **Notes on Parameters** >**ClientAccountId** - this can be passed in order to retrieve all information on all trading accounts for which it is the parent. >**TradingAccountId** - this can be passed to retrieve information specific to a certain trading account *(the child of ClientAccount)*.  If *neither* ClientAccountId nor TradingAccountId is passed, then the information returned by default from the API is ClientAccount.
             </summary>
             <param name="requestDTO">Contains the request for a ListActiveOrders query.</param>
         </member>
         <member name="M:CIAPI.Rpc.Client.BeginListActiveOrders(CIAPI.DTO.ListActiveOrdersRequestDTO,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
-            Queries the specified trading account for all open positions and active orders. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.
+            Queries the specified trading account for all open positions and active orders. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format. **Notes on Parameters** >**ClientAccountId** - this can be passed in order to retrieve all information on all trading accounts for which it is the parent. >**TradingAccountId** - this can be passed to retrieve information specific to a certain trading account *(the child of ClientAccount)*.  If *neither* ClientAccountId nor TradingAccountId is passed, then the information returned by default from the API is ClientAccount.
             </summary>
             <param name="requestDTO">Contains the request for a ListActiveOrders query.</param>
             <param name="callback"></param>
             <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client.BeginRequest(Salient.ReliableHttpClient.RequestMethod,System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},Salient.ReliableHttpClient.ContentType,Salient.ReliableHttpClient.ContentType,System.TimeSpan,System.Int32,System.Int32,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="method"></param>
+            <param name="target"></param>
+            <param name="uriTemplate"></param>
+            <param name="parameters"></param>
+            <param name="requestContentType"></param>
+            <param name="responseContentType"></param>
+            <param name="cacheDuration"></param>
+            <param name="timeout"></param>
+            <param name="retryCount"></param>
+            <param name="callback"></param>
+            <param name="state"></param>
+            <returns></returns>
+            <exception cref="T:System.ObjectDisposedException"></exception>
+        </member>
+        <member name="M:CIAPI.Rpc.Client.Request``1(Salient.ReliableHttpClient.RequestMethod,System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},Salient.ReliableHttpClient.ContentType,Salient.ReliableHttpClient.ContentType,System.TimeSpan,System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="method"></param>
+            <param name="target"></param>
+            <param name="uriTemplate"></param>
+            <param name="parameters"></param>
+            <param name="requestContentType"></param>
+            <param name="responseContentType"></param>
+            <param name="cacheDuration"></param>
+            <param name="timeout"></param>
+            <param name="retryCount"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ObjectDisposedException"></exception>
+        </member>
+        <member name="M:CIAPI.Rpc.Client.Request(Salient.ReliableHttpClient.RequestMethod,System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},Salient.ReliableHttpClient.ContentType,Salient.ReliableHttpClient.ContentType,System.TimeSpan,System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="method"></param>
+            <param name="target"></param>
+            <param name="uriTemplate"></param>
+            <param name="parameters"></param>
+            <param name="requestContentType"></param>
+            <param name="responseContentType"></param>
+            <param name="cacheDuration"></param>
+            <param name="timeout"></param>
+            <param name="retryCount"></param>
+            <returns></returns>
+            <exception cref="T:System.ObjectDisposedException"></exception>
+        </member>
+        <member name="M:CIAPI.Rpc.Client.Dispose(System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client.EndRequest(Salient.ReliableHttpClient.ReliableAsyncResult)">
+            <summary>
+            
+            </summary>
+            <param name="result"></param>
+            <returns></returns>
+            <exception cref="T:System.ObjectDisposedException"></exception>
+            <exception cref="T:Salient.ReliableHttpClient.ReliableHttpException"></exception>
+            <exception cref="T:CIAPI.Rpc.ServerConnectionException"></exception>
+        </member>
+        <member name="M:CIAPI.Rpc.Client.CreateStreamingClient">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Rpc.Client.CreateStreamingClient(System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="usePolling"></param>
+            <returns></returns>
+            <exception cref="T:System.ObjectDisposedException"></exception>
         </member>
         <member name="M:CIAPI.Rpc.Client.LogIn(System.String,System.String)">
             <summary>
@@ -2783,6 +3184,13 @@
             <param name="password">Password is case sensitive</param>
             <returns></returns>
         </member>
+        <member name="M:CIAPI.Rpc.Client.LogInUsingSession(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="session"></param>
+        </member>
         <member name="M:CIAPI.Rpc.Client.BeginLogIn(System.String,System.String,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
             Log In
@@ -2791,6 +3199,13 @@
             <param name="state"></param>
             <param name="userName">Username is case sensitive</param>
             <param name="password">Password is case sensitive</param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Rpc.Client.EndLogIn(Salient.ReliableHttpClient.ReliableAsyncResult)">
+            <summary>
+            
+            </summary>
+            <param name="asyncResult"></param>
             <returns></returns>
         </member>
         <member name="M:CIAPI.Rpc.Client.LogOut">
@@ -2806,6 +3221,33 @@
             <param name="callback"></param>
             <param name="state"></param>
             <returns></returns>
+        </member>
+        <member name="M:CIAPI.Rpc.Client.EndLogOut(Salient.ReliableHttpClient.ReliableAsyncResult)">
+            <summary>
+            
+            </summary>
+            <param name="asyncResult"></param>
+            <returns></returns>
+        </member>
+        <member name="P:CIAPI.Rpc.Client.Http200ErrorsOnly">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:CIAPI.Rpc.Client.MagicNumberResolver">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:CIAPI.Rpc.Client.UserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:CIAPI.Rpc.Client.Session">
+            <summary>
+            
+            </summary>
         </member>
         <member name="M:CIAPI.Rpc.Client._Authentication.LogOn(CIAPI.DTO.ApiLogOnRequestDTO)">
             <summary>
@@ -2826,14 +3268,14 @@
             Delete a session. This is how you "log off" from the CIAPI.
             </summary>
             <param name="UserName">Username is case sensitive. May be set as a service parameter or as a request header.</param>
-            <param name="session">The session token. May be set as a service parameter or as a request header.</param>
+            <param name="Session">The session token. May be set as a service parameter or as a request header.</param>
         </member>
         <member name="M:CIAPI.Rpc.Client._Authentication.BeginDeleteSession(System.String,System.String,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
             Delete a session. This is how you "log off" from the CIAPI.
             </summary>
             <param name="UserName">Username is case sensitive. May be set as a service parameter or as a request header.</param>
-            <param name="session">The session token. May be set as a service parameter or as a request header.</param>
+            <param name="Session">The session token. May be set as a service parameter or as a request header.</param>
             <param name="callback"></param>
             <param name="state"></param>
         </member>
@@ -2975,7 +3417,7 @@
             <param name="callback"></param>
             <param name="state"></param>
         </member>
-        <member name="M:CIAPI.Rpc.Client._Market.ListMarketInformationSearch(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.String,System.Int32,System.Boolean)">
+        <member name="M:CIAPI.Rpc.Client._Market.ListMarketInformationSearch(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.String,System.Int32,System.Boolean)">
             <summary>
             Returns market information for the markets that meet the search criteria. The search can be performed by market code and/or market name, and can include CFDs and Spread Bet markets.
             </summary>
@@ -2984,11 +3426,12 @@
             <param name="spreadProductType">Sets the search to include spread bet markets.</param>
             <param name="cfdProductType">Sets the search to include CFD markets.</param>
             <param name="binaryProductType">Sets the search to include binary markets.</param>
+            <param name="includeOptions">When set to true, the search captures and returns options markets. When set to false, options markets are excluded from the search results.</param>
             <param name="query">The text to search for. Matches part of market name / code from the start.</param>
             <param name="maxResults">The maximum number of results to return.</param>
             <param name="useMobileShortName">True if the market name should be in short form.  Helpful when displaying data on a small screen.</param>
         </member>
-        <member name="M:CIAPI.Rpc.Client._Market.BeginListMarketInformationSearch(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.String,System.Int32,System.Boolean,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
+        <member name="M:CIAPI.Rpc.Client._Market.BeginListMarketInformationSearch(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.String,System.Int32,System.Boolean,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
             Returns market information for the markets that meet the search criteria. The search can be performed by market code and/or market name, and can include CFDs and Spread Bet markets.
             </summary>
@@ -2997,13 +3440,14 @@
             <param name="spreadProductType">Sets the search to include spread bet markets.</param>
             <param name="cfdProductType">Sets the search to include CFD markets.</param>
             <param name="binaryProductType">Sets the search to include binary markets.</param>
+            <param name="includeOptions">When set to true, the search captures and returns options markets. When set to false, options markets are excluded from the search results.</param>
             <param name="query">The text to search for. Matches part of market name / code from the start.</param>
             <param name="maxResults">The maximum number of results to return.</param>
             <param name="useMobileShortName">True if the market name should be in short form.  Helpful when displaying data on a small screen.</param>
             <param name="callback"></param>
             <param name="state"></param>
         </member>
-        <member name="M:CIAPI.Rpc.Client._Market.ListMarketSearch(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.String,System.Int32,System.Boolean)">
+        <member name="M:CIAPI.Rpc.Client._Market.ListMarketSearch(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.String,System.Int32,System.Boolean)">
             <summary>
             Returns a list of markets that meet the search criteria. The search can be performed by market code and/or market name, and can include CFDs and Spread Bet markets. Leave the query string empty to return all markets available to the user.
             </summary>
@@ -3012,11 +3456,12 @@
             <param name="spreadProductType">Sets the search to include spread bet markets.</param>
             <param name="cfdProductType">Sets the search to include CFD markets.</param>
             <param name="binaryProductType">Sets the search to include binary markets.</param>
+            <param name="includeOptions">When set to true, the search captures and returns options markets. When set to false, options markets are excluded from the search results.</param>
             <param name="query">The text to search for. Matches part of market name / code from the start. *(Optional)*.</param>
             <param name="maxResults">The maximum number of results to return.</param>
             <param name="useMobileShortName">True if the market name should be in short form.  Helpful when displaying data on a small screen.</param>
         </member>
-        <member name="M:CIAPI.Rpc.Client._Market.BeginListMarketSearch(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.String,System.Int32,System.Boolean,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
+        <member name="M:CIAPI.Rpc.Client._Market.BeginListMarketSearch(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.String,System.Int32,System.Boolean,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
             Returns a list of markets that meet the search criteria. The search can be performed by market code and/or market name, and can include CFDs and Spread Bet markets. Leave the query string empty to return all markets available to the user.
             </summary>
@@ -3025,13 +3470,14 @@
             <param name="spreadProductType">Sets the search to include spread bet markets.</param>
             <param name="cfdProductType">Sets the search to include CFD markets.</param>
             <param name="binaryProductType">Sets the search to include binary markets.</param>
+            <param name="includeOptions">When set to true, the search captures and returns options markets. When set to false, options markets are excluded from the search results.</param>
             <param name="query">The text to search for. Matches part of market name / code from the start. *(Optional)*.</param>
             <param name="maxResults">The maximum number of results to return.</param>
             <param name="useMobileShortName">True if the market name should be in short form.  Helpful when displaying data on a small screen.</param>
             <param name="callback"></param>
             <param name="state"></param>
         </member>
-        <member name="M:CIAPI.Rpc.Client._Market.SearchWithTags(System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Int32,System.Boolean)">
+        <member name="M:CIAPI.Rpc.Client._Market.SearchWithTags(System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Int32,System.Boolean)">
             <summary>
             Get market information and tags for the markets that meet the search criteria. Leave the query string empty to return all markets and tags available to the user.
             </summary>
@@ -3042,10 +3488,11 @@
             <param name="spreadProductType">Sets the search to include spread bet markets.</param>
             <param name="cfdProductType">Sets the search to include CFD markets.</param>
             <param name="binaryProductType">Sets the search to include binary markets.</param>
+            <param name="includeOptions">When set to true, the search captures and returns options markets. When set to false, options markets are excluded from the search results.</param>
             <param name="maxResults">The maximum number of results to return. Default is 20.</param>
             <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
         </member>
-        <member name="M:CIAPI.Rpc.Client._Market.BeginSearchWithTags(System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Int32,System.Boolean,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
+        <member name="M:CIAPI.Rpc.Client._Market.BeginSearchWithTags(System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Int32,System.Boolean,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
             Get market information and tags for the markets that meet the search criteria. Leave the query string empty to return all markets and tags available to the user.
             </summary>
@@ -3056,6 +3503,7 @@
             <param name="spreadProductType">Sets the search to include spread bet markets.</param>
             <param name="cfdProductType">Sets the search to include CFD markets.</param>
             <param name="binaryProductType">Sets the search to include binary markets.</param>
+            <param name="includeOptions">When set to true, the search captures and returns options markets. When set to false, options markets are excluded from the search results.</param>
             <param name="maxResults">The maximum number of results to return. Default is 20.</param>
             <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
             <param name="callback"></param>
@@ -3199,13 +3647,13 @@
         </member>
         <member name="M:CIAPI.Rpc.Client._TradesAndOrders.ListOpenPositions(System.Int32)">
             <summary>
-            Queries for a specified trading account's trades / open positions. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.
+            Queries for a specified trading account's trades / open positions. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format. **Notes on Parameters** >**ClientAccountId** - this can be passed in order to retrieve all information on all trading accounts for which it is the parent. >**TradingAccountId** - this can be passed to retrieve information specific to a certain trading account *(the child of ClientAccount)*.  If *neither* ClientAccountId nor TradingAccountId is passed, then the information returned by default from the API is ClientAccount.
             </summary>
             <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
         </member>
         <member name="M:CIAPI.Rpc.Client._TradesAndOrders.BeginListOpenPositions(System.Int32,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
-            Queries for a specified trading account's trades / open positions. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.
+            Queries for a specified trading account's trades / open positions. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format. **Notes on Parameters** >**ClientAccountId** - this can be passed in order to retrieve all information on all trading accounts for which it is the parent. >**TradingAccountId** - this can be passed to retrieve information specific to a certain trading account *(the child of ClientAccount)*.  If *neither* ClientAccountId nor TradingAccountId is passed, then the information returned by default from the API is ClientAccount.
             </summary>
             <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
             <param name="callback"></param>
@@ -3213,13 +3661,13 @@
         </member>
         <member name="M:CIAPI.Rpc.Client._TradesAndOrders.ListActiveStopLimitOrders(System.Int32)">
             <summary>
-            Queries for a specified trading account's active stop / limit orders. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetActiveStopLimitOrder](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetActiveStopLimitOrder.htm) when you get updates on the order stream to get the updated data in this format.
+            Queries for a specified trading account's active stop / limit orders. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetActiveStopLimitOrder](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetActiveStopLimitOrder.htm) when you get updates on the order stream to get the updated data in this format. **Notes on Parameters** >**ClientAccountId** - this can be passed in order to retrieve all information on all trading accounts for which it is the parent. >**TradingAccountId** - this can be passed to retrieve information specific to a certain trading account *(the child of ClientAccount)*.  If *neither* ClientAccountId nor TradingAccountId is passed, then the information returned by default from the API is ClientAccount.
             </summary>
             <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
         </member>
         <member name="M:CIAPI.Rpc.Client._TradesAndOrders.BeginListActiveStopLimitOrders(System.Int32,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
-            Queries for a specified trading account's active stop / limit orders. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetActiveStopLimitOrder](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetActiveStopLimitOrder.htm) when you get updates on the order stream to get the updated data in this format.
+            Queries for a specified trading account's active stop / limit orders. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetActiveStopLimitOrder](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetActiveStopLimitOrder.htm) when you get updates on the order stream to get the updated data in this format. **Notes on Parameters** >**ClientAccountId** - this can be passed in order to retrieve all information on all trading accounts for which it is the parent. >**TradingAccountId** - this can be passed to retrieve information specific to a certain trading account *(the child of ClientAccount)*.  If *neither* ClientAccountId nor TradingAccountId is passed, then the information returned by default from the API is ClientAccount.
             </summary>
             <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
             <param name="callback"></param>
@@ -3255,14 +3703,14 @@
         </member>
         <member name="M:CIAPI.Rpc.Client._TradesAndOrders.ListTradeHistory(System.Int32,System.Int32)">
             <summary>
-            Queries for a specified trading account's trade history. The result set will contain orders with a status of __(3 - Open, 9 - Closed)__, and includes __orders that were a trade / stop / limit order__. There's currently no corresponding GetTradeHistory *(as with [ListOpenPositions](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListOpenPositions.htm))*.
+            Queries for a specified trading account's trade history. The result set will contain orders with a status of __(3 - Open, 9 - Closed)__, and includes __orders that were a trade / stop / limit order__. There's currently no corresponding GetTradeHistory *(as with [ListOpenPositions](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListOpenPositions.htm))*. **Notes on Parameters** >**ClientAccountId** - this can be passed in order to retrieve all information on all trading accounts for which it is the parent. >**TradingAccountId** - this can be passed to retrieve information specific to a certain trading account *(the child of ClientAccount)*.  If *neither* ClientAccountId nor TradingAccountId is passed, then the information returned by default from the API is ClientAccount.
             </summary>
             <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
             <param name="maxResults">The maximum number of results to return.</param>
         </member>
         <member name="M:CIAPI.Rpc.Client._TradesAndOrders.BeginListTradeHistory(System.Int32,System.Int32,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
-            Queries for a specified trading account's trade history. The result set will contain orders with a status of __(3 - Open, 9 - Closed)__, and includes __orders that were a trade / stop / limit order__. There's currently no corresponding GetTradeHistory *(as with [ListOpenPositions](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListOpenPositions.htm))*.
+            Queries for a specified trading account's trade history. The result set will contain orders with a status of __(3 - Open, 9 - Closed)__, and includes __orders that were a trade / stop / limit order__. There's currently no corresponding GetTradeHistory *(as with [ListOpenPositions](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListOpenPositions.htm))*. **Notes on Parameters** >**ClientAccountId** - this can be passed in order to retrieve all information on all trading accounts for which it is the parent. >**TradingAccountId** - this can be passed to retrieve information specific to a certain trading account *(the child of ClientAccount)*.  If *neither* ClientAccountId nor TradingAccountId is passed, then the information returned by default from the API is ClientAccount.
             </summary>
             <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
             <param name="maxResults">The maximum number of results to return.</param>
@@ -3271,14 +3719,14 @@
         </member>
         <member name="M:CIAPI.Rpc.Client._TradesAndOrders.ListStopLimitOrderHistory(System.Int32,System.Int32)">
             <summary>
-            Queries for a specified trading account's stop / limit order history. The result set includes __only orders that were originally stop / limit orders__ that currently have one of the following statuses __(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)__.  There is currently no corresponding GetStopLimitOrderHistory *(as with [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListActiveStopLimitOrders.htm))*.
+            Queries for a specified trading account's stop / limit order history. The result set includes __only orders that were originally stop / limit orders__ that currently have one of the following statuses __(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)__.  There is currently no corresponding GetStopLimitOrderHistory *(as with [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListActiveStopLimitOrders.htm))*. **Notes on Parameters** >**ClientAccountId** - this can be passed in order to retrieve all information on all trading accounts for which it is the parent. >**TradingAccountId** - this can be passed to retrieve information specific to a certain trading account *(the child of ClientAccount)*.  If *neither* ClientAccountId nor TradingAccountId is passed, then the information returned by default from the API is ClientAccount.
             </summary>
             <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
             <param name="maxResults">The maximum number of results to return.</param>
         </member>
         <member name="M:CIAPI.Rpc.Client._TradesAndOrders.BeginListStopLimitOrderHistory(System.Int32,System.Int32,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
             <summary>
-            Queries for a specified trading account's stop / limit order history. The result set includes __only orders that were originally stop / limit orders__ that currently have one of the following statuses __(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)__.  There is currently no corresponding GetStopLimitOrderHistory *(as with [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListActiveStopLimitOrders.htm))*.
+            Queries for a specified trading account's stop / limit order history. The result set includes __only orders that were originally stop / limit orders__ that currently have one of the following statuses __(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)__.  There is currently no corresponding GetStopLimitOrderHistory *(as with [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListActiveStopLimitOrders.htm))*. **Notes on Parameters** >**ClientAccountId** - this can be passed in order to retrieve all information on all trading accounts for which it is the parent. >**TradingAccountId** - this can be passed to retrieve information specific to a certain trading account *(the child of ClientAccount)*.  If *neither* ClientAccountId nor TradingAccountId is passed, then the information returned by default from the API is ClientAccount.
             </summary>
             <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
             <param name="maxResults">The maximum number of results to return.</param>
@@ -3462,6 +3910,11 @@
             used as a null target for json deserialization test
             </summary>
         </member>
+        <member name="M:CIAPI.Rpc.Client.NullObject.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:CIAPI.PrettyPrinterExtensions">
             <summary>
              Useful logging and debugging extensions
@@ -3474,10 +3927,740 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
+        <member name="T:CIAPI.Rpc.InvalidCredentialsException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidCredentialsException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidCredentialsException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="ex"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidCredentialsException.#ctor(System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidCredentialsException.#ctor(System.String,Salient.ReliableHttpClient.ReliableHttpException)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="exception"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidCredentialsException.#ctor(Salient.ReliableHttpClient.ReliableHttpException)">
+            <summary>
+            
+            </summary>
+            <param name="exception"></param>
+        </member>
         <member name="T:CIAPI.NullType">
             <summary>
             empty class to enable return of void methods
             </summary>
+        </member>
+        <member name="T:CIAPI.MagicNumberKeys">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:CIAPI.MagicNumberKeys.ApiOrderResponseDTO_StatusReason">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:CIAPI.MagicNumberKeys.ApiOrderResponseDTO_Status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:CIAPI.MagicNumberKeys.ApiTradeOrderResponseDTO_StatusReason">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:CIAPI.MagicNumberKeys.ApiTradeOrderResponseDTO_Status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:CIAPI.MagicNumberKeys.ApiActiveStopLimitOrderDTO_Applicability">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:CIAPI.MagicNumberKeys.ApiOpenPositionDTO_Status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:CIAPI.MagicNumberResolver">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.MagicNumberResolver.ResolveMagicNumbers(CIAPI.DTO.ListOpenPositionsResponseDTO)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:CIAPI.MagicNumberResolver.ResolveMagicNumbers(CIAPI.DTO.ApiOpenPositionDTO)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:CIAPI.MagicNumberResolver.ResolveMagicNumbers(CIAPI.DTO.ApiActiveStopLimitOrderDTO)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:CIAPI.MagicNumberResolver.ResolveMagicNumbers(CIAPI.DTO.ApiTradeOrderResponseDTO)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:CIAPI.MagicNumberResolver.ResolveMagicNumbers(CIAPI.DTO.ApiOrderResponseDTO)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:CIAPI.MagicNumberResolver.ResolveMagicNumbers(CIAPI.DTO.ApiSimulateTradeOrderResponseDTO)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:CIAPI.MagicNumberResolver.ResolveMagicNumbers(CIAPI.DTO.ApiSimulateOrderResponseDTO)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:CIAPI.MagicNumberResolver.ResolveMagicNumbers(CIAPI.DTO.GetOpenPositionResponseDTO)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:CIAPI.MagicNumberResolver.#ctor(CIAPI.Rpc.Client)">
+            <summary>
+            
+            </summary>
+            <param name="client"></param>
+        </member>
+        <member name="M:CIAPI.MagicNumberResolver.ResolveMagicNumber(System.String,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+            <param name="code"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.MagicNumberResolver.PreloadMagicNumbers">
+            <summary>
+            
+            </summary>
+            <exception cref="T:CIAPI.Rpc.AggregateException"></exception>
+        </member>
+        <member name="T:CIAPI.Rpc.MetricsRecorder">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Rpc.MetricsRecorder.#ctor(CIAPI.Rpc.Client,System.Uri,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="client"></param>
+            <param name="appmetricsUri"></param>
+            <param name="metricsSession"></param>
+            <param name="metricsAccessKey"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.MetricsRecorder.Stop">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Rpc.MetricsRecorder.Dispose(System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="P:CIAPI.Rpc.MetricsRecorder.AppmetricsUri">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:CIAPI.Rpc.AggregateException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Rpc.AggregateException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.AggregateException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="ex"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.AggregateException.#ctor(System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.AggregateException.#ctor(System.String,Salient.ReliableHttpClient.ReliableHttpException)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="ex"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.AggregateException.#ctor(Salient.ReliableHttpClient.ReliableHttpException)">
+            <summary>
+            
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.AggregateException.ToString">
+            <summary>
+            Creates and returns a string representation of the current exception.
+            </summary>
+            <returns>
+            A string representation of the current exception.
+            </returns>
+            <filterpriority>1</filterpriority><PermissionSet><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" PathDiscovery="*AllFiles*"/></PermissionSet>
+        </member>
+        <member name="P:CIAPI.Rpc.AggregateException.Exceptions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:CIAPI.Rpc.ThrottlingException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Rpc.ThrottlingException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.ThrottlingException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="ex"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.ThrottlingException.#ctor(System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.ThrottlingException.#ctor(System.String,Salient.ReliableHttpClient.ReliableHttpException)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="exception"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.ThrottlingException.#ctor(Salient.ReliableHttpClient.ReliableHttpException)">
+            <summary>
+            
+            </summary>
+            <param name="exception"></param>
+        </member>
+        <member name="T:CIAPI.Rpc.NoDataAvailableException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Rpc.NoDataAvailableException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.NoDataAvailableException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="ex"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.NoDataAvailableException.#ctor(System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.NoDataAvailableException.#ctor(System.String,Salient.ReliableHttpClient.ReliableHttpException)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="exception"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.NoDataAvailableException.#ctor(Salient.ReliableHttpClient.ReliableHttpException)">
+            <summary>
+            
+            </summary>
+            <param name="exception"></param>
+        </member>
+        <member name="T:CIAPI.Rpc.InvalidSessionException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidSessionException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidSessionException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="ex"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidSessionException.#ctor(System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidSessionException.#ctor(System.String,Salient.ReliableHttpClient.ReliableHttpException)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="exception"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidSessionException.#ctor(Salient.ReliableHttpClient.ReliableHttpException)">
+            <summary>
+            
+            </summary>
+            <param name="exception"></param>
+        </member>
+        <member name="T:CIAPI.Rpc.InvalidJsonRequestCaseFormatException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidJsonRequestCaseFormatException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidJsonRequestCaseFormatException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="ex"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidJsonRequestCaseFormatException.#ctor(System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidJsonRequestCaseFormatException.#ctor(System.String,Salient.ReliableHttpClient.ReliableHttpException)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="exception"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidJsonRequestCaseFormatException.#ctor(Salient.ReliableHttpClient.ReliableHttpException)">
+            <summary>
+            
+            </summary>
+            <param name="exception"></param>
+        </member>
+        <member name="T:CIAPI.Rpc.InvalidJsonRequestException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidJsonRequestException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidJsonRequestException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="ex"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidJsonRequestException.#ctor(System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidJsonRequestException.#ctor(System.String,Salient.ReliableHttpClient.ReliableHttpException)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="exception"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidJsonRequestException.#ctor(Salient.ReliableHttpClient.ReliableHttpException)">
+            <summary>
+            
+            </summary>
+            <param name="exception"></param>
+        </member>
+        <member name="T:CIAPI.Rpc.InvalidParameterValueException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidParameterValueException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidParameterValueException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="ex"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidParameterValueException.#ctor(System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidParameterValueException.#ctor(System.String,Salient.ReliableHttpClient.ReliableHttpException)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="exception"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidParameterValueException.#ctor(Salient.ReliableHttpClient.ReliableHttpException)">
+            <summary>
+            
+            </summary>
+            <param name="exception"></param>
+        </member>
+        <member name="T:CIAPI.Rpc.ParameterMissingException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Rpc.ParameterMissingException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.ParameterMissingException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="ex"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.ParameterMissingException.#ctor(System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.ParameterMissingException.#ctor(System.String,Salient.ReliableHttpClient.ReliableHttpException)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="exception"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.ParameterMissingException.#ctor(Salient.ReliableHttpClient.ReliableHttpException)">
+            <summary>
+            
+            </summary>
+            <param name="exception"></param>
+        </member>
+        <member name="T:CIAPI.Rpc.InvalidParameterTypeException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidParameterTypeException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidParameterTypeException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="ex"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidParameterTypeException.#ctor(System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidParameterTypeException.#ctor(System.String,Salient.ReliableHttpClient.ReliableHttpException)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="exception"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InvalidParameterTypeException.#ctor(Salient.ReliableHttpClient.ReliableHttpException)">
+            <summary>
+            
+            </summary>
+            <param name="exception"></param>
+        </member>
+        <member name="T:CIAPI.Rpc.InternalServerErrorException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Rpc.InternalServerErrorException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InternalServerErrorException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="ex"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InternalServerErrorException.#ctor(System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InternalServerErrorException.#ctor(System.String,Salient.ReliableHttpClient.ReliableHttpException)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="exception"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.InternalServerErrorException.#ctor(Salient.ReliableHttpClient.ReliableHttpException)">
+            <summary>
+            
+            </summary>
+            <param name="exception"></param>
+        </member>
+        <member name="T:CIAPI.Rpc.ForbiddenException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Rpc.ForbiddenException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.ForbiddenException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="ex"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.ForbiddenException.#ctor(System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.ForbiddenException.#ctor(System.String,Salient.ReliableHttpClient.ReliableHttpException)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="exception"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.ForbiddenException.#ctor(Salient.ReliableHttpClient.ReliableHttpException)">
+            <summary>
+            
+            </summary>
+            <param name="exception"></param>
+        </member>
+        <member name="T:CIAPI.Rpc.ServerConnectionException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Rpc.ServerConnectionException.#ctor(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="responseText"></param>
+        </member>
+        <member name="T:CIAPI.StreamingClient.IMessageConverter`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:CIAPI.StreamingClient.IMessageConverter`1.Convert(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CIAPI.StreamingClient.InvalidTopicException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.StreamingClient.InvalidTopicException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="T:CIAPI.StreamingClient.Lightstreamer.HttpUtility">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.StreamingClient.Lightstreamer.HttpUtility.UrlEncode(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.StreamingClient.Lightstreamer.HttpUtility.UrlEncode(System.String,System.Text.Encoding)">
+            <summary>
+            
+            </summary>
+            <param name="s"></param>
+            <param name="enc"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.StreamingClient.Lightstreamer.HttpUtility.UrlEncodeToBytes(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="bytes"></param>
+            <param name="offset"></param>
+            <param name="count"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CIAPI.Streaming.IStreamingClientFactory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Streaming.IStreamingClientFactory.Create(System.Uri,System.String,System.String,Salient.ReliableHttpClient.Serialization.IJsonSerializer)">
+            <summary>
+            
+            </summary>
+            <param name="streamingUri"></param>
+            <param name="userName"></param>
+            <param name="session"></param>
+            <param name="serializer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Streaming.IStreamingClientFactory.Create(System.Uri,System.String,System.String,System.Boolean,Salient.ReliableHttpClient.Serialization.IJsonSerializer)">
+            <summary>
+            
+            </summary>
+            <param name="streamingUri"></param>
+            <param name="userName"></param>
+            <param name="session"></param>
+            <param name="usePolling"></param>
+            <param name="serializer"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CIAPI.StreamingClient.Lightstreamer.LightstreamerDefaults">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:CIAPI.StreamingClient.Lightstreamer.LightstreamerDefaults.DEFAULT_TIMEOUT_MS">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:CIAPI.StreamingClient.Lightstreamer.LightstreamerDtoConverter`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="TDto"></typeparam>
+        </member>
+        <member name="M:CIAPI.StreamingClient.Lightstreamer.LightstreamerDtoConverter`1.#ctor(Salient.ReliableHttpClient.Serialization.IJsonSerializer)">
+            <summary>
+            
+            </summary>
+            <param name="serializer"></param>
+        </member>
+        <member name="M:CIAPI.StreamingClient.Lightstreamer.LightstreamerDtoConverter`1.Convert(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.StreamingClient.Lightstreamer.LightstreamerDtoConverter`1.GetFieldList">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.StreamingClient.Lightstreamer.LightstreamerDtoConverter`1.GetFieldIndex(System.Reflection.PropertyInfo)">
+            <summary>
+            
+            </summary>
+            <param name="fieldPropertyInfo"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException"></exception>
         </member>
         <member name="M:CIAPI.StreamingClient.Lightstreamer.LightstreamerDtoConverter`1.IsTypeNullable(System.Type,System.Type@)">
             <summary>
@@ -3496,19 +4679,237 @@
             <param name="value"></param>
             <returns></returns>
         </member>
+        <member name="M:CIAPI.StreamingClient.Lightstreamer.LightstreamerDtoConverter`1.PopulateProperty(`0,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="dto"></param>
+            <param name="propertyName"></param>
+            <param name="value"></param>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="P:CIAPI.StreamingClient.Lightstreamer.LightstreamerDtoConverter`1.DtoPropertyNames">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:CIAPI.Streaming.LightStreamerStreamingClientFactory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Streaming.LightStreamerStreamingClientFactory.Create(System.Uri,System.String,System.String,Salient.ReliableHttpClient.Serialization.IJsonSerializer)">
+            <summary>
+            
+            </summary>
+            <param name="streamingUri"></param>
+            <param name="userName"></param>
+            <param name="session"></param>
+            <param name="serializer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Streaming.LightStreamerStreamingClientFactory.Create(System.Uri,System.String,System.String,System.Boolean,Salient.ReliableHttpClient.Serialization.IJsonSerializer)">
+            <summary>
+            
+            </summary>
+            <param name="streamingUri"></param>
+            <param name="userName"></param>
+            <param name="session"></param>
+            <param name="usePolling"></param>
+            <param name="serializer"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CIAPI.StreamingClient.ConnectionStatus">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:CIAPI.StreamingClient.ConnectionStatus.Disconnected">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:CIAPI.StreamingClient.ConnectionStatus.Connecting">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:CIAPI.StreamingClient.ConnectionStatus.Connected">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:CIAPI.StreamingClient.ConnectionStatus.Streaming">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:CIAPI.StreamingClient.ConnectionStatus.Polling">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:CIAPI.StreamingClient.ConnectionStatus.Stalled">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:CIAPI.StreamingClient.ConnectionStatus.Error">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:CIAPI.StreamingClient.ConnectionStatusEventArgs">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.StreamingClient.ConnectionStatusEventArgs.#ctor(System.String,CIAPI.StreamingClient.ConnectionStatus)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="status"></param>
+        </member>
+        <member name="M:CIAPI.StreamingClient.ConnectionStatusEventArgs.ToString">
+            <summary>
+            Returns a string that represents the current object.
+            </summary>
+            <returns>
+            A string that represents the current object.
+            </returns>
+            <filterpriority>2</filterpriority>
+        </member>
+        <member name="P:CIAPI.StreamingClient.ConnectionStatusEventArgs.Message">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:CIAPI.StreamingClient.ConnectionStatusEventArgs.Status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:CIAPI.StreamingClient.IFaultTolerantLsClientAdapter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.StreamingClient.IFaultTolerantLsClientAdapter.CheckPhase(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="ph"></param>
+            <returns></returns>
+        </member>
         <member name="M:CIAPI.StreamingClient.IFaultTolerantLsClientAdapter.TearDownListener(CIAPI.StreamingClient.IStreamingListener)">
             <summary>
             Allows consumer to stop and remove a listener from this client.
+            </summary>
+        </member>
+        <member name="M:CIAPI.StreamingClient.IFaultTolerantLsClientAdapter.BuildListener``1(System.String,System.String,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="topic"></param>
+            <param name="mode"></param>
+            <param name="snapshot"></param>
+            <typeparam name="TDto"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.StreamingClient.IFaultTolerantLsClientAdapter.SubscribeTable``1(Lightstreamer.DotNet.Client.SimpleTableInfo,CIAPI.StreamingClient.ITableListener{``0},System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="simpleTableInfo"></param>
+            <param name="listener"></param>
+            <param name="b"></param>
+            <typeparam name="TDto"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.StreamingClient.IFaultTolerantLsClientAdapter.UnsubscribeTable(Lightstreamer.DotNet.Client.SubscribedTableKey)">
+            <summary>
+            
+            </summary>
+            <param name="subscribedTableKey"></param>
+        </member>
+        <member name="M:CIAPI.StreamingClient.IFaultTolerantLsClientAdapter.OpenConnection(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="phase"></param>
+        </member>
+        <member name="M:CIAPI.StreamingClient.IFaultTolerantLsClientAdapter.CloseConnection(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="phase"></param>
+        </member>
+        <member name="P:CIAPI.StreamingClient.IFaultTolerantLsClientAdapter.AdapterSet">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:CIAPI.StreamingClient.IFaultTolerantLsClientAdapter.Connected">
+            <summary>
+            
             </summary>
         </member>
         <member name="P:CIAPI.StreamingClient.IFaultTolerantLsClientAdapter.ListenerCount">
             <summary>
             </summary>
         </member>
+        <member name="E:CIAPI.StreamingClient.IFaultTolerantLsClientAdapter.StatusUpdate">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:CIAPI.StreamingClient.FaultTolerantLsClientAdapter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.StreamingClient.FaultTolerantLsClientAdapter.SubscribeTable``1(Lightstreamer.DotNet.Client.SimpleTableInfo,CIAPI.StreamingClient.ITableListener{``0},System.Boolean)">
+            <summary>
+            
+            </summary>
+            <typeparam name="TDto"></typeparam>
+            <param name="simpleTableInfo"></param>
+            <param name="listener"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.StreamingClient.FaultTolerantLsClientAdapter.UnsubscribeTable(Lightstreamer.DotNet.Client.SubscribedTableKey)">
+            <summary>
+            
+            </summary>
+            <param name="subscribedTableKey"></param>
+        </member>
+        <member name="M:CIAPI.StreamingClient.FaultTolerantLsClientAdapter.#ctor(System.String,System.String,System.String,System.String,System.Boolean,Salient.ReliableHttpClient.Serialization.IJsonSerializer)">
+            <summary>
+            
+            </summary>
+            <param name="streamingUri"></param>
+            <param name="userName"></param>
+            <param name="sessionId"></param>
+            <param name="adapterSet"></param>
+            <param name="usePolling"></param>
+            <param name="serializer"></param>
+        </member>
         <member name="M:CIAPI.StreamingClient.FaultTolerantLsClientAdapter.TearDownListener(CIAPI.StreamingClient.IStreamingListener)">
             <summary>
             Allows consumer to stop and remove a listener from this client.
             </summary>
+        </member>
+        <member name="M:CIAPI.StreamingClient.FaultTolerantLsClientAdapter.BuildListener``1(System.String,System.String,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="topic"></param>
+            <param name="mode"></param>
+            <param name="snapshot"></param>
+            <typeparam name="TDto"></typeparam>
+            <returns></returns>
         </member>
         <member name="M:CIAPI.StreamingClient.FaultTolerantLsClientAdapter.PauseAndRetryStartClient(System.Int32,System.Exception)">
             <summary>
@@ -3524,8 +4925,29 @@
             <param name="ph"></param>
             <returns></returns>
         </member>
+        <member name="M:CIAPI.StreamingClient.FaultTolerantLsClientAdapter.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+            <filterpriority>2</filterpriority>
+        </member>
+        <member name="P:CIAPI.StreamingClient.FaultTolerantLsClientAdapter.AdapterSet">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:CIAPI.StreamingClient.FaultTolerantLsClientAdapter.Connected">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:CIAPI.StreamingClient.FaultTolerantLsClientAdapter.ListenerCount">
             <summary>
+            </summary>
+        </member>
+        <member name="E:CIAPI.StreamingClient.FaultTolerantLsClientAdapter.StatusUpdate">
+            <summary>
+            
             </summary>
         </member>
         <member name="T:CIAPI.StreamingClient.FaultTolerantLsClientAdapter.ClientStartStop">
@@ -3533,11 +4955,232 @@
             nested class to provide access to private members
             </summary>
         </member>
+        <member name="T:CIAPI.StreamingClient.IStreamingListener">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.StreamingClient.IStreamingListener.Start(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="phase"></param>
+        </member>
+        <member name="M:CIAPI.StreamingClient.IStreamingListener.Stop">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:CIAPI.StreamingClient.IStreamingListener.Topic">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:CIAPI.StreamingClient.IStreamingListener.Adapter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:CIAPI.StreamingClient.IStreamingListener`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="TDto"></typeparam>
+        </member>
+        <member name="E:CIAPI.StreamingClient.IStreamingListener`1.MessageReceived">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:CIAPI.StreamingClient.ListenerAdapter`1">
             <summary>
             the purpose of this adapter is to allow consumer to maintain handlers
             for listener events even when the internal listener is reinstantiated due
             to fault tolerance events
+            </summary>
+        </member>
+        <member name="M:CIAPI.StreamingClient.ListenerAdapter`1.#ctor(System.String,System.String,System.Boolean,CIAPI.StreamingClient.IFaultTolerantLsClientAdapter,Salient.ReliableHttpClient.Serialization.IJsonSerializer)">
+            <summary>
+            
+            </summary>
+            <param name="topic"></param>
+            <param name="mode"></param>
+            <param name="snapshot"></param>
+            <param name="client"></param>
+            <param name="serializer"></param>
+        </member>
+        <member name="M:CIAPI.StreamingClient.ListenerAdapter`1.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+            <filterpriority>2</filterpriority>
+        </member>
+        <member name="M:CIAPI.StreamingClient.ListenerAdapter`1.Dispose(System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="P:CIAPI.StreamingClient.ListenerAdapter`1.AdapterSet">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:CIAPI.StreamingClient.ListenerAdapter`1.Adapter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="E:CIAPI.StreamingClient.ListenerAdapter`1.MessageReceived">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:CIAPI.StreamingClient.ListenerAdapter`1.Topic">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:CIAPI.StreamingClient.MessageEventArgs`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:CIAPI.StreamingClient.MessageEventArgs`1.#ctor(System.String,System.String,`0,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="dataAdapter"></param>
+            <param name="topic"></param>
+            <param name="messageData"></param>
+            <param name="phase"></param>
+        </member>
+        <member name="P:CIAPI.StreamingClient.MessageEventArgs`1.DataAdapter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:CIAPI.StreamingClient.MessageEventArgs`1.Phase">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:CIAPI.StreamingClient.MessageEventArgs`1.Topic">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:CIAPI.StreamingClient.MessageEventArgs`1.Data">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:CIAPI.Streaming.StreamingMessageFinder">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Streaming.StreamingMessageFinder.FindExact``1(System.String,System.String,System.Collections.Generic.IEnumerable{CIAPI.StreamingClient.MessageEventArgs{``0}})">
+            <summary>
+            
+            </summary>
+            <typeparam name="TDTO"></typeparam>
+            <param name="adapter"></param>
+            <param name="topic"></param>
+            <param name="messages"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CIAPI.Streaming.StreamingRecorder">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Streaming.StreamingRecorder.#ctor(CIAPI.StreamingClient.IStreamingListener)">
+            <summary>
+            
+            </summary>
+            <param name="listener"></param>
+        </member>
+        <member name="M:CIAPI.Streaming.StreamingRecorder.Start">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Streaming.StreamingRecorder.Stop">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Streaming.StreamingRecorder.Dispose">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Streaming.StreamingRecorder.Dispose(System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:CIAPI.Streaming.StreamingRecorder.Create``1(CIAPI.StreamingClient.IStreamingListener{``0})">
+            <summary>
+            
+            </summary>
+            <typeparam name="TDTO"></typeparam>
+            <param name="listener"></param>
+            <returns></returns>
+        </member>
+        <member name="P:CIAPI.Streaming.StreamingRecorder.Paused">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:CIAPI.Streaming.StreamingRecorder`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="TDTO"></typeparam>
+        </member>
+        <member name="M:CIAPI.Streaming.StreamingRecorder`1.#ctor(CIAPI.StreamingClient.IStreamingListener{`0})">
+            <summary>
+            
+            </summary>
+            <param name="listener"></param>
+        </member>
+        <member name="M:CIAPI.Streaming.StreamingRecorder`1.GetMessages">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Streaming.StreamingRecorder`1.ClearMessages">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Streaming.StreamingRecorder`1.ListenerMessageReceived(System.Object,CIAPI.StreamingClient.MessageEventArgs{`0})">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CIAPI.Streaming.StreamingRecorder`1.Dispose(System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="T:CIAPI.StreamingClient.ITableListener`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="TDto"></typeparam>
+        </member>
+        <member name="E:CIAPI.StreamingClient.ITableListener`1.MessageReceived">
+            <summary>
+            
             </summary>
         </member>
         <member name="M:CIAPI.StreamingClient.TableListener`1.IsUpdateNull(Lightstreamer.DotNet.Client.IUpdateInfo)">
@@ -3552,14 +5195,278 @@
             <param name="update"></param>
             <returns></returns>
         </member>
+        <member name="T:CIAPI.StreamingClient.StatusEventArgs">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:CIAPI.StreamingClient.StatusEventArgs.Status">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:CIAPI.Streaming.Testing.SequentialSerializedPriceDTOMessageGenerator">
             <summary>
             this class will cycle through matching messages and deliver them sequentially
             </summary>
         </member>
+        <member name="M:CIAPI.Streaming.Testing.SequentialSerializedPriceDTOMessageGenerator.Populate(CIAPI.DTO.PriceDTO,CIAPI.DTO.PriceDTO)">
+            <summary>
+            
+            </summary>
+            <param name="target"></param>
+            <param name="source"></param>
+        </member>
+        <member name="M:CIAPI.Streaming.Testing.SequentialSerializedPriceDTOMessageGenerator.#ctor(System.Collections.Generic.List{CIAPI.StreamingClient.MessageEventArgs{CIAPI.DTO.PriceDTO}})">
+            <summary>
+            
+            </summary>
+            <param name="messages"></param>
+        </member>
+        <member name="M:CIAPI.Streaming.Testing.SequentialSerializedPriceDTOMessageGenerator.GetNextMessage(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="adapter"></param>
+            <param name="topic"></param>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="T:CIAPI.Streaming.Testing.TestStreamingClient">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Streaming.Testing.TestStreamingClient.#ctor(System.Uri,System.String,System.String,Salient.ReliableHttpClient.Serialization.IJsonSerializer,CIAPI.Streaming.Testing.TestStreamingClientFactory)">
+            <summary>
+            
+            </summary>
+            <param name="streamingUri"></param>
+            <param name="userName"></param>
+            <param name="session"></param>
+            <param name="serializer"></param>
+            <param name="testStreamingClientFactory"></param>
+        </member>
+        <member name="M:CIAPI.Streaming.Testing.TestStreamingClient.OnStatusChanged(System.Object,CIAPI.StreamingClient.StatusEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CIAPI.Streaming.Testing.TestStreamingClient.BuildListener``1(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="dataAdapter"></param>
+            <param name="topic"></param>
+            <typeparam name="TDto"></typeparam>
+            <returns></returns>
+        </member>
         <member name="M:CIAPI.Streaming.Testing.TestStreamingClient.TearDownListener(CIAPI.StreamingClient.IStreamingListener)">
             <summary>
             Allows consumer to stop and remove a listener from this client.
+            </summary>
+        </member>
+        <member name="M:CIAPI.Streaming.Testing.TestStreamingClient.BuildNewsHeadlinesListener(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="category"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Streaming.Testing.TestStreamingClient.BuildPricesListener(System.Int32[])">
+            <summary>
+            
+            </summary>
+            <param name="marketIds"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Streaming.Testing.TestStreamingClient.BuildQuotesListener">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Streaming.Testing.TestStreamingClient.BuildClientAccountMarginListener">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Streaming.Testing.TestStreamingClient.BuildOrdersListener">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Streaming.Testing.TestStreamingClient.BuildDefaultPricesListener(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="accountOperatorId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Streaming.Testing.TestStreamingClient.BuildTradeMarginListener">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Streaming.Testing.TestStreamingClient.Dispose">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Streaming.Testing.TestStreamingClient.Dispose(System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="E:CIAPI.Streaming.Testing.TestStreamingClient.StatusChanged">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:CIAPI.Streaming.Testing.TestStreamingClientFactory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:CIAPI.Streaming.Testing.TestStreamingClientFactory.CreateNewsMessage">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:CIAPI.Streaming.Testing.TestStreamingClientFactory.CreatePriceMessage">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:CIAPI.Streaming.Testing.TestStreamingClientFactory.CreateQuoteMessage">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:CIAPI.Streaming.Testing.TestStreamingClientFactory.CreateClientAccountMarginMessage">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:CIAPI.Streaming.Testing.TestStreamingClientFactory.CreateOrderMessage">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:CIAPI.Streaming.Testing.TestStreamingClientFactory.CreateTradeMarginMessage">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Streaming.Testing.TestStreamingClientFactory.Create(System.Uri,System.String,System.String,Salient.ReliableHttpClient.Serialization.IJsonSerializer)">
+            <summary>
+            
+            </summary>
+            <param name="streamingUri"></param>
+            <param name="userName"></param>
+            <param name="session"></param>
+            <param name="serializer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Streaming.Testing.TestStreamingClientFactory.Create(System.Uri,System.String,System.String,System.Boolean,Salient.ReliableHttpClient.Serialization.IJsonSerializer)">
+            <summary>
+            
+            </summary>
+            <param name="streamingUri"></param>
+            <param name="userName"></param>
+            <param name="session"></param>
+            <param name="usePolling"></param>
+            <param name="serializer"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CIAPI.Streaming.Testing.TestStreamingListener">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Streaming.Testing.TestStreamingListener.#ctor(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="adapter"></param>
+            <param name="topic"></param>
+        </member>
+        <member name="M:CIAPI.Streaming.Testing.TestStreamingListener.Dispose">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Streaming.Testing.TestStreamingListener.Start(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="phase"></param>
+        </member>
+        <member name="M:CIAPI.Streaming.Testing.TestStreamingListener.Stop">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CIAPI.Streaming.Testing.TestStreamingListener.TimerCallback(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="ignored"></param>
+        </member>
+        <member name="M:CIAPI.Streaming.Testing.TestStreamingListener.Dispose(System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="P:CIAPI.Streaming.Testing.TestStreamingListener.Adapter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:CIAPI.Streaming.Testing.TestStreamingListener.Phase">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:CIAPI.Streaming.Testing.TestStreamingListener.Topic">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:CIAPI.Streaming.Testing.TestStreamingListener`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="TDTO"></typeparam>
+        </member>
+        <member name="M:CIAPI.Streaming.Testing.TestStreamingListener`1.#ctor(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="adapter"></param>
+            <param name="topic"></param>
+        </member>
+        <member name="M:CIAPI.Streaming.Testing.TestStreamingListener`1.TimerCallback(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="ignored"></param>
+        </member>
+        <member name="F:CIAPI.Streaming.Testing.TestStreamingListener`1.CreateMessage">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="E:CIAPI.Streaming.Testing.TestStreamingListener`1.MessageReceived">
+            <summary>
+            
             </summary>
         </member>
     </members>

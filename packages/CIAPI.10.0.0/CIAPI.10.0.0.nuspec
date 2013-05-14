@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>CIAPI</id>
-    <version>8.3.0</version>
+    <version>10.0.0</version>
     <title>CIAPI</title>
     <authors>CityIndex Ltd, Sky Sanders, David Laing</authors>
     <owners>CityIndex Ltd, Sky Sanders, David Laing</owners>
