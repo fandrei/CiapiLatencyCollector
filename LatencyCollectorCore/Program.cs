@@ -98,6 +98,7 @@ namespace LatencyCollectorCore
 		{
 			try
 			{
+				ReportEvent("Event", "Trying to stop...");
 				lock (Sync)
 				{
 					SettingsUpdater.Interrupt();
