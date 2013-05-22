@@ -33,7 +33,7 @@ namespace LatencyCollectorCore
 
 				while (true)
 				{
-					var stop = _stopEvent.WaitOne(1);
+					var stop = _stopEvent.WaitOne(100);
 					if (stop)
 						break;
 
