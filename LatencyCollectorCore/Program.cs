@@ -186,7 +186,7 @@ namespace LatencyCollectorCore
 		{
 			var exception = e.ExceptionObject as Exception;
 			if (exception != null)
-				Report(exception);
+				ReportEvent("Exception.Unhandled", exception.ToString());
 
 			Tracker.Terminate();
 		}
