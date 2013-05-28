@@ -39,9 +39,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\AppMetrics.AgentService.PluginBase.1.0.365\lib\net40\AppMetrics.AgentService.PluginBase.dll</HintPath>
     </Reference>
-    <Reference Include="AppMetrics.Client, Version=1.0.4890.5934, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="AppMetrics.Client, Version=1.0.4896.12583, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AppMetrics.Client.1.0.430\lib\net40\AppMetrics.Client.dll</HintPath>
+      <HintPath>..\packages\AppMetrics.Client.1.0.436\lib\net40\AppMetrics.Client.dll</HintPath>
     </Reference>
     <Reference Include="AppMetrics.Shared, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

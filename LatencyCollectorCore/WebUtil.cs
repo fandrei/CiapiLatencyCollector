@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using AppMetrics.Client;
 
 namespace LatencyCollectorCore
 {
@@ -15,10 +16,7 @@ namespace LatencyCollectorCore
 		{
 			try
 			{
-				using (var client = new WebClient())
-				{
-					var resp = client.DownloadString("http://www.msftncsi.com/ncsi.txt");
-				}
+				var resp = HttpUtil.Request("http://www.msftncsi.com/ncsi.txt");
 
 				return true;
 			}

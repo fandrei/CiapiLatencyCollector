@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Xml.Serialization;
 
+using AppMetrics.Client;
 using AppMetrics.Shared;
 
 using LatencyCollectorCore.Monitors;
@@ -53,15 +54,10 @@ namespace LatencyCollectorCore
 		{
 			var configAddress = ConfigBaseUrl + string.Format("/GetConfig.ashx?NodeName={0}&PluginName={1}", NodeName, "CIAPI");
 
-			using (var client = new WebClient())
-			{
-				client.Credentials = new NetworkCredential(UserName, Password);
-
-				var res = client.DownloadString(configAddress);
-				if (res == "disabled")
-					return null;
-				return res;
-			}
+			var res = HttpUtil.Request(configAddress, new NetworkCredential(UserName, Password));
+			if (res == "disabled")
+				return null;
+			return res;
 		}
 
 		private static XmlSerializer _serializer;
