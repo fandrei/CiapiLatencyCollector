@@ -35,9 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AppMetrics.AgentService.PluginBase, Version=1.0.0.20814, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="AppMetrics.AgentService.PluginBase, Version=1.0.0.14540, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AppMetrics.AgentService.PluginBase.1.0.365\lib\net40\AppMetrics.AgentService.PluginBase.dll</HintPath>
+      <HintPath>..\packages\AppMetrics.AgentService.PluginBase.1.0.439\lib\net40\AppMetrics.AgentService.PluginBase.dll</HintPath>
     </Reference>
     <Reference Include="AppMetrics.Client, Version=1.0.4896.12583, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -45,7 +45,7 @@
     </Reference>
     <Reference Include="AppMetrics.Shared, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AppMetrics.AgentService.PluginBase.1.0.365\lib\net40\AppMetrics.Shared.dll</HintPath>
+      <HintPath>..\packages\AppMetrics.AgentService.PluginBase.1.0.439\lib\net40\AppMetrics.Shared.dll</HintPath>
     </Reference>
     <Reference Include="CIAPI, Version=10.0.0.548, Culture=neutral, PublicKeyToken=5dfdbaca97c75bb7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

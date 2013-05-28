@@ -88,7 +88,7 @@ namespace LatencyCollectorCore
 
 		public static PluginSettings Instance
 		{
-			get { return _instance ?? (_instance = Load<PluginSettings>(FileName)); }
+			get { return _instance ?? (_instance = Load<PluginSettings>(FileName, "AppSettings")); }
 		}
 
 		public static string Version
@@ -97,14 +97,6 @@ namespace LatencyCollectorCore
 			{
 				var res = string.Format("v{0}", Assembly.GetCallingAssembly().GetName().Version);
 				return res;
-			}
-		}
-
-		protected override void OnAfterLoad()
-		{
-			if (UserId.IsNullOrEmpty())
-			{
-				UserId = Guid.NewGuid().ToString();
 			}
 		}
 	}
