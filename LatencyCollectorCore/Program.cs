@@ -16,7 +16,7 @@ namespace LatencyCollectorCore
 {
 	public class Program
 	{
-		static void Main()
+		static void Main(string[] args)
 		{
 			try
 			{
@@ -31,13 +31,15 @@ namespace LatencyCollectorCore
 				var consoleThread = new Thread(ConsoleCheckingThread);
 				consoleThread.Start();
 
+				var isDebug = (args.Length > 0 && args[0] == "-debug");
+
 				while (true)
 				{
 					var stop = _stopEvent.WaitOne(100);
 					if (stop)
 						break;
 
-					if (!Control.IsMasterRunning)
+					if (!isDebug && !Control.IsMasterRunning)
 					{
 						ReportEvent("Event", "No master process found - exiting");
 						break;
