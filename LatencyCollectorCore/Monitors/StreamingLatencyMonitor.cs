@@ -77,6 +77,7 @@ namespace LatencyCollectorCore.Monitors
 			if (_listener != null)
 			{
 				_listener.Stop();
+				_listener.Dispose();
 				_listener = null;
 			}
 

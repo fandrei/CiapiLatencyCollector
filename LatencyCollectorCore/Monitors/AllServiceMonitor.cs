@@ -300,30 +300,30 @@ namespace LatencyCollectorCore.Monitors
 
 		private static PriceDTO GetPrice(Client client)
 		{
-			var streamingClient = client.CreateStreamingClient();
-			var listener = streamingClient.BuildPricesListener(MarketId);
-
-			PriceDTO price = null;
-			try
+			using (var streamingClient = client.CreateStreamingClient())
+			using (var listener = streamingClient.BuildPricesListener(MarketId))
 			{
-				var finished = new ManualResetEvent(false);
+				PriceDTO price = null;
+				try
+				{
+					var finished = new ManualResetEvent(false);
 
-				listener.MessageReceived +=
-					(s, args) =>
-					{
-						price = args.Data;
-						finished.Set();
-					};
+					listener.MessageReceived +=
+						(s, args) =>
+							{
+								price = args.Data;
+								finished.Set();
+							};
 
-				if (!finished.WaitOne(TimeSpan.FromMinutes(1)))
-					throw new ApplicationException("Can't obtain price: timed out");
+					if (!finished.WaitOne(TimeSpan.FromMinutes(1)))
+						throw new ApplicationException("Can't obtain price: timed out");
 
-				return price;
-			}
-			finally
-			{
-				listener.Stop();
-				streamingClient.Dispose();
+					return price;
+				}
+				finally
+				{
+					listener.Stop();
+				}
 			}
 		}
 
@@ -343,6 +343,9 @@ namespace LatencyCollectorCore.Monitors
 		{
 			if (_client != null)
 			{
+				if (!string.IsNullOrEmpty(_client.Session))
+					_client.LogOut();
+
 				_client.Dispose();
 				_client = null;
 			}
@@ -350,6 +353,7 @@ namespace LatencyCollectorCore.Monitors
 			if (_metricsRecorder != null)
 			{
 				_metricsRecorder.Stop();
+				_metricsRecorder.Dispose();
 				_metricsRecorder = null;
 			}
 		}
