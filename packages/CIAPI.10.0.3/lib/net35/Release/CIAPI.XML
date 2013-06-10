@@ -1514,8 +1514,16 @@
             The trade currency.
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "P:CIAPI.DTO.ApiTradeHistoryDTO.RealisedPnl" -->
-        <!-- Badly formed XML comment ignored for member "P:CIAPI.DTO.ApiTradeHistoryDTO.RealisedPnlCurrency" -->
+        <member name="P:CIAPI.DTO.ApiTradeHistoryDTO.RealisedPnl">
+            <summary>
+            The realised profit and loss (P&amp;L).
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradeHistoryDTO.RealisedPnlCurrency">
+            <summary>
+            The realised P&amp;L currency.
+            </summary>
+        </member>
         <member name="P:CIAPI.DTO.ApiTradeHistoryDTO.LastChangedDateTimeUtc">
             <summary>
             Represents the date and time when the trade/order was last edited. **Note:** does not include things such as the current market price.
@@ -3815,8 +3823,22 @@
             <param name="callback"></param>
             <param name="state"></param>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._Messaging.GetSystemLookup(System.String,System.Int32)" -->
-        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._Messaging.BeginGetSystemLookup(System.String,System.Int32,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)" -->
+        <member name="M:CIAPI.Rpc.Client._Messaging.GetSystemLookup(System.String,System.Int32)">
+            <summary>
+            Use the message lookup service to get localised text names for the various status codes &amp; IDs returned by the API. For example, a query for **OrderStatusReason** will contain text names for all the possible values of **OrderStatusReason** in the [ApiOrderResponseDTO](http://labs.cityindex.com/docs/Content/Data%20Types/ApiOrderResponseDTO.htm). You should only request the list once per session *(for each entity you're interested in)*.
+            </summary>
+            <param name="LookupEntityName">The entity to lookup. For example: **OrderStatusReason**, **InstructionStatusReason**, **OrderApplicability**, **Currency**, **QuoteStatus**, **QuoteStatusReason** or **Culture**.</param>
+            <param name="CultureId">The Culture ID used to override the translated text description. *(Optional)*.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Messaging.BeginGetSystemLookup(System.String,System.Int32,Salient.ReliableHttpClient.ReliableAsyncCallback,System.Object)">
+            <summary>
+            Use the message lookup service to get localised text names for the various status codes &amp; IDs returned by the API. For example, a query for **OrderStatusReason** will contain text names for all the possible values of **OrderStatusReason** in the [ApiOrderResponseDTO](http://labs.cityindex.com/docs/Content/Data%20Types/ApiOrderResponseDTO.htm). You should only request the list once per session *(for each entity you're interested in)*.
+            </summary>
+            <param name="LookupEntityName">The entity to lookup. For example: **OrderStatusReason**, **InstructionStatusReason**, **OrderApplicability**, **Currency**, **QuoteStatus**, **QuoteStatusReason** or **Culture**.</param>
+            <param name="CultureId">The Culture ID used to override the translated text description. *(Optional)*.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
         <member name="M:CIAPI.Rpc.Client._Messaging.GetClientApplicationMessageTranslation(System.Int32,System.Int32,System.Int32)">
             <summary>
             Use the message translation service to get client specific translated text strings.
