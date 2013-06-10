@@ -35,17 +35,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AppMetrics.AgentService.PluginBase, Version=1.0.0.14540, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="AppMetrics.AgentService.PluginBase, Version=1.0.0.6954, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AppMetrics.AgentService.PluginBase.1.0.439\lib\net40\AppMetrics.AgentService.PluginBase.dll</HintPath>
+      <HintPath>..\packages\AppMetrics.AgentService.PluginBase.1.0.441\lib\net40\AppMetrics.AgentService.PluginBase.dll</HintPath>
     </Reference>
-    <Reference Include="AppMetrics.Client, Version=1.0.4903.13266, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="AppMetrics.Client, Version=1.0.4909.6949, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AppMetrics.Client.1.0.440\lib\net40\AppMetrics.Client.dll</HintPath>
+      <HintPath>..\packages\AppMetrics.Client.1.0.441\lib\net40\AppMetrics.Client.dll</HintPath>
     </Reference>
     <Reference Include="AppMetrics.Shared, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AppMetrics.AgentService.PluginBase.1.0.439\lib\net40\AppMetrics.Shared.dll</HintPath>
+      <HintPath>..\packages\AppMetrics.AgentService.PluginBase.1.0.441\lib\net40\AppMetrics.Shared.dll</HintPath>
     </Reference>
     <Reference Include="CIAPI, Version=10.0.0.548, Culture=neutral, PublicKeyToken=5dfdbaca97c75bb7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -103,7 +103,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
