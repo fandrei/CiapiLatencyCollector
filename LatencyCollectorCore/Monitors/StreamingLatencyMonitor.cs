@@ -74,6 +74,11 @@ namespace LatencyCollectorCore.Monitors
 
 		protected override void Cleanup()
 		{
+			if (_listener != null && _streamingClient != null)
+			{
+				_streamingClient.TearDownListener(_listener);
+			}
+
 			if (_listener != null)
 			{
 				_listener.Stop();

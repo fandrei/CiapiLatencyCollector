@@ -322,7 +322,10 @@ namespace LatencyCollectorCore.Monitors
 				}
 				finally
 				{
-					listener.Stop();
+					if (listener != null)
+					{
+						streamingClient.TearDownListener(listener);
+					}
 				}
 			}
 		}
