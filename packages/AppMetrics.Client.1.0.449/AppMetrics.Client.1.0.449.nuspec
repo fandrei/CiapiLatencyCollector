@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>AppMetrics.Client</id>
-    <version>1.0.441</version>
+    <version>1.0.449</version>
     <title>AppMetrics.Client</title>
     <authors>CityIndex Ltd,  Andrei Faber</authors>
     <owners>CityIndex Ltd,  Andrei Faber</owners>
