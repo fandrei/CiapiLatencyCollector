@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>AppMetrics.Shared</id>
+    <version>1.0.464</version>
+    <title>AppMetrics.Shared</title>
+    <authors>CityIndex Ltd,  Andrei Faber</authors>
+    <owners>CityIndex Ltd,  Andrei Faber</owners>
+    <licenseUrl>https://github.com/fandrei/AppMetrics/raw/master/LICENSE.txt</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>AppMetrics shared classes</description>
+    <language>en-GB</language>
+  </metadata>
+</package>
