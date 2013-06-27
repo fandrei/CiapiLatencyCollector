@@ -9,7 +9,13 @@ namespace LatencyCollectorCore.Monitors
 {
 	public class DefaultPageMonitor : LatencyMonitor
 	{
+		public DefaultPageMonitor()
+		{
+			EventName = "General.DefaultPage";
+		}
+
 		public string PageUrl { get; set; }
+		public string EventName { get; set; }
 
 		public override void Execute()
 		{
@@ -26,7 +32,7 @@ namespace LatencyCollectorCore.Monitors
 				var watch = Tracker.StartMeasure();
 				using (var response = request.GetResponse())
 				{
-					Tracker.EndMeasure(watch, "General.DefaultPage");
+					Tracker.EndMeasure(watch, EventName);
 				}
 			}
 			catch (WebException exc)
