@@ -91,7 +91,7 @@
         </member>
         <member name="P:CIAPI.DTO.AccountInformationResponseDTO.AccountHolders">
             <summary>
-            [missing]
+            Information about account holders.
             </summary>
         </member>
         <member name="T:CIAPI.DTO.ApiAccountHolderDTO">
