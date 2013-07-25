@@ -15,6 +15,9 @@ namespace LatencyCollectorCore
 			tracker.Log("Info_NodeName", PluginSettings.Instance.NodeName);
 			var curAssembly = typeof(Program).Assembly;
 			tracker.Log("Info_ProcessVersion", curAssembly.FullName);
+
+			var res = string.Format("v{0}", typeof(CIAPI.Rpc.Client).Assembly.GetName().Version);
+			tracker.Log("Info_CiapiVersion", res);
 		}
 	}
 }
