@@ -8,6 +8,4 @@ _ReSharper*/
 temp/
 _WebPackage/
 _UpdatePackage/
-
-#Don't ignore the above when below the packages/ folder
-!packages/
+packages/
